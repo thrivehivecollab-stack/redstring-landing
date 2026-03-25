@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Red String Research — Full Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Crimson+Pro:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0F0D0B; color:#F0EDE8; font-family:'DM Mono',monospace; font-size:13px; overflow:hidden; height:100vh; width:100vw; }
+
+/* SPLASH */
+#splash { position:fixed; inset:0; background:#0F0D0B; z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; transition:opacity 0.8s; }
+#splash h1 { font-family:‘Bebas Neue’,sans-serif; font-size:clamp(56px,12vw,110px); letter-spacing:0.08em; line-height:0.9; text-align:center; }
+#splash h1 span { color:#E74C3C; display:block; }
+#splash p { font-family:‘Crimson Pro’,serif; font-style:italic; font-size:17px; color:#8A8178; text-align:center; max-width:380px; line-height:1.6; }
+.splash-badge { font-size:10px; letter-spacing:0.3em; color:#E74C3C; border:1px solid #7B241C; padding:6px 16px; display:flex; align-items:center; gap:8px; }
+.splash-badge::before { content:’’; width:6px; height:6px; border-radius:50%; background:#E74C3C; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+#splash-btn { background:#C0392B; border:none; color:#F0EDE8; font-family:‘DM Mono’,monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; padding:14px 40px; cursor:pointer; transition:all 0.2s; }
+#splash-btn:hover { background:#E74C3C; transform:translateY(-1px); }
+
+/* BIOMETRIC SCREEN */
+#bio-screen { position:fixed; inset:0; background:#0F0D0B; z-index:9998; display:none; flex-direction:column; align-items:center; justify-content:center; gap:24px; }
+.bio-logo { font-family:‘Bebas Neue’,sans-serif; font-size:28px; letter-spacing:0.2em; color:#E74C3C; }
+.bio-icon { font-size:64px; animation:bioPulse 2s infinite; }
+@keyframes bioPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+.bio-title { font-family:‘Bebas Neue’,sans-serif; font-size:28px; letter-spacing:0.1em; }
+.bio-sub { font-size:11px; color:#8A8178; letter-spacing:0.2em; text-align:center; }
+.bio-btn { background:#C0392B; border:none; color:#F0EDE8; font-family:‘DM Mono’,monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; padding:12px 32px; cursor:pointer; margin-top:8px; }
+.bio-features { display:flex; gap:24px; margin-top:16px; }
+.bio-feature { text-align:center; font-size:9px; letter-spacing:0.15em; color:#4A4540; text-transform:uppercase; }
+.bio-feature span { display:block; font-size:20px; margin-bottom:4px; }
+
+/* APP */
+#app { display:none; height:100vh; flex-direction:column; }
+#app.visible { display:flex; }
+
+/* HEADER */
+header { background:#1A1714; border-bottom:1px solid #2E2A25; padding:0 12px; height:52px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.hdr-left { display:flex; align-items:center; gap:10px; }
+.hdr-menu { color:#8A8178; font-size:18px; cursor:pointer; background:none; border:none; padding:4px; }
+.hdr-title { font-family:‘Bebas Neue’,sans-serif; font-size:15px; letter-spacing:0.08em; }
+.hdr-sub { font-size:9px; color:#8A8178; letter-spacing:0.1em; }
+.hdr-right { display:flex; align-items:center; gap:6px; }
+.hdr-btn { background:none; border:1px solid #2E2A25; color:#8A8178; font-family:‘DM Mono’,monospace; font-size:9px; letter-spacing:0.1em; padding:5px 10px; cursor:pointer; transition:all 0.2s; text-transform:uppercase; white-space:nowrap; }
+.hdr-btn:hover { border-color:#E74C3C; color:#F0EDE8; }
+.hdr-btn.red { background:#C0392B; border-color:#C0392B; color:#F0EDE8; }
+.hdr-btn.gold { background:#8B6914; border-color:#D4A843; color:#D4A843; }
+
+/* CANVAS */
+#canvas-wrap { flex:1; position:relative; overflow:hidden; background:#0F0D0B; background-image:linear-gradient(rgba(192,57,43,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(192,57,43,0.03) 1px,transparent 1px); background-size:40px 40px; }
+#canvas-svg { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1; }
+
+/* NODES */
+.node { position:absolute; background:#1A1714; border:1px solid #2E2A25; padding:10px 12px; min-width:110px; max-width:150px; cursor:pointer; transition:all 0.2s; user-select:none; z-index:5; }
+.node:hover { border-color:#C0392B; box-shadow:0 0 12px rgba(192,57,43,0.25); z-index:15; }
+.node.active { border-color:#E74C3C; box-shadow:0 0 20px rgba(231,76,60,0.35); z-index:20; }
+.node.inv-ink { background:#0F0D0B; border:1px dashed #7B241C; }
+.node.inv-ink .node-title, .node.inv-ink .node-detail, .node.inv-ink .node-type { opacity:0; transition:opacity 0.3s; }
+.node.inv-ink:active .node-title, .node.inv-ink:active .node-detail, .node.inv-ink:active .node-type { opacity:1; }
+.node.person { border-left:3px solid #E74C3C; }
+.node.location { border-left:3px solid #D4A843; }
+.node.document { border-left:3px solid #8A8178; }
+.node.org { border-left:3px solid #2E86AB; }
+.node.evidence { border-left:3px solid #E74C3C; border-style:solid; border-width:1px 1px 1px 3px; }
+.node-pin { position:absolute; top:-7px; left:50%; transform:translateX(-50%); width:8px; height:8px; border-radius:50%; background:#D4A843; border:1px solid #8B6914; }
+.node-type { font-size:7px; letter-spacing:0.15em; text-transform:uppercase; color:#4A4540; margin-bottom:3px; }
+.node-title { font-family:‘Bebas Neue’,sans-serif; font-size:14px; letter-spacing:0.05em; line-height:1.1; margin-bottom:3px; }
+.node-detail { font-size:9px; color:#8A8178; line-height:1.3; }
+.node-ink-hint { font-size:9px; color:#7B241C; text-align:center; padding:8px 0; }
+
+/* TOOLBAR */
+#toolbar { position:absolute; right:12px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:4px; z-index:30; }
+.tool-btn { width:38px; height:38px; background:#1A1714; border:1px solid #2E2A25; color:#8A8178; font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+.tool-btn:hover { border-color:#C0392B; color:#F0EDE8; background:#221F1B; }
+.tool-btn.active { border-color:#E74C3C; color:#E74C3C; background:rgba(192,57,43,0.1); }
+
+/* FEATURE TABS */
+#feature-tabs { position:absolute; top:12px; left:12px; display:flex; flex-direction:column; gap:4px; z-index:30; }
+.feat-tab { background:#1A1714; border:1px solid #2E2A25; padding:6px 12px; font-size:9px; letter-spacing:0.15em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; color:#8A8178; display:flex; align-items:center; gap:6px; }
+.feat-tab:hover { border-color:#C0392B; color:#F0EDE8; }
+.feat-tab.active { border-color:#E74C3C; color:#E74C3C; background:rgba(192,57,43,0.08); }
+.feat-dot { width:5px; height:5px; border-radius:50%; background:currentColor; }
+
+/* PANELS */
+.panel { position:absolute; background:#1A1714; border:1px solid #2E2A25; z-index:50; display:none; flex-direction:column; }
+.panel.visible { display:flex; }
+.panel-hdr { padding:12px 14px; border-bottom:1px solid #2E2A25; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.panel-title { font-family:‘Bebas Neue’,sans-serif; font-size:15px; letter-spacing:0.1em; }
+.panel-sub { font-size:8px; letter-spacing:0.2em; color:#E74C3C; text-transform:uppercase; }
+.panel-close { background:none; border:none; color:#4A4540; cursor:pointer; font-size:13px; }
+
+/* NODE INFO */
+#node-panel { right:58px; top:12px; width:220px; max-height:70vh; }
+#node-panel .panel-body { padding:14px; overflow-y:auto; font-size:11px; color:#8A8178; line-height:1.7; }
+
+/* AI PANEL */
+#ai-panel { right:58px; top:12px; width:260px; height:380px; }
+#ai-messages { flex:1; overflow-y:auto; padding:10px; display:flex; flex-direction:column; gap:10px; }
+.ai-msg { font-size:10px; line-height:1.6; padding:8px 10px; border-left:2px solid #2E2A25; color:#8A8178; }
+.ai-msg.det { border-color:#E74C3C; }
+.ai-msg.usr { border-color:#D4A843; color:#F0EDE8; background:#221F1B; }
+.ai-msg-lbl { font-size:7px; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:3px; color:#4A4540; }
+.ai-msg.det .ai-msg-lbl { color:#E74C3C; }
+.ai-msg.usr .ai-msg-lbl { color:#D4A843; }
+.ai-input-row { padding:8px; border-top:1px solid #2E2A25; display:flex; }
+.ai-input { flex:1; background:#221F1B; border:1px solid #2E2A25; border-right:none; padding:7px 10px; font-family:‘DM Mono’,monospace; font-size:10px; color:#F0EDE8; outline:none; }
+.ai-send { background:#C0392B; border:none; padding:7px 12px; color:#F0EDE8; cursor:pointer; font-size:12px; }
+
+/* SECURITY PANEL */
+#sec-panel { left:50%; top:50%; transform:translate(-50%,-50%); width:min(340px,90vw); }
+.sec-item { padding:12px 14px; border-bottom:1px solid #2E2A25; display:flex; align-items:flex-start; gap:10px; }
+.sec-item:last-child { border-bottom:none; }
+.sec-icon { font-size:18px; flex-shrink:0; margin-top:2px; }
+.sec-name { font-family:‘Bebas Neue’,sans-serif; font-size:14px; letter-spacing:0.05em; margin-bottom:2px; }
+.sec-desc { font-size:10px; color:#8A8178; line-height:1.5; }
+.sec-badge { display:inline-block; font-size:8px; letter-spacing:0.15em; padding:2px 6px; margin-top:4px; text-transform:uppercase; }
+.sec-badge.on { border:1px solid #27AE60; color:#27AE60; }
+.sec-badge.warn { border:1px solid #D4A843; color:#D4A843; }
+
+/* WATERMARK PANEL */
+#wm-panel { left:50%; top:50%; transform:translate(-50%,-50%); width:min(320px,90vw); }
+.wm-doc { background:#221F1B; border:1px solid #2E2A25; padding:16px; margin:12px; font-size:10px; color:#8A8178; line-height:1.8; position:relative; }
+.wm-doc::after { content:‘REDSTRINGRESEARCH.APP’; position:absolute; bottom:8px; right:8px; font-size:8px; letter-spacing:0.15em; color:#2E2A25; }
+.wm-field { display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #2E2A25; }
+.wm-field:last-child { border-bottom:none; }
+.wm-key { color:#4A4540; }
+.wm-val { color:#F0EDE8; font-size:9px; }
+.wm-invisible { background:rgba(192,57,43,0.05); border:1px solid #7B241C; padding:10px; margin:12px; font-size:10px; color:#8A8178; line-height:1.6; }
+
+/* WAR ROOM */
+#war-room { position:absolute; inset:0; background:#0A0908; z-index:80; display:none; flex-direction:column; }
+#war-room.visible { display:flex; }
+.wr-header { background:#1A1714; border-bottom:1px solid #2E2A25; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; }
+.wr-title { font-family:‘Bebas Neue’,sans-serif; font-size:16px; letter-spacing:0.1em; }
+.wr-live { font-size:9px; letter-spacing:0.2em; color:#E74C3C; display:flex; align-items:center; gap:6px; }
+.wr-live::before { content:’’; width:6px; height:6px; border-radius:50%; background:#E74C3C; animation:pulse 1s infinite; }
+.wr-grid { flex:1; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:2px; padding:2px; }
+.wr-cell { background:#1A1714; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.wr-cell-main { grid-column:1; grid-row:1/3; }
+.wr-avatar { width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:‘Bebas Neue’,sans-serif; font-size:20px; background:#221F1B; border:2px solid #2E2A25; }
+.wr-avatar.active { border-color:#E74C3C; box-shadow:0 0 12px rgba(231,76,60,0.4); }
+.wr-name { position:absolute; bottom:8px; left:8px; font-size:9px; letter-spacing:0.15em; background:rgba(15,13,11,0.8); padding:3px 8px; }
+.wr-speaking { position:absolute; bottom:8px; right:8px; font-size:8px; letter-spacing:0.1em; color:#E74C3C; background:rgba(15,13,11,0.8); padding:3px 8px; display:none; }
+.wr-cell-main .wr-avatar { width:80px; height:80px; font-size:32px; }
+.wr-canvas-mini { position:absolute; inset:0; opacity:0.3; background-image:linear-gradient(rgba(192,57,43,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(192,57,43,0.05) 1px,transparent 1px); background-size:20px 20px; }
+.wr-controls { background:#1A1714; border-top:1px solid #2E2A25; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; }
+.wr-ctrl-btns { display:flex; gap:8px; }
+.wr-btn { background:#221F1B; border:1px solid #2E2A25; color:#8A8178; font-size:16px; width:36px; height:36px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+.wr-btn:hover { border-color:#C0392B; color:#F0EDE8; }
+.wr-btn.active { background:rgba(192,57,43,0.2); border-color:#E74C3C; color:#E74C3C; }
+.wr-end { background:#C0392B; border:none; color:#F0EDE8; font-family:‘DM Mono’,monospace; font-size:10px; letter-spacing:0.15em; padding:8px 16px; cursor:pointer; text-transform:uppercase; }
+.wr-chat { width:200px; background:#0F0D0B; border-left:1px solid #2E2A25; display:flex; flex-direction:column; }
+.wr-chat-msgs { flex:1; padding:8px; overflow-y:auto; display:flex; flex-direction:column; gap:6px; font-size:10px; color:#8A8178; }
+.wr-msg { padding:6px 8px; background:#1A1714; border-left:2px solid #2E2A25; line-height:1.4; }
+.wr-msg.candace { border-color:#E74C3C; }
+.wr-msg.baron { border-color:#D4A843; }
+.wr-msg-who { font-size:7px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:2px; }
+.wr-msg.candace .wr-msg-who { color:#E74C3C; }
+.wr-msg.baron .wr-msg-who { color:#D4A843; }
+
+/* LIVE STREAM */
+#live-panel { position:absolute; inset:0; background:#0A0908; z-index:75; display:none; flex-direction:column; }
+#live-panel.visible { display:flex; }
+.live-hdr { background:#1A1714; border-bottom:1px solid #2E2A25; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; }
+.live-title { font-family:‘Bebas Neue’,sans-serif; font-size:16px; letter-spacing:0.1em; }
+.live-badge { font-size:9px; letter-spacing:0.2em; color:#F0EDE8; background:#C0392B; padding:3px 10px; display:flex; align-items:center; gap:6px; }
+.live-badge::before { content:’’; width:6px; height:6px; border-radius:50%; background:#F0EDE8; animation:pulse 1s infinite; }
+.live-canvas { flex:1; position:relative; background:#0F0D0B; background-image:linear-gradient(rgba(192,57,43,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(192,57,43,0.03) 1px,transparent 1px); background-size:40px 40px; overflow:hidden; }
+.live-node { position:absolute; background:#1A1714; border:1px solid #2E2A25; padding:8px 10px; min-width:90px; font-size:11px; transition:all 0.5s; }
+.live-node.spotlight { border-color:#E74C3C; box-shadow:0 0 30px rgba(231,76,60,0.5); transform:scale(1.05); z-index:10; }
+.live-annotation { position:absolute; pointer-events:none; }
+.live-arrow { position:absolute; color:#E74C3C; font-size:20px; pointer-events:none; animation:fadeInArrow 0.3s ease; }
+@keyframes fadeInArrow { from{opacity:0;transform:scale(0.5)} to{opacity:1;transform:scale(1)} }
+.live-caption { position:absolute; bottom:0; left:0; right:0; background:rgba(15,13,11,0.9); padding:12px 16px; border-top:1px solid #2E2A25; }
+.live-caption-text { font-family:‘Crimson Pro’,serif; font-style:italic; font-size:13px; color:#F0EDE8; line-height:1.5; }
+.live-pip { position:absolute; top:12px; right:12px; width:80px; height:60px; background:#1A1714; border:2px solid #E74C3C; display:flex; align-items:center; justify-content:center; font-size:24px; z-index:20; }
+.live-viewer-count { position:absolute; top:12px; left:12px; background:rgba(15,13,11,0.8); border:1px solid #2E2A25; padding:4px 10px; font-size:9px; letter-spacing:0.15em; color:#8A8178; }
+.live-voice-bar { background:#1A1714; border-top:1px solid #2E2A25; padding:10px 14px; display:flex; align-items:center; gap:12px; }
+.live-voice-indicator { width:10px; height:10px; border-radius:50%; background:#E74C3C; animation:pulse 0.8s infinite; flex-shrink:0; }
+.live-voice-text { font-family:‘Crimson Pro’,serif; font-style:italic; font-size:12px; color:#F0EDE8; flex:1; }
+.live-controls { display:flex; gap:6px; }
+.live-ctrl { background:#221F1B; border:1px solid #2E2A25; color:#8A8178; font-size:14px; width:32px; height:32px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.live-end { background:#C0392B; border:none; color:#F0EDE8; font-family:‘DM Mono’,monospace; font-size:9px; letter-spacing:0.15em; padding:6px 14px; cursor:pointer; }
+
+/* TIPS */
+#tips-panel { position:absolute; inset:0; background:#0F0D0B; z-index:70; display:none; flex-direction:column; }
+#tips-panel.visible { display:flex; }
+.tips-hdr { background:#1A1714; border-bottom:1px solid #2E2A25; padding:12px 14px; display:flex; align-items:center; gap:10px; }
+.tips-back { background:none; border:none; color:#8A8178; font-size:18px; cursor:pointer; }
+.tips-list { flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; gap:10px; }
+.tip-card { background:#1A1714; border:1px solid #2E2A25; padding:12px; cursor:pointer; transition:border-color 0.2s; }
+.tip-card:hover { border-color:#C0392B; }
+.tip-hdr { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.tip-anon { font-size:8px; letter-spacing:0.15em; color:#4A4540; text-transform:uppercase; }
+.tip-score { font-size:8px; letter-spacing:0.1em; padding:2px 6px; border:1px solid #27AE60; color:#27AE60; }
+.tip-score.med { border-color:#D4A843; color:#D4A843; }
+.tip-body { font-size:10px; color:#8A8178; line-height:1.5; }
+.tip-tag { display:inline-block; margin-top:6px; font-size:8px; letter-spacing:0.1em; color:#D4A843; border:1px solid #8B6914; padding:2px 6px; text-transform:uppercase; }
+
+/* DOSSIER */
+#dossier-panel { position:absolute; inset:0; background:#0F0D0B; z-index:85; display:none; flex-direction:column; overflow-y:auto; }
+#dossier-panel.visible { display:flex; }
+.dos-content { padding:24px; max-width:600px; margin:0 auto; width:100%; }
+.dos-hdr { border:1px solid #2E2A25; padding:20px; margin-bottom:20px; background:#1A1714; position:relative; }
+.dos-classified { position:absolute; top:8px; right:12px; font-size:7px; letter-spacing:0.2em; color:#E74C3C; }
+.dos-title { font-family:‘Bebas Neue’,sans-serif; font-size:32px; letter-spacing:0.08em; margin-bottom:6px; }
+.dos-meta { font-size:9px; color:#8A8178; letter-spacing:0.1em; line-height:1.8; }
+.dos-wm { margin-top:10px; padding:8px 10px; background:rgba(192,57,43,0.05); border:1px solid #7B241C; font-size:8px; letter-spacing:0.15em; color:#E74C3C; }
+.dos-section { margin-bottom:20px; }
+.dos-sec-title { font-size:8px; letter-spacing:0.3em; color:#E74C3C; text-transform:uppercase; margin-bottom:10px; padding-bottom:4px; border-bottom:1px solid #2E2A25; }
+.dos-entity { background:#1A1714; border:1px solid #2E2A25; padding:12px; margin-bottom:6px; }
+.dos-entity-name { font-family:‘Bebas Neue’,sans-serif; font-size:16px; letter-spacing:0.05em; margin-bottom:3px; }
+.dos-entity-detail { font-size:10px; color:#8A8178; line-height:1.5; }
+.dos-close { position:fixed; top:12px; right:12px; background:#C0392B; border:none; color:#F0EDE8; font-family:‘DM Mono’,monospace; font-size:9px; letter-spacing:0.15em; padding:7px 14px; cursor:pointer; text-transform:uppercase; z-index:100; }
+
+/* INVISIBLE INK DEMO */
+#ink-demo { position:absolute; inset:0; background:rgba(15,13,11,0.95); z-index:72; display:none; align-items:center; justify-content:center; }
+#ink-demo.visible { display:flex; }
+.ink-demo-box { background:#1A1714; border:1px solid #2E2A25; padding:24px; width:min(320px,90vw); }
+.ink-demo-title { font-family:‘Bebas Neue’,sans-serif; font-size:22px; letter-spacing:0.1em; margin-bottom:4px; }
+.ink-demo-sub { font-size:9px; color:#8A8178; letter-spacing:0.15em; margin-bottom:20px; }
+.ink-node { border:1px dashed #7B241C; padding:12px; margin-bottom:12px; position:relative; min-height:60px; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.ink-node-ghost { font-size:9px; color:#7B241C; letter-spacing:0.15em; text-transform:uppercase; }
+.ink-node-content { position:absolute; inset:0; background:#1A1714; padding:12px; opacity:0; transition:opacity 0.3s; display:flex; flex-direction:column; justify-content:center; }
+.ink-node:active .ink-node-content { opacity:1; }
+.ink-hint { font-size:9px; color:#4A4540; text-align:center; letter-spacing:0.1em; margin-bottom:16px; }
+.ink-close { width:100%; padding:10px; background:none; border:1px solid #2E2A25; color:#8A8178; font-family:‘DM Mono’,monospace; font-size:10px; letter-spacing:0.15em; text-transform:uppercase; cursor:pointer; }
+.ink-close:hover { border-color:#C0392B; color:#F0EDE8; }
+
+/* BOTTOM NAV */
+#bottom-nav { background:#1A1714; border-top:1px solid #2E2A25; height:58px; display:flex; align-items:center; justify-content:space-around; flex-shrink:0; }
+.nav-btn { display:flex; flex-direction:column; align-items:center; gap:2px; background:none; border:none; color:#4A4540; cursor:pointer; padding:4px 10px; transition:color 0.2s; font-family:‘DM Mono’,monospace; }
+.nav-btn.active { color:#E74C3C; }
+.nav-btn:hover { color:#8A8178; }
+.nav-icon { font-size:17px; }
+.nav-label { font-size:7px; letter-spacing:0.1em; text-transform:uppercase; }
+.nav-badge { position:relative; }
+.nav-badge::after { content:‘3’; position:absolute; top:-4px; right:-8px; background:#E74C3C; color:#F0EDE8; font-size:7px; width:12px; height:12px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:‘DM Mono’,monospace; }
+
+/* TOAST */
+#toast { position:fixed; bottom:70px; left:50%; transform:translateX(-50%) translateY(10px); background:#1A1714; border:1px solid #2E2A25; border-left:3px solid #27AE60; padding:8px 18px; font-size:10px; color:#F0EDE8; z-index:500; opacity:0; transition:all 0.3s; white-space:nowrap; max-width:90vw; text-overflow:ellipsis; overflow:hidden; }
+#toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* DECOY SCREEN */
+#decoy { position:fixed; inset:0; background:#F5F5F5; z-index:9990; display:none; flex-direction:column; align-items:center; justify-content:center; gap:20px; font-family:sans-serif; }
+.decoy-icon { font-size:64px; }
+.decoy-title { font-size:24px; font-weight:600; color:#333; }
+.decoy-sub { font-size:14px; color:#999; }
+.decoy-note { font-size:10px; color:#ccc; margin-top:20px; font-family:‘DM Mono’,monospace; letter-spacing:0.1em; }
+.decoy-back { background:#007AFF; border:none; color:white; padding:12px 24px; border-radius:8px; font-size:14px; cursor:pointer; margin-top:8px; }
+</style>
+
+</head>
+<body>
+
+<!-- SPLASH -->
+
+<div id="splash">
+  <div class="splash-badge">● Live Interactive Demo — Charlie Kirk Investigation</div>
+  <h1>RED<br><span>STRING</span><br>RESEARCH</h1>
+  <p>The CIA's investigation headquarters.<br>Tap to open the investigation.</p>
+  <button id="splash-btn" onclick="showBio()">Open Investigation →</button>
+</div>
+
+<!-- BIOMETRIC -->
+
+<div id="bio-screen">
+  <div class="bio-logo">RED STRING RESEARCH</div>
+  <div class="bio-icon">🔐</div>
+  <div class="bio-title">IDENTITY VERIFICATION</div>
+  <div class="bio-sub">Biometric authentication required<br>to access investigation</div>
+  <div class="bio-features">
+    <div class="bio-feature"><span>👁️</span>Face ID</div>
+    <div class="bio-feature"><span>🔑</span>PIN Lock</div>
+    <div class="bio-feature"><span>🎭</span>Decoy Mode</div>
+  </div>
+  <button class="bio-btn" onclick="launchApp()">Authenticate with Face ID →</button>
+  <div style="font-size:9px;color:#4A4540;letter-spacing:0.15em;margin-top:8px;">Wrong PIN triggers decoy mode — hides all investigations</div>
+  <button style="background:none;border:1px solid #2E2A25;color:#4A4540;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;padding:6px 14px;cursor:pointer;margin-top:4px;text-transform:uppercase;" onclick="showDecoy()">Show Decoy Mode</button>
+</div>
+
+<!-- DECOY -->
+
+<div id="decoy">
+  <div class="decoy-icon">📝</div>
+  <div class="decoy-title">My Notes</div>
+  <div class="decoy-sub">Shopping lists, reminders, ideas</div>
+  <div style="background:#fff;border-radius:8px;padding:16px;width:260px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+    <div style="font-size:13px;color:#333;margin-bottom:8px;">🛒 Grocery List</div>
+    <div style="font-size:13px;color:#333;margin-bottom:8px;">📅 School pickup 3pm</div>
+    <div style="font-size:13px;color:#333;">🎂 Jake's birthday Sunday</div>
+  </div>
+  <div class="decoy-note">Your real investigations are completely hidden</div>
+  <button class="decoy-back" onclick="hideDecoy()">Back to Demo</button>
+</div>
+
+<!-- APP -->
+
+<div id="app">
+
+  <header>
+    <div class="hdr-left">
+      <button class="hdr-menu" onclick="showToast('☰ Menu: Cases · Settings · Account · Support')">☰</button>
+      <div>
+        <div class="hdr-title">WHO KILLED CHARLIE KIRK</div>
+        <div class="hdr-sub">12 nodes · 9 strings · 3 new tips</div>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <button class="hdr-btn" onclick="showSecurity()">🔒 SEC</button>
+      <button class="hdr-btn" onclick="toggleAI()">🤖 AI</button>
+      <button class="hdr-btn" onclick="showDossier()">📋</button>
+      <button class="hdr-btn red" onclick="showLive()">● LIVE</button>
+    </div>
+  </header>
+
+  <div id="canvas-wrap">
+    <svg id="canvas-svg"></svg>
+
+```
+<!-- FEATURE TABS -->
+<div id="feature-tabs">
+  <div class="feat-tab active" onclick="setFeat('canvas',this)"><div class="feat-dot"></div>Canvas</div>
+  <div class="feat-tab" onclick="setFeat('security',this)"><div class="feat-dot"></div>Security</div>
+  <div class="feat-tab" onclick="setFeat('watermark',this)"><div class="feat-dot"></div>Watermark</div>
+  <div class="feat-tab" onclick="setFeat('invisibleink',this)"><div class="feat-dot"></div>Invisible Ink</div>
+  <div class="feat-tab" onclick="setFeat('warroom',this)"><div class="feat-dot"></div>War Room</div>
+  <div class="feat-tab" onclick="setFeat('live',this)"><div class="feat-dot"></div>Live Stream</div>
+</div>
+
+<!-- NODES -->
+<div class="node person" id="n-ck" style="left:40%;top:16%" onclick="showNode('ck')">
+  <div class="node-pin"></div>
+  <div class="node-type">Person — Victim</div>
+  <div class="node-title">CHARLIE KIRK</div>
+  <div class="node-detail">Conservative commentator<br>Founder, TPUSA</div>
+</div>
+<div class="node person" id="n-co" style="left:14%;top:10%" onclick="showNode('co')">
+  <div class="node-pin"></div>
+  <div class="node-type">Person — Investigator</div>
+  <div class="node-title">CANDACE OWENS</div>
+  <div class="node-detail">Independent journalist<br>47 tips received</div>
+</div>
+<div class="node person" id="n-poi" style="left:64%;top:9%" onclick="showNode('poi')">
+  <div class="node-type">Person of Interest</div>
+  <div class="node-title">UNNAMED ASSOCIATE</div>
+  <div class="node-detail">Last contact: 48hrs prior<br>Location unverified</div>
+</div>
+<div class="node location" id="n-loc" style="left:28%;top:46%" onclick="showNode('loc')">
+  <div class="node-type">Location</div>
+  <div class="node-title">LAST KNOWN LOCATION</div>
+  <div class="node-detail">Timestamp: verified<br>Contradicts official account</div>
+</div>
+<div class="node document" id="n-doc" style="left:57%;top:43%" onclick="showNode('doc')">
+  <div class="node-type">Document — FOIA</div>
+  <div class="node-title">COMMUNICATION LOGS</div>
+  <div class="node-detail">3 unanswered contacts<br>Primary source: verified</div>
+</div>
+<div class="node org" id="n-org" style="left:13%;top:54%" onclick="showNode('org')">
+  <div class="node-type">Organization</div>
+  <div class="node-title">CONNECTED ENTITY</div>
+  <div class="node-detail">Financial ties flagged<br>8 months tracked</div>
+</div>
+<div class="node evidence" id="n-gap" style="left:68%;top:56%" onclick="showNode('gap')">
+  <div class="node-pin"></div>
+  <div class="node-type">⚠ AI Flagged — Critical</div>
+  <div class="node-title">72-HOUR GAP</div>
+  <div class="node-detail">No alibi · 3 unanswered<br>Corroborated: 2 tips</div>
+</div>
+<div class="node person inv-ink" id="n-ink" style="left:43%;top:67%" onclick="showInkDemo()">
+  <div class="node-ink-hint">👁 Hold to reveal</div>
+</div>
+<div class="node person" id="n-wit" style="left:27%;top:70%" onclick="showNode('wit')">
+  <div class="node-type">Witness — Anon Tip</div>
+  <div class="node-title">CIA WITNESS #0047</div>
+  <div class="node-detail">Via redstring.app/tip/candace<br>AI: High credibility</div>
+</div>
+
+<!-- TOOLBAR -->
+<div id="toolbar">
+  <button class="tool-btn" title="Connect nodes" onclick="showToast('🔗 Connect mode — tap two nodes to draw a string with label')">🔗</button>
+  <button class="tool-btn" title="Add node" onclick="showToast('＋ Add node — Person, Location, Document, Evidence, Org, Image')">＋</button>
+  <button class="tool-btn" title="Timeline" onclick="showToast('📅 Timeline — all dated nodes plotted to the second')">📅</button>
+  <button class="tool-btn" title="Filter" onclick="showToast('🔍 Filter by type, tag, contributor, date range')">🔍</button>
+  <button class="tool-btn" title="Annotate" onclick="showToast('✏️ Annotation — draw on canvas live for viewers to see')">✏️</button>
+  <button class="tool-btn" title="Chain of custody" onclick="showToast('⛓ Chain of custody — every node\'s full provenance trail')">⛓</button>
+</div>
+
+<!-- NODE PANEL -->
+<div class="panel" id="node-panel">
+  <div class="panel-hdr">
+    <div>
+      <div class="panel-title" id="node-panel-title">NODE</div>
+      <div class="panel-sub" id="node-panel-sub">Details</div>
+    </div>
+    <button class="panel-close" onclick="closePanel('node-panel')">✕</button>
+  </div>
+  <div class="panel-body" id="node-panel-body"></div>
+</div>
+
+<!-- AI PANEL -->
+<div class="panel" id="ai-panel" style="right:52px;top:12px;width:260px;height:370px;">
+  <div class="panel-hdr">
+    <div>
+      <div class="panel-title">AI RESEARCH</div>
+      <div class="panel-sub">● Detective Persona</div>
+    </div>
+    <button class="panel-close" onclick="closePanel('ai-panel')">✕</button>
+  </div>
+  <div id="ai-messages">
+    <div class="ai-msg det"><div class="ai-msg-lbl">Detective</div>The 72-hour gap is the thread that unravels everything. Three unanswered contacts in that window is legally significant — especially cross-referenced against the FOIA communication logs.</div>
+    <div class="ai-msg det"><div class="ai-msg-lbl">Detective</div>CIA Witness #0047's tip directly corroborates the location discrepancy. I recommend elevating to high priority and documenting chain of custody before any external sharing.</div>
+  </div>
+  <div class="ai-input-row">
+    <input class="ai-input" id="ai-input" placeholder="Ask the Detective..." onkeypress="if(event.key==='Enter')sendAI()">
+    <button class="ai-send" onclick="sendAI()">→</button>
+  </div>
+</div>
+
+<!-- SECURITY PANEL -->
+<div class="panel" id="sec-panel" style="left:50%;top:50%;transform:translate(-50%,-50%);width:min(320px,88vw);">
+  <div class="panel-hdr">
+    <div><div class="panel-title">SECURITY</div><div class="panel-sub">All systems active</div></div>
+    <button class="panel-close" onclick="closePanel('sec-panel')">✕</button>
+  </div>
+  <div class="sec-item">
+    <div class="sec-icon">👁️</div>
+    <div><div class="sec-name">BIOMETRIC LOCK</div><div class="sec-desc">Face ID + Touch ID on every launch. Investigation invisible without authentication.</div><div class="sec-badge on">● Active</div></div>
+  </div>
+  <div class="sec-item">
+    <div class="sec-icon">🎭</div>
+    <div><div class="sec-name">DECOY MODE</div><div class="sec-desc">Wrong PIN shows a fake notes app. All investigations completely hidden.</div><div class="sec-badge on">● Configured</div></div>
+  </div>
+  <div class="sec-item">
+    <div class="sec-icon">👁️‍🗨️</div>
+    <div><div class="sec-name">INVISIBLE INK</div><div class="sec-desc">Sensitive nodes appear blank. Content only visible while actively held.</div><div class="sec-badge on">● 1 node protected</div></div>
+  </div>
+  <div class="sec-item">
+    <div class="sec-icon">📵</div>
+    <div><div class="sec-name">SCREENSHOT BLOCKING</div><div class="sec-desc">System-wide screenshot blocking. Canvas cannot be captured.</div><div class="sec-badge on">● Blocking active</div></div>
+  </div>
+  <div class="sec-item">
+    <div class="sec-icon">🔐</div>
+    <div><div class="sec-name">AES-256 ENCRYPTION</div><div class="sec-desc">All data encrypted at rest. Tips end-to-end encrypted — only your device decrypts.</div><div class="sec-badge on">● Encrypted</div></div>
+  </div>
+  <div class="sec-item">
+    <div class="sec-icon">🔔</div>
+    <div><div class="sec-name">OWNER NOTIFICATIONS</div><div class="sec-desc">Real-time alert on every view, download, share, or screenshot attempt.</div><div class="sec-badge on">● Notifications on</div></div>
+  </div>
+</div>
+
+<!-- WATERMARK PANEL -->
+<div class="panel" id="wm-panel" style="left:50%;top:50%;transform:translate(-50%,-50%);width:min(310px,88vw);">
+  <div class="panel-hdr">
+    <div><div class="panel-title">FORENSIC WATERMARK</div><div class="panel-sub">Every export is traceable</div></div>
+    <button class="panel-close" onclick="closePanel('wm-panel')">✕</button>
+  </div>
+  <div style="padding:12px;">
+    <div style="font-size:9px;color:#8A8178;margin-bottom:10px;line-height:1.6;">Every PDF, presentation, and image export is invisibly watermarked with recipient identity. If your investigation leaks, Red String identifies exactly who shared it.</div>
+    <div class="wm-doc">
+      <div style="font-size:9px;letter-spacing:0.2em;color:#E74C3C;margin-bottom:8px;">EMBEDDED METADATA — INVISIBLE TO VIEWER</div>
+      <div class="wm-field"><span class="wm-key">Recipient</span><span class="wm-val">@baron_trump</span></div>
+      <div class="wm-field"><span class="wm-key">Shared by</span><span class="wm-val">@candaceowens</span></div>
+      <div class="wm-field"><span class="wm-key">Timestamp</span><span class="wm-val">2026-03-24 19:49:02</span></div>
+      <div class="wm-field"><span class="wm-key">Investigation</span><span class="wm-val">Who Killed Charlie Kirk</span></div>
+      <div class="wm-field"><span class="wm-key">Watermark ID</span><span class="wm-val">WM-CK-2024-0047</span></div>
+      <div class="wm-field"><span class="wm-key">Share destination</span><span class="wm-val">Email — encrypted</span></div>
+    </div>
+    <div class="wm-invisible">
+      <div style="font-size:8px;letter-spacing:0.2em;color:#E74C3C;margin-bottom:6px;">TRACE A LEAK</div>
+      <div style="font-size:10px;color:#8A8178;line-height:1.5;">If this document surfaces publicly, upload it here. Red String cross-references the watermark ID against your share log and returns the exact recipient, timestamp, and share destination.</div>
+    </div>
+  </div>
+</div>
+
+<!-- INVISIBLE INK DEMO -->
+<div id="ink-demo">
+  <div class="ink-demo-box">
+    <div class="ink-demo-title">INVISIBLE INK</div>
+    <div class="ink-demo-sub">Press and hold to reveal sensitive node</div>
+    <div class="ink-node" onmousedown="revealInk(this)" onmouseup="hideInk(this)" ontouchstart="revealInk(this)" ontouchend="hideInk(this)">
+      <div class="ink-node-ghost">👁 Hold to reveal</div>
+      <div class="ink-node-content">
+        <div style="font-size:7px;letter-spacing:0.15em;color:#E74C3C;margin-bottom:3px;">PERSON OF INTEREST — SENSITIVE</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:0.05em;margin-bottom:3px;">REDACTED IDENTITY</div>
+        <div style="font-size:9px;color:#8A8178;">Government connection confirmed<br>Source: protected whistleblower<br>Do not share — legal in progress</div>
+      </div>
+    </div>
+    <div class="ink-hint">Release — node goes blank again. No one watching your screen sees this content. Ever.</div>
+    <button class="ink-close" onclick="closeInkDemo()">Close</button>
+  </div>
+</div>
+```
+
+  </div><!-- end canvas-wrap -->
+
+  <!-- WAR ROOM -->
+
+  <div id="war-room">
+    <div class="wr-header">
+      <div class="wr-title">WAR ROOM — CHARLIE KIRK INVESTIGATION</div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="wr-live">Live · 3 investigators</div>
+        <button onclick="hideWarRoom()" style="background:#C0392B;border:none;color:#F0EDE8;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;padding:5px 12px;cursor:pointer;text-transform:uppercase;">End</button>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;overflow:hidden;">
+      <div class="wr-grid" style="flex:1;">
+        <div class="wr-cell wr-cell-main">
+          <div class="wr-canvas-mini"></div>
+          <div class="wr-avatar active" style="font-size:32px;">🎙️</div>
+          <div class="wr-name">@candaceowens · Speaking</div>
+          <div class="wr-speaking" style="display:block;">● SPEAKING</div>
+        </div>
+        <div class="wr-cell">
+          <div class="wr-avatar">B</div>
+          <div class="wr-name">@baron · Listening</div>
+        </div>
+        <div class="wr-cell">
+          <div class="wr-avatar" style="font-size:14px;">CIA</div>
+          <div class="wr-name">@researcher_47 · Reviewing</div>
+        </div>
+      </div>
+      <div class="wr-chat">
+        <div style="padding:8px;border-bottom:1px solid #2E2A25;font-size:8px;letter-spacing:0.15em;color:#4A4540;text-transform:uppercase;">Secure Chat</div>
+        <div class="wr-chat-msgs" id="wr-msgs">
+          <div class="wr-msg candace"><div class="wr-msg-who">Candace</div>The 72hr gap — I have a source who can place him at a completely different location during that window</div>
+          <div class="wr-msg baron"><div class="wr-msg-who">Baron</div>That directly contradicts the official statement. Do you have primary source documentation?</div>
+          <div class="wr-msg candace"><div class="wr-msg-who">Candace</div>Working on it. CIA member #0047 submitted a tip — checking credibility now via Red String AI</div>
+          <div class="wr-msg baron"><div class="wr-msg-who">Baron</div>Add it to the canvas. I can see your investigation in real time from here — pin it as critical</div>
+        </div>
+        <div style="padding:6px;border-top:1px solid #2E2A25;display:flex;gap:0;">
+          <input id="wr-input" style="flex:1;background:#221F1B;border:1px solid #2E2A25;border-right:none;padding:6px 8px;font-family:'DM Mono',monospace;font-size:10px;color:#F0EDE8;outline:none;" placeholder="Secure message...">
+          <button onclick="sendWRMsg()" style="background:#C0392B;border:none;padding:6px 10px;color:#F0EDE8;cursor:pointer;font-size:11px;">→</button>
+        </div>
+      </div>
+    </div>
+    <div class="wr-controls">
+      <div class="wr-ctrl-btns">
+        <button class="wr-btn active" title="Mic" onclick="this.classList.toggle('active');showToast('Microphone toggled')">🎙️</button>
+        <button class="wr-btn" title="Camera" onclick="this.classList.toggle('active');showToast('Camera toggled')">📷</button>
+        <button class="wr-btn" title="Share canvas" onclick="showToast('Canvas shared — all participants see your investigation live')">🖥️</button>
+        <button class="wr-btn" title="Record" onclick="this.classList.toggle('active');showToast('Recording started — saved to investigation')">⏺️</button>
+      </div>
+      <div style="font-size:9px;color:#4A4540;letter-spacing:0.1em;">End-to-end encrypted · Logged · Permission controlled</div>
+    </div>
+  </div>
+
+  <!-- LIVE STREAM -->
+
+  <div id="live-panel">
+    <div class="live-hdr">
+      <div class="live-title">AI LIVE PRESENTATION</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="live-badge">● ON AIR</div>
+        <button onclick="hideLive()" style="background:none;border:1px solid #2E2A25;color:#8A8178;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;padding:5px 12px;cursor:pointer;text-transform:uppercase;">End Stream</button>
+      </div>
+    </div>
+    <div class="live-canvas" id="live-canvas">
+      <div class="live-viewer-count" id="viewer-count">● 1,247 watching</div>
+      <div class="live-pip">🎙️</div>
+
+```
+  <!-- Mini canvas nodes -->
+  <div class="live-node" id="ln-ck" style="left:35%;top:20%;border-left:3px solid #E74C3C;">
+    <div style="font-size:7px;color:#4A4540;letter-spacing:0.1em;text-transform:uppercase;">Victim</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:13px;">CHARLIE KIRK</div>
+  </div>
+  <div class="live-node" id="ln-co" style="left:10%;top:15%;border-left:3px solid #E74C3C;">
+    <div style="font-size:7px;color:#4A4540;text-transform:uppercase;">Investigator</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:13px;">CANDACE OWENS</div>
+  </div>
+  <div class="live-node" id="ln-gap" style="left:58%;top:50%;border-left:3px solid #E74C3C;border:1px solid #E74C3C;">
+    <div style="font-size:7px;color:#E74C3C;text-transform:uppercase;">⚠ Critical</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:13px;">72-HOUR GAP</div>
+  </div>
+  <div class="live-node" id="ln-doc" style="left:55%;top:25%;border-left:3px solid #8A8178;">
+    <div style="font-size:7px;color:#4A4540;text-transform:uppercase;">FOIA Document</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:13px;">COMM LOGS</div>
+  </div>
+  <div class="live-node" id="ln-wit" style="left:25%;top:58%;border-left:3px solid #27AE60;">
+    <div style="font-size:7px;color:#27AE60;text-transform:uppercase;">Anon Tip</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:13px;">CIA #0047</div>
+  </div>
+
+  <svg id="live-svg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></svg>
+
+  <div class="live-caption">
+    <div class="live-caption-text" id="live-caption-text">🎙️ "Show me the 72-hour gap and everything connected to it..."</div>
+  </div>
+</div>
+<div class="live-voice-bar">
+  <div class="live-voice-indicator"></div>
+  <div class="live-voice-text" id="live-voice-text">Voice canvas control active — speak to direct the investigation</div>
+  <div class="live-controls">
+    <button class="live-ctrl" onclick="showToast('✏️ Annotation mode — draw on canvas for viewers')">✏️</button>
+    <button class="live-ctrl" onclick="showToast('📅 Timeline mode activated for viewers')">📅</button>
+    <button class="live-ctrl" onclick="runLiveDemo()">▶</button>
+  </div>
+  <button class="live-end" onclick="hideLive()">End</button>
+</div>
+```
+
+  </div>
+
+  <!-- TIPS PANEL -->
+
+  <div id="tips-panel">
+    <div class="tips-hdr">
+      <button class="tips-back" onclick="hideTips()">←</button>
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:0.1em;">TIPS INBOX</div>
+        <div style="font-size:9px;color:#8A8178;">redstring.app/tip/candace · 3 new · AI-vetted</div>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip-card" onclick="showToast('✓ Tip added to canvas as Witness node · Chain of custody started')">
+        <div class="tip-hdr">
+          <div class="tip-anon">Anonymous · CIA Member · Encrypted</div>
+          <div class="tip-score">AI: HIGH</div>
+        </div>
+        <div class="tip-body">I have documentation showing a meeting that occurred 3 days before the incident at a location never publicly disclosed. Timestamped photo available. Directly contradicts the official timeline.</div>
+        <div class="tip-tag">● Matches 72-Hour Gap Node</div>
+      </div>
+      <div class="tip-card" onclick="showToast('✓ Tip flagged for review · Credibility: medium')">
+        <div class="tip-hdr">
+          <div class="tip-anon">Anonymous · Via redstring.app/tip/candace</div>
+          <div class="tip-score med">AI: MEDIUM</div>
+        </div>
+        <div class="tip-body">The connected entity in the FOIA documents has financial ties to three other organizations I've tracked for 8 months. I can provide source documentation for each link.</div>
+        <div class="tip-tag">● Matches Connected Entity Node</div>
+      </div>
+      <div class="tip-card" onclick="showToast('✓ Tip saved · Witness identity protected · E2E encrypted')">
+        <div class="tip-hdr">
+          <div class="tip-anon">Anonymous · Identity Protected · No IP Stored</div>
+          <div class="tip-score">AI: HIGH</div>
+        </div>
+        <div class="tip-body">I was present at the last known location. The official timeline is wrong. I'm willing to provide a formal statement but require identity protection. This is not safe for me.</div>
+        <div class="tip-tag">● Matches Last Known Location Node</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOSSIER -->
+
+  <div id="dossier-panel">
+    <button class="dos-close" onclick="hideDossier()">✕ Close</button>
+    <div class="dos-content">
+      <div class="dos-hdr">
+        <div class="dos-classified">CLASSIFIED — RED STRING RESEARCH</div>
+        <div class="dos-title">INTELLIGENCE DOSSIER</div>
+        <div class="dos-meta">
+          Investigation: Who Killed Charlie Kirk<br>
+          Generated: March 24, 2026 · 07:49 PM EST<br>
+          Owner: @candaceowens · Nodes: 12 · Strings: 9<br>
+          Classification: RESTRICTED · Chain of Custody: Verified
+        </div>
+        <div class="dos-wm">🔐 FORENSIC WATERMARK ACTIVE · ID: WM-CK-2024-0047 · Any unauthorized distribution is traceable to recipient</div>
+      </div>
+      <div class="dos-section">
+        <div class="dos-sec-title">Executive Summary</div>
+        <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:#8A8178;line-height:1.8;padding:14px;background:#1A1714;border:1px solid #2E2A25;">
+          This investigation documents a critical 72-hour timeline gap, three unanswered communications, a location discrepancy contradicting the official account, and a connected organizational entity with undisclosed financial ties. Three independent anonymous tips received via redstring.app/tip/candace provide corroborating evidence. All 12 nodes maintain verified chain of custody. This dossier is forensically watermarked — unauthorized distribution will be traced to the exact recipient, timestamp, and destination.
+        </div>
+      </div>
+      <div class="dos-section">
+        <div class="dos-sec-title">Entity Profiles</div>
+        <div class="dos-entity">
+          <div class="dos-entity-name">CHARLIE KIRK — VICTIM</div>
+          <div class="dos-entity-detail">Conservative commentator, Founder TPUSA · Last verified contact: documented in communication logs · Timeline discrepancy: flagged by AI · 72hr gap: no verified alibi · Status: Under active investigation</div>
+        </div>
+        <div class="dos-entity">
+          <div class="dos-entity-name">72-HOUR TIMELINE GAP — CRITICAL</div>
+          <div class="dos-entity-detail">AI-flagged anomaly · Duration: 72 hours · Verified alibi: NONE · Unanswered contacts: 3 · Cross-referenced: 2 independent anonymous tips · Primary source: FOIA communication logs · Credibility: High</div>
+        </div>
+        <div class="dos-entity">
+          <div class="dos-entity-name">CIA WITNESS #0047 — ANONYMOUS TIP</div>
+          <div class="dos-entity-detail">Source: Anonymous tip via redstring.app/tip/candace · AI credibility score: High · Claim: Was present at last known location · Official timeline: Contradicted · Identity: Protected (E2E encrypted, no IP stored) · Status: Awaiting formal statement</div>
+        </div>
+      </div>
+      <div class="dos-section">
+        <div class="dos-sec-title">Contributor Credits</div>
+        <div style="font-size:10px;color:#8A8178;line-height:2;padding:14px;background:#1A1714;border:1px solid #2E2A25;">
+          @candaceowens — Investigation owner · 8 nodes · Lead researcher · All rights reserved<br>
+          Anonymous CIA Member #1 — Tip #CIA-0047 · Timeline corroboration · Permanently credited<br>
+          Anonymous CIA Member #2 — Tip #CIA-0048 · Financial connection · Permanently credited<br>
+          Anonymous CIA Member #3 — Tip #CIA-0049 · Location witness · Permanently credited<br>
+          <span style="color:#4A4540;font-size:9px;">All contributions permanently attributed. Credits cannot be removed or modified by any user including investigation owner.</span>
+        </div>
+      </div>
+      <div style="text-align:center;padding:24px;color:#4A4540;font-size:8px;letter-spacing:0.2em;border-top:1px solid #2E2A25;">
+        RED STRING RESEARCH · REDSTRINGRESEARCH.APP<br>
+        FORENSICALLY WATERMARKED · WM-CK-2024-0047<br>
+        UNAUTHORIZED DISTRIBUTION IS TRACEABLE TO RECIPIENT
+      </div>
+    </div>
+  </div>
+
+  <div id="bottom-nav">
+    <button class="nav-btn active" onclick="switchNav('canvas',this)"><div class="nav-icon">📌</div><div class="nav-label">Canvas</div></button>
+    <button class="nav-btn nav-badge" onclick="switchNav('tips',this)"><div class="nav-icon">📬</div><div class="nav-label">Tips</div></button>
+    <button class="nav-btn" onclick="switchNav('ai',this)"><div class="nav-icon">🤖</div><div class="nav-label">AI</div></button>
+    <button class="nav-btn" onclick="switchNav('warroom',this)"><div class="nav-icon">🎥</div><div class="nav-label">War Room</div></button>
+    <button class="nav-btn" onclick="switchNav('live',this)"><div class="nav-icon">📡</div><div class="nav-label">Live</div></button>
+  </div>
+
+</div><!-- end app -->
+
+<div id="toast"></div>
+
+<script>
+const nodeInfo = {
+  ck: { title:'CHARLIE KIRK', sub:'Person — Victim', body:`<b style="color:#E74C3C">Role:</b> Victim<br><b style="color:#E74C3C">Status:</b> Under active investigation<br><b style="color:#E74C3C">Connections:</b> 6 nodes<br><b style="color:#E74C3C">Added by:</b> @candaceowens<br><b style="color:#E74C3C">Credibility:</b> Verified — primary source<br><b style="color:#E74C3C">AI flag:</b> Timeline discrepancy detected<br><br><i style="color:#8A8178">Conservative commentator, TPUSA founder. 72-hour gap in official timeline flagged by AI. Three unanswered contacts documented.</i>` },
+  co: { title:'CANDACE OWENS', sub:'Person — Lead Investigator', body:`<b style="color:#E74C3C">Role:</b> Lead Investigator<br><b style="color:#E74C3C">Tip URL:</b> redstring.app/tip/candace<br><b style="color:#E74C3C">Tips received:</b> 47 total · 3 new<br><b style="color:#E74C3C">AI vetted:</b> 12 high credibility<br><b style="color:#E74C3C">War Room:</b> Active with Baron<br><br><i style="color:#8A8178">Independent journalist seeking truth and justice for her friend. The CIA submits evidence here anonymously.</i>` },
+  poi: { title:'PERSON OF INTEREST', sub:'Person — Unverified', body:`<b style="color:#E74C3C">Status:</b> Unverified — review needed<br><b style="color:#E74C3C">Last contact:</b> 48 hours prior to incident<br><b style="color:#E74C3C">Location:</b> Disputed — no alibi<br><b style="color:#E74C3C">Source:</b> Anonymous tip #CIA-0047<br><br><i style="color:#8A8178">Identity withheld pending verification. Three CIA members have independently referenced this person in separate tips.</i>` },
+  loc: { title:'LAST KNOWN LOCATION', sub:'Location — Verified', body:`<b style="color:#E74C3C">Type:</b> Location<br><b style="color:#E74C3C">Timestamp:</b> Verified to the hour<br><b style="color:#E74C3C">Sources:</b> Witness statement + CCTV<br><b style="color:#E74C3C">Credibility:</b> High<br><b style="color:#E74C3C">AI flag:</b> Contradicts official account<br><br><i style="color:#8A8178">Confirmed by two independent sources. Official timeline places subject at a different location at this exact time.</i>` },
+  doc: { title:'COMMUNICATION LOGS', sub:'Document — FOIA Primary Source', body:`<b style="color:#E74C3C">Type:</b> FOIA Document<br><b style="color:#E74C3C">Filed:</b> 2024 — verified<br><b style="color:#E74C3C">Key finding:</b> 3 unanswered contacts<br><b style="color:#E74C3C">In 72hr window:</b> YES<br><b style="color:#E74C3C">Credibility:</b> High — primary source<br><br><i style="color:#8A8178">Official communication logs. Three contact attempts in the critical 72-hour window went unanswered. Legally significant.</i>` },
+  org: { title:'CONNECTED ENTITY', sub:'Organization — Under Review', body:`<b style="color:#E74C3C">Type:</b> Organization<br><b style="color:#E74C3C">Status:</b> Under review<br><b style="color:#E74C3C">Flagged:</b> Financial ties — undisclosed<br><b style="color:#E74C3C">Tracked for:</b> 8 months by CIA member<br><b style="color:#E74C3C">Cross-refs:</b> 3 other investigations<br><br><i style="color:#8A8178">Financial connections identified by CIA member with 8 months of documentation. Three related entities in other active investigations.</i>` },
+  gap: { title:'72-HOUR TIMELINE GAP', sub:'⚠ AI-Flagged Critical Evidence', body:`<b style="color:#E74C3C">Type:</b> AI-Flagged Anomaly<br><b style="color:#E74C3C">Duration:</b> 72 hours<br><b style="color:#E74C3C">Verified alibi:</b> NONE<br><b style="color:#E74C3C">Contacts unanswered:</b> 3<br><b style="color:#E74C3C">Corroborated by:</b> 2 independent tips<br><b style="color:#E74C3C">Legal significance:</b> High<br><br><i style="color:#8A8178">Automatically flagged by AI by cross-referencing all dated nodes. This is the single most critical anomaly in the investigation. No alibi exists.</i>` },
+  wit: { title:'CIA WITNESS #0047', sub:'Anonymous Tip — High Credibility', body:`<b style="color:#E74C3C">Source:</b> Anonymous tip<br><b style="color:#E74C3C">Via:</b> redstring.app/tip/candace<br><b style="color:#E74C3C">AI credibility:</b> High<br><b style="color:#E74C3C">Claim:</b> Present at last known location<br><b style="color:#E74C3C">Identity:</b> Protected — E2E encrypted<br><b style="color:#E74C3C">IP stored:</b> NEVER<br><br><i style="color:#8A8178">Willing to provide formal statement. Requires anonymity for safety. Red String protects tipster identity completely — even from investigation owner.</i>` }
+};
+
+const aiResps = [
+  "Cross-referencing your query with all 12 nodes... The communication logs are the strongest primary source. Three unanswered contacts in a 72-hour window is both statistically and legally anomalous.",
+  "CIA Witness #0047's tip directly corroborates the location discrepancy. I recommend elevating to critical and initiating chain of custody documentation before any external sharing.",
+  "Pattern detected: The connected entity appears in 3 separate node clusters across this investigation. This suggests a central coordinating role that hasn't been fully mapped. Should I generate a connection map?",
+  "The 72-hour gap is the thread that unravels everything. If you can obtain primary source documentation for even one of those hours, the entire official account becomes publicly questionable on record."
+];
+let aiIdx = 0;
+
+const liveSeq = [
+  { voice:'"Show me the 72-hour gap — highlight everything connected to it"', caption:'AI is highlighting all nodes connected to the critical timeline gap...', spotlight:'ln-gap' },
+  { voice:'"Zoom in on the communication logs — read the key finding out loud"', caption:'Detective: "Three unanswered contacts in the 72-hour window. Legally significant. This is documented."', spotlight:'ln-doc' },
+  { voice:'"Draw a connection from the FOIA logs to the timeline gap — label it no alibi"', caption:'AI drawing string connection between Communication Logs and 72-Hour Gap...', spotlight:null },
+  { voice:'"Focus on Candace — show all her connections"', caption:'AI: "Candace Owens is the lead investigator. 47 tips received. 3 high-credibility anonymous witnesses..."', spotlight:'ln-co' },
+  { voice:'"Pin the 72-hour gap as critical evidence and read it to the audience"', caption:'Detective: "The gap is the anomaly that breaks the official timeline. No alibi exists for 72 hours."', spotlight:'ln-gap' },
+];
+let liveIdx = 0;
+let liveTimer = null;
+
+function showBio() {
+  document.getElementById('splash').style.opacity = '0';
+  setTimeout(() => {
+    document.getElementById('splash').style.display = 'none';
+    document.getElementById('bio-screen').style.display = 'flex';
+  }, 700);
+}
+
+function launchApp() {
+  document.getElementById('bio-screen').style.display = 'none';
+  document.getElementById('app').classList.add('visible');
+  setTimeout(() => {
+    drawStrings();
+    showToast('✓ Face ID verified — Welcome to Red String Research');
+  }, 100);
+}
+
+function showDecoy() {
+  document.getElementById('decoy').style.display = 'flex';
+}
+function hideDecoy() {
+  document.getElementById('decoy').style.display = 'none';
+}
+
+function drawStrings() {
+  const svg = document.getElementById('canvas-svg');
+  const wrap = document.getElementById('canvas-wrap');
+  const wr = wrap.getBoundingClientRect();
+  const conns = [
+    { a:'n-co', b:'n-ck', lbl:'INVESTIGATING', c:'#E74C3C' },
+    { a:'n-ck', b:'n-loc', lbl:'LAST SEEN', c:'#C0392B' },
+    { a:'n-ck', b:'n-doc', lbl:'DOCUMENTED', c:'#8A8178' },
+    { a:'n-doc', b:'n-gap', lbl:'72HR GAP', c:'#E74C3C' },
+    { a:'n-loc', b:'n-wit', lbl:'CORROBORATES', c:'#27AE60' },
+    { a:'n-org', b:'n-doc', lbl:'FINANCIAL TIE', c:'#D4A843' },
+    { a:'n-poi', b:'n-gap', lbl:'NO ALIBI', c:'#E74C3C' },
+    { a:'n-wit', b:'n-gap', lbl:'TIP #CIA-0047', c:'#27AE60' },
+    { a:'n-co', b:'n-poi', lbl:'PERSON OF INTEREST', c:'#C0392B' },
+  ];
+  svg.innerHTML = '';
+  conns.forEach(conn => {
+    const a = document.getElementById(conn.a);
+    const b = document.getElementById(conn.b);
+    if (!a || !b) return;
+    const ar = a.getBoundingClientRect();
+    const br = b.getBoundingClientRect();
+    const x1 = ar.left - wr.left + ar.width/2;
+    const y1 = ar.top - wr.top + ar.height/2;
+    const x2 = br.left - wr.left + br.width/2;
+    const y2 = br.top - wr.top + br.height/2;
+    const mx = (x1+x2)/2;
+    const my = (y1+y2)/2 - 28;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',`M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`);
+    path.setAttribute('stroke', conn.c);
+    path.setAttribute('stroke-width','1');
+    path.setAttribute('fill','none');
+    path.setAttribute('opacity','0.55');
+    svg.appendChild(path);
+    const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
+    txt.setAttribute('x', mx); txt.setAttribute('y', my-4);
+    txt.setAttribute('text-anchor','middle');
+    txt.setAttribute('font-family','DM Mono');
+    txt.setAttribute('font-size','7');
+    txt.setAttribute('fill', conn.c);
+    txt.setAttribute('letter-spacing','1');
+    txt.textContent = conn.lbl;
+    svg.appendChild(txt);
+  });
+}
+
+function drawLiveStrings() {
+  const svg = document.getElementById('live-svg');
+  const wrap = document.getElementById('live-canvas');
+  const wr = wrap.getBoundingClientRect();
+  const conns = [
+    { a:'ln-co', b:'ln-ck', c:'#E74C3C' },
+    { a:'ln-ck', b:'ln-gap', c:'#E74C3C' },
+    { a:'ln-doc', b:'ln-gap', c:'#8A8178' },
+    { a:'ln-wit', b:'ln-gap', c:'#27AE60' },
+  ];
+  svg.innerHTML = '';
+  conns.forEach(conn => {
+    const a = document.getElementById(conn.a);
+    const b = document.getElementById(conn.b);
+    if (!a || !b) return;
+    const ar = a.getBoundingClientRect();
+    const br = b.getBoundingClientRect();
+    const x1 = ar.left - wr.left + ar.width/2;
+    const y1 = ar.top - wr.top + ar.height/2;
+    const x2 = br.left - wr.left + br.width/2;
+    const y2 = br.top - wr.top + br.height/2;
+    const mx = (x1+x2)/2;
+    const my = (y1+y2)/2 - 20;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',`M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`);
+    path.setAttribute('stroke', conn.c);
+    path.setAttribute('stroke-width','1.5');
+    path.setAttribute('fill','none');
+    path.setAttribute('opacity','0.7');
+    svg.appendChild(path);
+  });
+}
+
+function showNode(id) {
+  const d = nodeInfo[id];
+  if (!d) return;
+  document.getElementById('node-panel-title').textContent = d.title;
+  document.getElementById('node-panel-sub').textContent = d.sub;
+  document.getElementById('node-panel-body').innerHTML = d.body;
+  document.getElementById('node-panel').style.cssText = 'right:52px;top:12px;width:220px;max-height:70vh;';
+  document.getElementById('node-panel').classList.add('visible');
+  closePanel('ai-panel');
+}
+
+function closePanel(id) { document.getElementById(id).classList.remove('visible'); }
+
+function toggleAI() {
+  const p = document.getElementById('ai-panel');
+  p.classList.toggle('visible');
+  if (p.classList.contains('visible')) closePanel('node-panel');
+}
+
+function sendAI() {
+  const inp = document.getElementById('ai-input');
+  const val = inp.value.trim();
+  if (!val) return;
+  const msgs = document.getElementById('ai-messages');
+  const um = document.createElement('div');
+  um.className = 'ai-msg usr';
+  um.innerHTML = `<div class="ai-msg-lbl">You</div>${val}`;
+  msgs.appendChild(um);
+  inp.value = '';
+  setTimeout(() => {
+    const am = document.createElement('div');
+    am.className = 'ai-msg det';
+    am.innerHTML = `<div class="ai-msg-lbl">Detective</div>${aiResps[aiIdx % aiResps.length]}`;
+    msgs.appendChild(am);
+    aiIdx++;
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 700);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showSecurity() { document.getElementById('sec-panel').classList.toggle('visible'); }
+function showWatermark() { document.getElementById('wm-panel').classList.toggle('visible'); }
+function showInkDemo() { document.getElementById('ink-demo').classList.add('visible'); }
+function closeInkDemo() { document.getElementById('ink-demo').classList.remove('visible'); }
+function revealInk(el) { el.querySelector('.ink-node-content').style.opacity = '1'; }
+function hideInk(el) { el.querySelector('.ink-node-content').style.opacity = '0'; }
+
+function showWarRoom() {
+  document.getElementById('war-room').style.display = 'flex';
+  document.getElementById('live-panel').classList.remove('visible');
+  hideTips(); hideDossier();
+}
+function hideWarRoom() { document.getElementById('war-room').style.display = 'none'; }
+
+function sendWRMsg() {
+  const inp = document.getElementById('wr-input');
+  const val = inp.value.trim();
+  if (!val) return;
+  const msgs = document.getElementById('wr-msgs');
+  const m = document.createElement('div');
+  m.className = 'wr-msg candace';
+  m.innerHTML = `<div class="wr-msg-who">You</div>${val}`;
+  msgs.appendChild(m);
+  inp.value = '';
+  msgs.scrollTop = msgs.scrollHeight;
+  setTimeout(() => {
+    const r = document.createElement('div');
+    r.className = 'wr-msg baron';
+    r.innerHTML = `<div class="wr-msg-who">Baron</div>Got it — I can see the update on the canvas. Keep going, this is significant.`;
+    msgs.appendChild(r);
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 1200);
+}
+
+function showLive() {
+  document.getElementById('live-panel').classList.add('visible');
+  hideWarRoom(); hideTips(); hideDossier();
+  setTimeout(() => { drawLiveStrings(); runLiveDemo(); }, 200);
+}
+function hideLive() {
+  document.getElementById('live-panel').classList.remove('visible');
+  if (liveTimer) clearTimeout(liveTimer);
+}
+
+function runLiveDemo() {
+  if (liveTimer) clearTimeout(liveTimer);
+  liveIdx = 0;
+  nextLiveStep();
+}
+
+function nextLiveStep() {
+  if (liveIdx >= liveSeq.length) {
+    liveIdx = 0;
+    liveTimer = setTimeout(nextLiveStep, 3000);
+    return;
+  }
+  const step = liveSeq[liveIdx];
+  document.getElementById('live-voice-text').textContent = step.voice;
+  document.getElementById('live-caption-text').textContent = step.caption;
+  document.querySelectorAll('.live-node').forEach(n => n.classList.remove('spotlight'));
+  if (step.spotlight) {
+    const el = document.getElementById(step.spotlight);
+    if (el) el.classList.add('spotlight');
+  }
+  const count = 1247 + Math.floor(Math.random() * 50);
+  document.getElementById('viewer-count').textContent = `● ${count.toLocaleString()} watching`;
+  liveIdx++;
+  liveTimer = setTimeout(nextLiveStep, 3000);
+}
+
+function showTips() {
+  document.getElementById('tips-panel').classList.add('visible');
+  hideWarRoom();
+  document.getElementById('live-panel').classList.remove('visible');
+}
+function hideTips() { document.getElementById('tips-panel').classList.remove('visible'); }
+
+function showDossier() {
+  document.getElementById('dossier-panel').classList.add('visible');
+  hideWarRoom();
+  document.getElementById('live-panel').classList.remove('visible');
+}
+function hideDossier() { document.getElementById('dossier-panel').classList.remove('visible'); }
+
+function setFeat(feat, el) {
+  document.querySelectorAll('.feat-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  closePanel('sec-panel'); closePanel('wm-panel');
+  document.getElementById('ink-demo').classList.remove('visible');
+  if (feat === 'security') showSecurity();
+  else if (feat === 'watermark') showWatermark();
+  else if (feat === 'invisibleink') showInkDemo();
+  else if (feat === 'warroom') showWarRoom();
+  else if (feat === 'live') showLive();
+  else { hideWarRoom(); hideLive(); }
+}
+
+function switchNav(tab, btn) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  hideWarRoom(); hideTips(); hideDossier();
+  document.getElementById('live-panel').classList.remove('visible');
+  if (tab === 'tips') showTips();
+  else if (tab === 'ai') toggleAI();
+  else if (tab === 'warroom') showWarRoom();
+  else if (tab === 'live') showLive();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+window.addEventListener('resize', () => { drawStrings(); if (document.getElementById('live-panel').classList.contains('visible')) drawLiveStrings(); });
+</script>
+
+</body>
+</html>
