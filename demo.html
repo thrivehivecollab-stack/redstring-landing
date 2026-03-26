@@ -506,6 +506,7 @@ header.res { background:#111827; }
   <div class="feat-tab inv-t" onclick="feat('ink',this)"><div class="feat-dot"></div>Invisible Ink</div>
   <div class="feat-tab inv-t" onclick="feat('vn',this)"><div class="feat-dot"></div>Voice Notes</div>
   <div class="feat-tab inv-t" onclick="feat('timeline',this)"><div class="feat-dot"></div>Timeline</div>
+  <div class="feat-tab inv-t" onclick="feat('tips',this)"><div class="feat-dot"></div>Tips Inbox</div>
   <div class="feat-tab inv-t" onclick="feat('msg',this)"><div class="feat-dot"></div>Messaging</div>
   <div class="feat-tab inv-t" onclick="feat('present',this)"><div class="feat-dot"></div>Presentation</div>
   <div class="feat-tab inv-t" onclick="feat('ciahub',this)"><div class="feat-dot"></div>CIA Hub</div>
@@ -731,7 +732,7 @@ header.res { background:#111827; }
   </div>
   <div class="tips-list">
     <div class="tc inv" onclick="toast('✓ Tip added to canvas · Chain of custody started · Reply sent in-app')">
-      <div class="tc-hr"><div class="tc-who">Jane M. · jane@email.com · Standard</div><div class="tc-score">AI: HIGH</div></div>
+      <div class="tc-hr"><div class="tc-who">Jane M. · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c9a3a8a7ac89aca4a8a0a5e7aaa6a4">[email&#160;protected]</a> · Standard</div><div class="tc-score">AI: HIGH</div></div>
       <div class="tc-body">Documentation showing a meeting 3 days before the incident at a location never publicly disclosed. Timestamped photo available.</div>
       <div class="tc-tag">● Matches 72-Hour Gap</div>
     </div>
@@ -741,7 +742,7 @@ header.res { background:#111827; }
       <div class="tc-tag">● Matches Nexus Group</div><div class="tc-priv">🔒 Owner only</div>
     </div>
     <div class="tc inv" onclick="toast('✓ Contact verified · High credibility · Investigation owner notified')">
-      <div class="tc-hr"><div class="tc-who">R. Thompson · rthompson@proton.me · Standard</div><div class="tc-score">AI: HIGH</div></div>
+      <div class="tc-hr"><div class="tc-who">R. Thompson · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3547415d5a5845465a5b7545475a415a5b1b5850">[email&#160;protected]</a> · Standard</div><div class="tc-score">AI: HIGH</div></div>
       <div class="tc-body">Present at the last known location. Official timeline is incorrect. Formal statement with supporting evidence available.</div>
       <div class="tc-tag">● Matches Last Known Location</div>
     </div>
@@ -960,239 +961,240 @@ header.res { background:#111827; }
 
 <div id="toast"></div>
 
-<script>
-let mode = 'investigation';
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+let mode = ‘investigation’;
 const ndData = [
-  {t:'LEAD INVESTIGATOR',s:'Person — Lead Investigator',b:`<b style="color:#E74C3C">Role:</b> Lead Investigator<br><b style="color:#E74C3C">Tip URL:</b> redstring.app/tip/username<br><b style="color:#E74C3C">Tips received:</b> 47 total · 3 new<br><b style="color:#E74C3C">Tips require:</b> Name + contact info<br><b style="color:#E74C3C">War Room:</b> Active with 2 collaborators<br><br><i style="color:#8A8178">The investigation owner. All tips require real name and contact — this ensures credibility and follow-up capability.</i>`},
-  {t:'SUBJECT ALPHA',s:'Person — Subject of Investigation',b:`<b style="color:#E74C3C">Status:</b> Under active investigation<br><b style="color:#E74C3C">Connections:</b> 6 nodes<br><b style="color:#E74C3C">AI flag:</b> Timeline discrepancy detected<br><b style="color:#E74C3C">72hr gap:</b> No verified alibi exists<br><br><i style="color:#8A8178">Seed data uses generic placeholder names. Real investigations use actual verified identities.</i>`},
-  {t:'ASSOCIATE EPSILON',s:'Person — Unverified',b:`<b style="color:#E74C3C">Status:</b> Unverified<br><b style="color:#E74C3C">Last contact:</b> 48 hours prior<br><b style="color:#E74C3C">Location:</b> Disputed — no alibi<br><b style="color:#E74C3C">Source:</b> 3 independent verified tips<br><br><i style="color:#8A8178">Three verified tipsters have independently referenced this associate. Identity confirmed by tip contributors on file.</i>`},
-  {t:'LAST KNOWN LOCATION',s:'Location — Verified',b:`<b style="color:#E74C3C">Timestamp:</b> Verified to the hour<br><b style="color:#E74C3C">Sources:</b> Witness statement + CCTV<br><b style="color:#E74C3C">Credibility:</b> High<br><b style="color:#E74C3C">AI flag:</b> Contradicts official account<br><br><i style="color:#8A8178">Confirmed by two independent verified sources. Official timeline places subject elsewhere — impossibility flagged by AI.</i>`},
-  {t:'COMMUNICATION LOGS',s:'Document — FOIA Primary Source',b:`<b style="color:#E74C3C">Type:</b> FOIA Document<br><b style="color:#E74C3C">Key finding:</b> 3 unanswered contacts in 72hr window<br><b style="color:#E74C3C">Credibility:</b> High — primary source<br><b style="color:#E74C3C">Chain of custody:</b> Verified<br><br><i style="color:#8A8178">Official communication logs. Three contact attempts went unanswered during the critical window. Legally significant.</i>`},
-  {t:'NEXUS GROUP',s:'Organization — Under Review',b:`<b style="color:#E74C3C">Status:</b> Under review<br><b style="color:#E74C3C">Flagged:</b> Financial ties — undisclosed<br><b style="color:#E74C3C">Tracked:</b> 8 months by verified contributor<br><b style="color:#E74C3C">Cross-refs:</b> 3 other investigations<br><br><i style="color:#8A8178">Financial connections documented by a verified tip contributor over 8 months. Three related entities in other active investigations.</i>`},
-  {t:'72-HOUR TIMELINE GAP',s:'⚠ AI-Flagged Critical Evidence',b:`<b style="color:#E74C3C">Duration:</b> 72 hours<br><b style="color:#E74C3C">Verified alibi:</b> NONE<br><b style="color:#E74C3C">Unanswered contacts:</b> 3<br><b style="color:#E74C3C">Corroborated by:</b> 2 verified tips<br><b style="color:#E74C3C">Legal significance:</b> High<br><br><i style="color:#8A8178">Auto-detected by AI cross-referencing all dated nodes. Single most critical anomaly. No alibi exists for this 72-hour period.</i>`},
-  {t:'INVISIBLE INK NODE',s:'Tap to see demo',b:`<b style="color:#E74C3C">Feature:</b> Invisible Ink<br><br>This node appears blank on the canvas. Sensitive content is hidden from anyone who might glance at your screen. Hold to reveal, release to hide.<br><br><i style="color:#8A8178">Tap the Invisible Ink tab above to see the full demo.</i>`},
-  {t:'WITNESS DELTA',s:'Witness — Verified Tip',b:`<b style="color:#E74C3C">Contact info:</b> On file with owner<br><b style="color:#E74C3C">Privacy toggle:</b> Standard<br><b style="color:#E74C3C">AI credibility:</b> High<br><b style="color:#E74C3C">Claim:</b> Present at last known location<br><br><i style="color:#8A8178">Identity verified via tip form. Owner has contact info for direct follow-up in-app. No external email or SMS app needed.</i>`}
+{t:‘LEAD INVESTIGATOR’,s:‘Person — Lead Investigator’,b:`<b style="color:#E74C3C">Role:</b> Lead Investigator<br><b style="color:#E74C3C">Tip URL:</b> redstring.app/tip/username<br><b style="color:#E74C3C">Tips received:</b> 47 total · 3 new<br><b style="color:#E74C3C">Tips require:</b> Name + contact info<br><b style="color:#E74C3C">War Room:</b> Active with 2 collaborators<br><br><i style="color:#8A8178">The investigation owner. All tips require real name and contact — this ensures credibility and follow-up capability.</i>`},
+{t:‘SUBJECT ALPHA’,s:‘Person — Subject of Investigation’,b:`<b style="color:#E74C3C">Status:</b> Under active investigation<br><b style="color:#E74C3C">Connections:</b> 6 nodes<br><b style="color:#E74C3C">AI flag:</b> Timeline discrepancy detected<br><b style="color:#E74C3C">72hr gap:</b> No verified alibi exists<br><br><i style="color:#8A8178">Seed data uses generic placeholder names. Real investigations use actual verified identities.</i>`},
+{t:‘ASSOCIATE EPSILON’,s:‘Person — Unverified’,b:`<b style="color:#E74C3C">Status:</b> Unverified<br><b style="color:#E74C3C">Last contact:</b> 48 hours prior<br><b style="color:#E74C3C">Location:</b> Disputed — no alibi<br><b style="color:#E74C3C">Source:</b> 3 independent verified tips<br><br><i style="color:#8A8178">Three verified tipsters have independently referenced this associate. Identity confirmed by tip contributors on file.</i>`},
+{t:‘LAST KNOWN LOCATION’,s:‘Location — Verified’,b:`<b style="color:#E74C3C">Timestamp:</b> Verified to the hour<br><b style="color:#E74C3C">Sources:</b> Witness statement + CCTV<br><b style="color:#E74C3C">Credibility:</b> High<br><b style="color:#E74C3C">AI flag:</b> Contradicts official account<br><br><i style="color:#8A8178">Confirmed by two independent verified sources. Official timeline places subject elsewhere — impossibility flagged by AI.</i>`},
+{t:‘COMMUNICATION LOGS’,s:‘Document — FOIA Primary Source’,b:`<b style="color:#E74C3C">Type:</b> FOIA Document<br><b style="color:#E74C3C">Key finding:</b> 3 unanswered contacts in 72hr window<br><b style="color:#E74C3C">Credibility:</b> High — primary source<br><b style="color:#E74C3C">Chain of custody:</b> Verified<br><br><i style="color:#8A8178">Official communication logs. Three contact attempts went unanswered during the critical window. Legally significant.</i>`},
+{t:‘NEXUS GROUP’,s:‘Organization — Under Review’,b:`<b style="color:#E74C3C">Status:</b> Under review<br><b style="color:#E74C3C">Flagged:</b> Financial ties — undisclosed<br><b style="color:#E74C3C">Tracked:</b> 8 months by verified contributor<br><b style="color:#E74C3C">Cross-refs:</b> 3 other investigations<br><br><i style="color:#8A8178">Financial connections documented by a verified tip contributor over 8 months. Three related entities in other active investigations.</i>`},
+{t:‘72-HOUR TIMELINE GAP’,s:‘⚠ AI-Flagged Critical Evidence’,b:`<b style="color:#E74C3C">Duration:</b> 72 hours<br><b style="color:#E74C3C">Verified alibi:</b> NONE<br><b style="color:#E74C3C">Unanswered contacts:</b> 3<br><b style="color:#E74C3C">Corroborated by:</b> 2 verified tips<br><b style="color:#E74C3C">Legal significance:</b> High<br><br><i style="color:#8A8178">Auto-detected by AI cross-referencing all dated nodes. Single most critical anomaly. No alibi exists for this 72-hour period.</i>`},
+{t:‘INVISIBLE INK NODE’,s:‘Tap to see demo’,b:`<b style="color:#E74C3C">Feature:</b> Invisible Ink<br><br>This node appears blank on the canvas. Sensitive content is hidden from anyone who might glance at your screen. Hold to reveal, release to hide.<br><br><i style="color:#8A8178">Tap the Invisible Ink tab above to see the full demo.</i>`},
+{t:‘WITNESS DELTA’,s:‘Witness — Verified Tip’,b:`<b style="color:#E74C3C">Contact info:</b> On file with owner<br><b style="color:#E74C3C">Privacy toggle:</b> Standard<br><b style="color:#E74C3C">AI credibility:</b> High<br><b style="color:#E74C3C">Claim:</b> Present at last known location<br><br><i style="color:#8A8178">Identity verified via tip form. Owner has contact info for direct follow-up in-app. No external email or SMS app needed.</i>`}
 ];
-const invR = ["Cross-referencing all 12 nodes... The communication logs are the strongest primary source. Three unanswered contacts in a 72-hour window is both statistically and legally anomalous.","Witness Delta's tip directly corroborates the location discrepancy. Recommend elevating to critical and initiating chain of custody documentation before any external sharing.","Pattern: Nexus Group appears in 3 separate node clusters. Central coordinating role not yet mapped. Should I generate a connection analysis?","The 72-hour gap is the thread that unravels everything. Primary source documentation for even one of those hours makes the entire official account publicly questionable on record."];
-const resR = ["Cross-referencing your research question with all source nodes... The peer-reviewed studies show conflicting methodologies. Triangulate with at least 3 independent primary sources before drawing conclusions.","I've identified a gap: your sources don't address the underlying mechanism. This is a significant weakness a peer reviewer would flag immediately.","Pattern: Three of your sources cite the same original 2019 study — citation chain risk. If that study has methodological issues it could undermine all three branches of your argument.","The open question node you flagged is unanswered in the literature. This is your strongest research angle and could be the basis of an original contribution."];
+const invR = [“Cross-referencing all 12 nodes… The communication logs are the strongest primary source. Three unanswered contacts in a 72-hour window is both statistically and legally anomalous.”,“Witness Delta’s tip directly corroborates the location discrepancy. Recommend elevating to critical and initiating chain of custody documentation before any external sharing.”,“Pattern: Nexus Group appears in 3 separate node clusters. Central coordinating role not yet mapped. Should I generate a connection analysis?”,“The 72-hour gap is the thread that unravels everything. Primary source documentation for even one of those hours makes the entire official account publicly questionable on record.”];
+const resR = [“Cross-referencing your research question with all source nodes… The peer-reviewed studies show conflicting methodologies. Triangulate with at least 3 independent primary sources before drawing conclusions.”,“I’ve identified a gap: your sources don’t address the underlying mechanism. This is a significant weakness a peer reviewer would flag immediately.”,“Pattern: Three of your sources cite the same original 2019 study — citation chain risk. If that study has methodological issues it could undermine all three branches of your argument.”,“The open question node you flagged is unanswered in the literature. This is your strongest research angle and could be the basis of an original contribution.”];
 let aiI = 0;
 const lSeq = [
-  {v:'"Show me the 72-hour gap — highlight everything connected"',c:'AI highlighting all nodes connected to the critical timeline gap...',s:'ll2'},
-  {v:'"Read the communication logs out loud"',c:'Detective: "Three unanswered contacts in the 72-hour window. Legally significant primary source documentation."',s:'ll3'},
-  {v:'"Connect FOIA logs to the gap — label it no alibi"',c:'AI drawing red string: Communication Logs → 72-Hour Gap — labeled NO ALIBI...',s:null},
-  {v:'"Focus on the lead investigator — show all connections"',c:'AI: "Lead Investigator — 47 tips received, 3 verified high credibility. War Room active with 2 collaborators."',s:'ll0'},
-  {v:'"Pin the 72-hour gap as critical evidence and narrate"',c:'Detective: "The gap is the anomaly that breaks the official timeline. No alibi. This is the thread."',s:'ll2'},
+{v:’“Show me the 72-hour gap — highlight everything connected”’,c:‘AI highlighting all nodes connected to the critical timeline gap…’,s:‘ll2’},
+{v:’“Read the communication logs out loud”’,c:‘Detective: “Three unanswered contacts in the 72-hour window. Legally significant primary source documentation.”’,s:‘ll3’},
+{v:’“Connect FOIA logs to the gap — label it no alibi”’,c:‘AI drawing red string: Communication Logs → 72-Hour Gap — labeled NO ALIBI…’,s:null},
+{v:’“Focus on the lead investigator — show all connections”’,c:‘AI: “Lead Investigator — 47 tips received, 3 verified high credibility. War Room active with 2 collaborators.”’,s:‘ll0’},
+{v:’“Pin the 72-hour gap as critical evidence and narrate”’,c:‘Detective: “The gap is the anomaly that breaks the official timeline. No alibi. This is the thread.”’,s:‘ll2’},
 ];
 let lI=0, lT=null;
 
-function goMode() { document.getElementById('splash').style.opacity='0'; setTimeout(()=>{document.getElementById('splash').style.display='none';document.getElementById('mode-select').style.display='flex';},700); }
+function goMode() { document.getElementById(‘splash’).style.opacity=‘0’; setTimeout(()=>{document.getElementById(‘splash’).style.display=‘none’;document.getElementById(‘mode-select’).style.display=‘flex’;},700); }
 function pickMode(m) {
-  mode=m;
-  document.getElementById('mode-select').style.display='none';
-  document.getElementById('bio-screen').style.display='flex';
-  if(m==='research'){
-    document.getElementById('bio-logo').style.color='#2E86AB';
-    document.getElementById('bio-sub').textContent='Biometric authentication required\nto access your research board';
-    document.getElementById('bio-btn').className='bio-btn res';
-  }
+mode=m;
+document.getElementById(‘mode-select’).style.display=‘none’;
+document.getElementById(‘bio-screen’).style.display=‘flex’;
+if(m===‘research’){
+document.getElementById(‘bio-logo’).style.color=’#2E86AB’;
+document.getElementById(‘bio-sub’).textContent=‘Biometric authentication required\nto access your research board’;
+document.getElementById(‘bio-btn’).className=‘bio-btn res’;
+}
 }
 function launch() {
-  document.getElementById('bio-screen').style.display='none';
-  document.getElementById('app').classList.add('visible');
-  applyMode(mode);
-  setTimeout(()=>{ drawStrings(); toast(`✓ Face ID verified — Welcome to Red String Research · ${mode==='investigation'?'Investigation':'Research'} Mode`); },100);
+document.getElementById(‘bio-screen’).style.display=‘none’;
+document.getElementById(‘app’).classList.add(‘visible’);
+applyMode(mode);
+setTimeout(()=>{ drawStrings(); toast(`✓ Face ID verified — Welcome to Red String Research · ${mode==='investigation'?'Investigation':'Research'} Mode`); },100);
 }
-function showDecoy(){document.getElementById('decoy').style.display='flex';}
-function hideDecoy(){document.getElementById('decoy').style.display='none';}
+function showDecoy(){document.getElementById(‘decoy’).style.display=‘flex’;}
+function hideDecoy(){document.getElementById(‘decoy’).style.display=‘none’;}
 
 function applyMode(m){
-  const inv=m==='investigation';
-  const hdr=document.getElementById('hdr');
-  const cw=document.getElementById('canvas-wrap');
-  const bn=document.getElementById('bnav');
-  const mb=document.getElementById('mb');
-  hdr.className=inv?'inv':'res';
-  cw.className=inv?'inv':'res';
-  bn.className=inv?'inv':'res';
-  mb.className=inv?'inv':'res';
-  mb.textContent=inv?'🕵️ Investigation Mode':'🔍 Research Mode';
-  document.getElementById('nav-tips').textContent=inv?'Tips':'Sources';
-  document.getElementById('nav-canvas').textContent=inv?'Canvas':'Board';
-  document.getElementById('hdr-title').textContent=inv?'OPERATION DEEP WATER':'AUTISM RESEARCH BOARD';
-  document.getElementById('hdr-sub').textContent=inv?'12 nodes · 9 strings · 3 new tips':'8 sources · 5 studies · 2 open questions';
-  document.getElementById('live-btn').className=inv?'hdr-btn red':'hdr-btn blue';
-  document.getElementById('ai-pl').textContent=inv?'● Detective Persona':'● Mama Bear Persona';
-  document.querySelectorAll('.feat-tab').forEach(t=>{t.className=`feat-tab ${inv?'inv-t':'res-t'}`;});
-  document.querySelector('.feat-tab').classList.add('active');
-  document.querySelectorAll('.tool-btn').forEach(b=>{b.className=`tool-btn ${inv?'inv-t':'res-t'}`;});
-  document.querySelectorAll('.node').forEach(n=>{n.classList.remove('inv-n','res-n');n.classList.add(inv?'inv-n':'res-n');});
-  document.querySelectorAll('.node-pin').forEach(p=>{p.className=`node-pin ${inv?'pin-inv':'pin-res'}`;});
-  document.querySelectorAll('.nb').forEach(b=>{b.classList.remove('inv-act','res-act');});
-  document.querySelector('.nb').classList.add(inv?'inv-act':'res-act');
-  if(!inv){
-    document.getElementById('ai-msgs').innerHTML=`<div class="am sch"><div class="aml">Mama Bear</div>Looking at your autism research board — I see sources on ABA therapy, sensory processing, and early intervention. In plain terms: the research on early intervention is genuinely encouraging. Let me break down what the studies actually say for parents who are just starting this journey.</div><div class="am sch"><div class="aml">Mama Bear</div>I noticed a gap — you don't have anything on co-occurring conditions like ADHD or anxiety, which affect about 70% of autistic kids. Want me to suggest credible sources to add to your board? I'll keep it jargon-free.</div>`;
-    document.querySelector('.ai-in').placeholder='Ask Mama Bear, Alice, Verify Val, Scholar...';
-    document.querySelector('.ai-in').className='ai-in res-i';
-    document.querySelector('.ai-sb').className='ai-sb res-s';
-    document.getElementById('tips-title').textContent='SOURCE SUBMISSIONS';
-    document.getElementById('tips-sub').textContent='Others can submit sources to your research · Requires name + contact';
-    document.getElementById('ai-pl').textContent='● Mama Bear Persona — Switch to Scholar, Alice, Verify Val...';
-    document.getElementById('hdr-title').textContent='AUTISM RESEARCH BOARD';
-    document.getElementById('hdr-sub').textContent='8 sources · 5 studies · 2 open questions · 1 voice note';
-  } else {
-    document.getElementById('ai-msgs').innerHTML=`<div class="am det"><div class="aml">Detective</div>The 72-hour gap is the thread that unravels everything. Three unanswered contacts in that window is legally anomalous. Cross-referencing with FOIA logs now.</div><div class="am det"><div class="aml">Detective</div>Witness Delta's tip directly corroborates the location discrepancy. Recommend elevating to critical and initiating chain of custody before any external sharing.</div>`;
-    document.querySelector('.ai-in').placeholder='Ask the Detective, Journalist, Analyst...';
-    document.querySelector('.ai-in').className='ai-in inv-i';
-    document.querySelector('.ai-sb').className='ai-sb inv-s';
-  }
+const inv=m===‘investigation’;
+const hdr=document.getElementById(‘hdr’);
+const cw=document.getElementById(‘canvas-wrap’);
+const bn=document.getElementById(‘bnav’);
+const mb=document.getElementById(‘mb’);
+hdr.className=inv?‘inv’:‘res’;
+cw.className=inv?‘inv’:‘res’;
+bn.className=inv?‘inv’:‘res’;
+mb.className=inv?‘inv’:‘res’;
+mb.textContent=inv?‘🕵️ Investigation Mode’:‘🔍 Research Mode’;
+document.getElementById(‘nav-tips’).textContent=inv?‘Tips’:‘Sources’;
+document.getElementById(‘nav-canvas’).textContent=inv?‘Canvas’:‘Board’;
+document.getElementById(‘hdr-title’).textContent=inv?‘OPERATION DEEP WATER’:‘AUTISM RESEARCH BOARD’;
+document.getElementById(‘hdr-sub’).textContent=inv?‘12 nodes · 9 strings · 3 new tips’:‘8 sources · 5 studies · 2 open questions’;
+document.getElementById(‘live-btn’).className=inv?‘hdr-btn red’:‘hdr-btn blue’;
+document.getElementById(‘ai-pl’).textContent=inv?‘● Detective Persona’:‘● Mama Bear Persona’;
+document.querySelectorAll(’.feat-tab’).forEach(t=>{t.className=`feat-tab ${inv?'inv-t':'res-t'}`;});
+document.querySelector(’.feat-tab’).classList.add(‘active’);
+document.querySelectorAll(’.tool-btn’).forEach(b=>{b.className=`tool-btn ${inv?'inv-t':'res-t'}`;});
+document.querySelectorAll(’.node’).forEach(n=>{n.classList.remove(‘inv-n’,‘res-n’);n.classList.add(inv?‘inv-n’:‘res-n’);});
+document.querySelectorAll(’.node-pin’).forEach(p=>{p.className=`node-pin ${inv?'pin-inv':'pin-res'}`;});
+document.querySelectorAll(’.nb’).forEach(b=>{b.classList.remove(‘inv-act’,‘res-act’);});
+document.querySelector(’.nb’).classList.add(inv?‘inv-act’:‘res-act’);
+if(!inv){
+document.getElementById(‘ai-msgs’).innerHTML=`<div class="am sch"><div class="aml">Mama Bear</div>Looking at your autism research board — I see sources on ABA therapy, sensory processing, and early intervention. In plain terms: the research on early intervention is genuinely encouraging. Let me break down what the studies actually say for parents who are just starting this journey.</div><div class="am sch"><div class="aml">Mama Bear</div>I noticed a gap — you don't have anything on co-occurring conditions like ADHD or anxiety, which affect about 70% of autistic kids. Want me to suggest credible sources to add to your board? I'll keep it jargon-free.</div>`;
+document.querySelector(’.ai-in’).placeholder=‘Ask Mama Bear, Alice, Verify Val, Scholar…’;
+document.querySelector(’.ai-in’).className=‘ai-in res-i’;
+document.querySelector(’.ai-sb’).className=‘ai-sb res-s’;
+document.getElementById(‘tips-title’).textContent=‘SOURCE SUBMISSIONS’;
+document.getElementById(‘tips-sub’).textContent=‘Others can submit sources to your research · Requires name + contact’;
+document.getElementById(‘ai-pl’).textContent=‘● Mama Bear Persona — Switch to Scholar, Alice, Verify Val…’;
+document.getElementById(‘hdr-title’).textContent=‘AUTISM RESEARCH BOARD’;
+document.getElementById(‘hdr-sub’).textContent=‘8 sources · 5 studies · 2 open questions · 1 voice note’;
+} else {
+document.getElementById(‘ai-msgs’).innerHTML=`<div class="am det"><div class="aml">Detective</div>The 72-hour gap is the thread that unravels everything. Three unanswered contacts in that window is legally anomalous. Cross-referencing with FOIA logs now.</div><div class="am det"><div class="aml">Detective</div>Witness Delta's tip directly corroborates the location discrepancy. Recommend elevating to critical and initiating chain of custody before any external sharing.</div>`;
+document.querySelector(’.ai-in’).placeholder=‘Ask the Detective, Journalist, Analyst…’;
+document.querySelector(’.ai-in’).className=‘ai-in inv-i’;
+document.querySelector(’.ai-sb’).className=‘ai-sb inv-s’;
+}
 }
 
 function drawStrings(){
-  const svg=document.getElementById('csvg');
-  const wrap=document.getElementById('canvas-wrap');
-  const wr=wrap.getBoundingClientRect();
-  const inv=mode==='investigation';
-  const mc=inv?'#E74C3C':'#2E86AB';
-  const ac=inv?'#C0392B':'#1A6A99';
-  const conns=[
-    {a:'n0',b:'n1',l:inv?'INVESTIGATING':'RESEARCHING',c:mc},
-    {a:'n1',b:'n3',l:inv?'LAST SEEN':'LOCATION',c:ac},
-    {a:'n1',b:'n4',l:inv?'DOCUMENTED':'SOURCE',c:'#8A8178'},
-    {a:'n4',b:'n6',l:inv?'72HR GAP':'FINDING',c:mc},
-    {a:'n3',b:'n8',l:inv?'CORROBORATES':'CONFIRMS',c:'#27AE60'},
-    {a:'n5',b:'n4',l:inv?'FINANCIAL TIE':'CONNECTED',c:'#D4A843'},
-    {a:'n2',b:'n6',l:inv?'NO ALIBI':'RELATED',c:mc},
-    {a:'n8',b:'n6',l:inv?'TIP VERIFIED':'SUPPORTS',c:'#27AE60'},
-    {a:'n0',b:'n2',l:inv?'PERSON OF INTEREST':'CONTACT',c:ac},
-  ];
-  svg.innerHTML='';
-  conns.forEach(conn=>{
-    const a=document.getElementById(conn.a);
-    const b=document.getElementById(conn.b);
-    if(!a||!b)return;
-    const ar=a.getBoundingClientRect(),br=b.getBoundingClientRect();
-    const x1=ar.left-wr.left+ar.width/2,y1=ar.top-wr.top+ar.height/2;
-    const x2=br.left-wr.left+br.width/2,y2=br.top-wr.top+br.height/2;
-    const mx=(x1+x2)/2,my=(y1+y2)/2-22;
-    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
-    path.setAttribute('d',`M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`);
-    path.setAttribute('stroke',conn.c);path.setAttribute('stroke-width','1');path.setAttribute('fill','none');path.setAttribute('opacity','0.55');
-    svg.appendChild(path);
-    const txt=document.createElementNS('http://www.w3.org/2000/svg','text');
-    txt.setAttribute('x',mx);txt.setAttribute('y',my-4);txt.setAttribute('text-anchor','middle');
-    txt.setAttribute('font-family','DM Mono');txt.setAttribute('font-size','7');txt.setAttribute('fill',conn.c);txt.setAttribute('letter-spacing','1');
-    txt.textContent=conn.l;svg.appendChild(txt);
-  });
+const svg=document.getElementById(‘csvg’);
+const wrap=document.getElementById(‘canvas-wrap’);
+const wr=wrap.getBoundingClientRect();
+const inv=mode===‘investigation’;
+const mc=inv?’#E74C3C’:’#2E86AB’;
+const ac=inv?’#C0392B’:’#1A6A99’;
+const conns=[
+{a:‘n0’,b:‘n1’,l:inv?‘INVESTIGATING’:‘RESEARCHING’,c:mc},
+{a:‘n1’,b:‘n3’,l:inv?‘LAST SEEN’:‘LOCATION’,c:ac},
+{a:‘n1’,b:‘n4’,l:inv?‘DOCUMENTED’:‘SOURCE’,c:’#8A8178’},
+{a:‘n4’,b:‘n6’,l:inv?‘72HR GAP’:‘FINDING’,c:mc},
+{a:‘n3’,b:‘n8’,l:inv?‘CORROBORATES’:‘CONFIRMS’,c:’#27AE60’},
+{a:‘n5’,b:‘n4’,l:inv?‘FINANCIAL TIE’:‘CONNECTED’,c:’#D4A843’},
+{a:‘n2’,b:‘n6’,l:inv?‘NO ALIBI’:‘RELATED’,c:mc},
+{a:‘n8’,b:‘n6’,l:inv?‘TIP VERIFIED’:‘SUPPORTS’,c:’#27AE60’},
+{a:‘n0’,b:‘n2’,l:inv?‘PERSON OF INTEREST’:‘CONTACT’,c:ac},
+];
+svg.innerHTML=’’;
+conns.forEach(conn=>{
+const a=document.getElementById(conn.a);
+const b=document.getElementById(conn.b);
+if(!a||!b)return;
+const ar=a.getBoundingClientRect(),br=b.getBoundingClientRect();
+const x1=ar.left-wr.left+ar.width/2,y1=ar.top-wr.top+ar.height/2;
+const x2=br.left-wr.left+br.width/2,y2=br.top-wr.top+br.height/2;
+const mx=(x1+x2)/2,my=(y1+y2)/2-22;
+const path=document.createElementNS(‘http://www.w3.org/2000/svg’,‘path’);
+path.setAttribute(‘d’,`M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`);
+path.setAttribute(‘stroke’,conn.c);path.setAttribute(‘stroke-width’,‘1’);path.setAttribute(‘fill’,‘none’);path.setAttribute(‘opacity’,‘0.55’);
+svg.appendChild(path);
+const txt=document.createElementNS(‘http://www.w3.org/2000/svg’,‘text’);
+txt.setAttribute(‘x’,mx);txt.setAttribute(‘y’,my-4);txt.setAttribute(‘text-anchor’,‘middle’);
+txt.setAttribute(‘font-family’,‘DM Mono’);txt.setAttribute(‘font-size’,‘7’);txt.setAttribute(‘fill’,conn.c);txt.setAttribute(‘letter-spacing’,‘1’);
+txt.textContent=conn.l;svg.appendChild(txt);
+});
 }
 
 function drawLiveStrings(){
-  const svg=document.getElementById('lsvg');
-  const wrap=document.getElementById('lc');
-  const wr=wrap.getBoundingClientRect();
-  const inv=mode==='investigation';
-  const c=inv?'#E74C3C':'#2E86AB';
-  [{a:'ll0',b:'ll1',c:c},{a:'ll1',b:'ll2',c:c},{a:'ll3',b:'ll2',c:'#8A8178'},{a:'ll4',b:'ll2',c:'#27AE60'}].forEach(conn=>{
-    const a=document.getElementById(conn.a),b=document.getElementById(conn.b);
-    if(!a||!b)return;
-    const ar=a.getBoundingClientRect(),br=b.getBoundingClientRect();
-    const x1=ar.left-wr.left+ar.width/2,y1=ar.top-wr.top+ar.height/2;
-    const x2=br.left-wr.left+br.width/2,y2=br.top-wr.top+br.height/2;
-    const mx=(x1+x2)/2,my=(y1+y2)/2-16;
-    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
-    path.setAttribute('d',`M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`);
-    path.setAttribute('stroke',conn.c);path.setAttribute('stroke-width','1.5');path.setAttribute('fill','none');path.setAttribute('opacity','0.7');
-    svg.appendChild(path);
-  });
+const svg=document.getElementById(‘lsvg’);
+const wrap=document.getElementById(‘lc’);
+const wr=wrap.getBoundingClientRect();
+const inv=mode===‘investigation’;
+const c=inv?’#E74C3C’:’#2E86AB’;
+[{a:‘ll0’,b:‘ll1’,c:c},{a:‘ll1’,b:‘ll2’,c:c},{a:‘ll3’,b:‘ll2’,c:’#8A8178’},{a:‘ll4’,b:‘ll2’,c:’#27AE60’}].forEach(conn=>{
+const a=document.getElementById(conn.a),b=document.getElementById(conn.b);
+if(!a||!b)return;
+const ar=a.getBoundingClientRect(),br=b.getBoundingClientRect();
+const x1=ar.left-wr.left+ar.width/2,y1=ar.top-wr.top+ar.height/2;
+const x2=br.left-wr.left+br.width/2,y2=br.top-wr.top+br.height/2;
+const mx=(x1+x2)/2,my=(y1+y2)/2-16;
+const path=document.createElementNS(‘http://www.w3.org/2000/svg’,‘path’);
+path.setAttribute(‘d’,`M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`);
+path.setAttribute(‘stroke’,conn.c);path.setAttribute(‘stroke-width’,‘1.5’);path.setAttribute(‘fill’,‘none’);path.setAttribute(‘opacity’,‘0.7’);
+svg.appendChild(path);
+});
 }
 
-function showNode(i){const d=ndData[i];if(!d)return;document.getElementById('np-title').textContent=d.t;document.getElementById('np-sub').textContent=d.s;document.getElementById('np-body').innerHTML=d.b;document.getElementById('np').classList.add('visible');cp('aip');}
-function cp(id){document.getElementById(id).classList.remove('visible');}
-function toggleAI(){const p=document.getElementById('aip');p.classList.toggle('visible');if(p.classList.contains('visible'))cp('np');}
+function showNode(i){const d=ndData[i];if(!d)return;document.getElementById(‘np-title’).textContent=d.t;document.getElementById(‘np-sub’).textContent=d.s;document.getElementById(‘np-body’).innerHTML=d.b;document.getElementById(‘np’).classList.add(‘visible’);cp(‘aip’);}
+function cp(id){document.getElementById(id).classList.remove(‘visible’);}
+function toggleAI(){const p=document.getElementById(‘aip’);p.classList.toggle(‘visible’);if(p.classList.contains(‘visible’))cp(‘np’);}
 function sendAI(){
-  const inp=document.getElementById('ai-in');const val=inp.value.trim();if(!val)return;
-  const msgs=document.getElementById('ai-msgs');const inv=mode==='investigation';
-  const um=document.createElement('div');um.className='am usr';um.innerHTML=`<div class="aml">You</div>${val}`;msgs.appendChild(um);
-  inp.value='';
-  setTimeout(()=>{
-    const am=document.createElement('div');am.className=`am ${inv?'det':'sch'}`;
-    am.innerHTML=`<div class="aml">${inv?'Detective':'Mama Bear'}</div>${(inv?invR:resR)[aiI%4]}`;
-    msgs.appendChild(am);aiI++;msgs.scrollTop=msgs.scrollHeight;
-  },700);
-  msgs.scrollTop=msgs.scrollHeight;
+const inp=document.getElementById(‘ai-in’);const val=inp.value.trim();if(!val)return;
+const msgs=document.getElementById(‘ai-msgs’);const inv=mode===‘investigation’;
+const um=document.createElement(‘div’);um.className=‘am usr’;um.innerHTML=`<div class="aml">You</div>${val}`;msgs.appendChild(um);
+inp.value=’’;
+setTimeout(()=>{
+const am=document.createElement(‘div’);am.className=`am ${inv?'det':'sch'}`;
+am.innerHTML=`<div class="aml">${inv?'Detective':'Mama Bear'}</div>${(inv?invR:resR)[aiI%4]}`;
+msgs.appendChild(am);aiI++;msgs.scrollTop=msgs.scrollHeight;
+},700);
+msgs.scrollTop=msgs.scrollHeight;
 }
-function showSec(){document.getElementById('secp').classList.toggle('visible');}
-function showInk(){document.getElementById('ink-demo').style.display='flex';}
-function closeInk(){document.getElementById('ink-demo').style.display='none';}
-function revInk(el){el.querySelector('.ink-content').style.opacity='1';}
-function hideInk(el){el.querySelector('.ink-content').style.opacity='0';}
-function showWR(){document.getElementById('wr').classList.add('visible');hideLive();hideTips();hideDos();hideTL();}
-function hideWR(){document.getElementById('wr').classList.remove('visible');}
+function showSec(){document.getElementById(‘secp’).classList.toggle(‘visible’);}
+function showInk(){document.getElementById(‘ink-demo’).style.display=‘flex’;}
+function closeInk(){document.getElementById(‘ink-demo’).style.display=‘none’;}
+function revInk(el){el.querySelector(’.ink-content’).style.opacity=‘1’;}
+function hideInk(el){el.querySelector(’.ink-content’).style.opacity=‘0’;}
+function showWR(){document.getElementById(‘wr’).classList.add(‘visible’);hideLive();hideTips();hideDos();hideTL();}
+function hideWR(){document.getElementById(‘wr’).classList.remove(‘visible’);}
 function sendWR(){
-  const inp=document.getElementById('wr-in');const val=inp.value.trim();if(!val)return;
-  const msgs=document.getElementById('wr-msgs');const inv=mode==='investigation';
-  const m=document.createElement('div');m.className=`wm ${inv?'ia':'ra'}`;m.innerHTML=`<div class="wm-who">You</div>${val}`;msgs.appendChild(m);
-  inp.value='';msgs.scrollTop=msgs.scrollHeight;
-  setTimeout(()=>{
-    const r=document.createElement('div');r.className=`wm ${inv?'ib':'rb'}`;
-    r.innerHTML=`<div class="wm-who">${inv?'Source B':'Research Partner'}</div>${inv?'Got it — I can see the canvas update in real time. Keep going, this is significant.':'Good point — found a study that addresses this. Adding to the board now.'}`;
-    msgs.appendChild(r);msgs.scrollTop=msgs.scrollHeight;
-  },1000);
+const inp=document.getElementById(‘wr-in’);const val=inp.value.trim();if(!val)return;
+const msgs=document.getElementById(‘wr-msgs’);const inv=mode===‘investigation’;
+const m=document.createElement(‘div’);m.className=`wm ${inv?'ia':'ra'}`;m.innerHTML=`<div class="wm-who">You</div>${val}`;msgs.appendChild(m);
+inp.value=’’;msgs.scrollTop=msgs.scrollHeight;
+setTimeout(()=>{
+const r=document.createElement(‘div’);r.className=`wm ${inv?'ib':'rb'}`;
+r.innerHTML=`<div class="wm-who">${inv?'Source B':'Research Partner'}</div>${inv?'Got it — I can see the canvas update in real time. Keep going, this is significant.':'Good point — found a study that addresses this. Adding to the board now.'}`;
+msgs.appendChild(r);msgs.scrollTop=msgs.scrollHeight;
+},1000);
 }
-function showLive(){document.getElementById('live').classList.add('visible');hideWR();hideTips();hideDos();hideTL();setTimeout(()=>{drawLiveStrings();runLive();},200);}
-function hideLive(){document.getElementById('live').classList.remove('visible');if(lT)clearTimeout(lT);}
+function showLive(){document.getElementById(‘live’).classList.add(‘visible’);hideWR();hideTips();hideDos();hideTL();setTimeout(()=>{drawLiveStrings();runLive();},200);}
+function hideLive(){document.getElementById(‘live’).classList.remove(‘visible’);if(lT)clearTimeout(lT);}
 function runLive(){if(lT)clearTimeout(lT);lI=0;nextLive();}
 function nextLive(){
-  if(lI>=lSeq.length){lI=0;lT=setTimeout(nextLive,3000);return;}
-  const s=lSeq[lI];
-  document.getElementById('lvt').textContent=s.v;
-  document.getElementById('l-cap').textContent=s.c;
-  document.querySelectorAll('.ln').forEach(n=>n.classList.remove('sp','inv','res'));
-  document.querySelectorAll('.ln').forEach(n=>n.classList.add(mode==='investigation'?'inv':'res'));
-  if(s.s){const el=document.getElementById(s.s);if(el)el.classList.add('sp',mode==='investigation'?'inv':'res');}
-  document.getElementById('lvc').textContent=`● ${(1247+Math.floor(Math.random()*60)).toLocaleString()} watching`;
-  lI++;lT=setTimeout(nextLive,3000);
+if(lI>=lSeq.length){lI=0;lT=setTimeout(nextLive,3000);return;}
+const s=lSeq[lI];
+document.getElementById(‘lvt’).textContent=s.v;
+document.getElementById(‘l-cap’).textContent=s.c;
+document.querySelectorAll(’.ln’).forEach(n=>n.classList.remove(‘sp’,‘inv’,‘res’));
+document.querySelectorAll(’.ln’).forEach(n=>n.classList.add(mode===‘investigation’?‘inv’:‘res’));
+if(s.s){const el=document.getElementById(s.s);if(el)el.classList.add(‘sp’,mode===‘investigation’?‘inv’:‘res’);}
+document.getElementById(‘lvc’).textContent=`● ${(1247+Math.floor(Math.random()*60)).toLocaleString()} watching`;
+lI++;lT=setTimeout(nextLive,3000);
 }
-function showTips(){document.getElementById('tips').classList.add('visible');hideWR();hideLive();hideTL();}
-function hideTips(){document.getElementById('tips').classList.remove('visible');}
-function showDos(){document.getElementById('dos').classList.add('visible');hideWR();hideLive();hideTL();}
-function hideDos(){document.getElementById('dos').classList.remove('visible');}
-function showTL(){document.getElementById('tl-panel').classList.add('visible');hideWR();hideLive();hideTips();hideDos();}
-function hideTL(){document.getElementById('tl-panel').classList.remove('visible');}
-function setGran(btn){document.querySelectorAll('.gb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');toast(`Timeline granularity: ${btn.textContent} — drag nodes to assign timestamps at any precision`);}
+function showTips(){document.getElementById(‘tips’).classList.add(‘visible’);hideWR();hideLive();hideTL();}
+function hideTips(){document.getElementById(‘tips’).classList.remove(‘visible’);}
+function showDos(){document.getElementById(‘dos’).classList.add(‘visible’);hideWR();hideLive();hideTL();}
+function hideDos(){document.getElementById(‘dos’).classList.remove(‘visible’);}
+function showTL(){document.getElementById(‘tl-panel’).classList.add(‘visible’);hideWR();hideLive();hideTips();hideDos();}
+function hideTL(){document.getElementById(‘tl-panel’).classList.remove(‘visible’);}
+function setGran(btn){document.querySelectorAll(’.gb’).forEach(b=>b.classList.remove(‘active’));btn.classList.add(‘active’);toast(`Timeline granularity: ${btn.textContent} — drag nodes to assign timestamps at any precision`);}
 function feat(f,el){
-  document.querySelectorAll('.feat-tab').forEach(t=>t.classList.remove('active'));
-  if(el)el.classList.add('active');
-  cp('secp');cp('wmp');cp('vnp');cp('msg-panel');cp('present-panel');cp('ciahub-panel');cp('pricing-panel');
-  document.getElementById('ink-demo').style.display='none';
-  hideTL();hideWR();hideLive();hideTips();hideDos();
-  if(f==='security')showSec();
-  else if(f==='watermark')document.getElementById('wmp').classList.add('visible');
-  else if(f==='ink')showInk();
-  else if(f==='vn')document.getElementById('vnp').classList.add('visible');
-  else if(f==='timeline')showTL();
-  else if(f==='tips')showTips();
-  else if(f==='msg'){document.getElementById('msg-panel').classList.add('visible');}
-  else if(f==='present'){
-    const inv=mode==='investigation';
-    document.getElementById('present-panel').className=`panel ${inv?'inv-p':'res-p'} visible`;
-    document.getElementById('pres-sub').textContent=inv?'Auto-generated from investigation':'Auto-generated from research board';
-  }
-  else if(f==='ciahub')document.getElementById('ciahub-panel').classList.add('visible');
-  else if(f==='pricing')document.getElementById('pricing-panel').classList.add('visible');
-  else if(f==='wr')showWR();
-  else if(f==='live')showLive();
+document.querySelectorAll(’.feat-tab’).forEach(t=>t.classList.remove(‘active’));
+if(el)el.classList.add(‘active’);
+cp(‘secp’);cp(‘wmp’);cp(‘vnp’);cp(‘msg-panel’);cp(‘present-panel’);cp(‘ciahub-panel’);cp(‘pricing-panel’);
+document.getElementById(‘ink-demo’).style.display=‘none’;
+hideTL();hideWR();hideLive();hideTips();hideDos();
+if(f===‘security’)showSec();
+else if(f===‘watermark’)document.getElementById(‘wmp’).classList.add(‘visible’);
+else if(f===‘ink’)showInk();
+else if(f===‘vn’)document.getElementById(‘vnp’).classList.add(‘visible’);
+else if(f===‘timeline’)showTL();
+else if(f===‘tips’)showTips();
+else if(f===‘msg’){document.getElementById(‘msg-panel’).classList.add(‘visible’);}
+else if(f===‘present’){
+const inv=mode===‘investigation’;
+document.getElementById(‘present-panel’).className=`panel ${inv?'inv-p':'res-p'} visible`;
+document.getElementById(‘pres-sub’).textContent=inv?‘Auto-generated from investigation’:‘Auto-generated from research board’;
+}
+else if(f===‘ciahub’)document.getElementById(‘ciahub-panel’).classList.add(‘visible’);
+else if(f===‘pricing’)document.getElementById(‘pricing-panel’).classList.add(‘visible’);
+else if(f===‘wr’)showWR();
+else if(f===‘live’)showLive();
 }
 function nav(t,btn){
-  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('inv-act','res-act'));
-  btn.classList.add(mode==='investigation'?'inv-act':'res-act');
-  hideWR();hideTips();hideDos();hideLive();hideTL();cp('aip');cp('np');
-  if(t==='tips')showTips();
-  else if(t==='ai')toggleAI();
-  else if(t==='wr')showWR();
-  else if(t==='live')showLive();
+document.querySelectorAll(’.nb’).forEach(b=>b.classList.remove(‘inv-act’,‘res-act’));
+btn.classList.add(mode===‘investigation’?‘inv-act’:‘res-act’);
+hideWR();hideTips();hideDos();hideLive();hideTL();cp(‘aip’);cp(‘np’);
+if(t===‘tips’)showTips();
+else if(t===‘ai’)toggleAI();
+else if(t===‘wr’)showWR();
+else if(t===‘live’)showLive();
 }
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
-window.addEventListener('resize',()=>{drawStrings();if(document.getElementById('live').classList.contains('visible'))drawLiveStrings();});
+function toast(msg){const t=document.getElementById(‘toast’);t.textContent=msg;t.classList.add(‘show’);setTimeout(()=>t.classList.remove(‘show’),3200);}
+window.addEventListener(‘resize’,()=>{drawStrings();if(document.getElementById(‘live’).classList.contains(‘visible’))drawLiveStrings();});
 </script>
 
 </body>
