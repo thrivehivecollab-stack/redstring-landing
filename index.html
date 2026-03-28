@@ -4,1807 +4,698 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Red String Research — Investigate Everything</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Crimson+Pro:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+<title>Red String Research — Pull the Thread</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&family=Special+Elite&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0F0D0B;
-  --surface: #1A1714;
-  --surface2: #221F1B;
-  --border: #2E2A25;
-  --red: #C0392B;
-  --red-bright: #E74C3C;
-  --red-dim: #7B241C;
-  --gold: #D4A843;
-  --gold-dim: #8B6914;
-  --text: #F0EDE8;
-  --text-dim: #8A8178;
-  --text-muted: #4A4540;
-  --mono: 'DM Mono', monospace;
-  --display: 'Bebas Neue', sans-serif;
-  --serif: 'Crimson Pro', serif;
-}
-
-- { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-background: var(–bg);
-color: var(–text);
-font-family: var(–mono);
-font-size: 13px;
-line-height: 1.6;
-overflow-x: hidden;
-}
-
-/* NOISE TEXTURE */
-body::before {
-content: ‘’;
-position: fixed;
-inset: 0;
-background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘0.03’/%3E%3C/svg%3E”);
-pointer-events: none;
-z-index: 9999;
-opacity: 0.4;
-}
-
-/* SCANLINES */
-body::after {
-content: ‘’;
-position: fixed;
-inset: 0;
-background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
-pointer-events: none;
-z-index: 9998;
-}
-
-/* ═══ NAVIGATION ═══ */
-nav {
-position: fixed;
-top: 0; left: 0; right: 0;
-z-index: 100;
-padding: 16px 32px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-background: rgba(15,13,11,0.92);
-backdrop-filter: blur(12px);
-border-bottom: 1px solid var(–border);
-}
-
-.nav-logo {
-font-family: var(–display);
-font-size: 22px;
-letter-spacing: 0.15em;
-color: var(–red-bright);
-text-decoration: none;
-}
-
-.nav-logo span { color: var(–text-dim); font-size: 11px; letter-spacing: 0.3em; display: block; font-family: var(–mono); }
-
-.nav-links { display: flex; gap: 24px; align-items: center; }
-.nav-links a { color: var(–text-dim); text-decoration: none; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.2s; }
-.nav-links a:hover { color: var(–text); }
-
-.nav-cta {
-background: var(–red);
-color: var(–text);
-border: none;
-padding: 8px 20px;
-font-family: var(–mono);
-font-size: 11px;
-letter-spacing: 0.15em;
-text-transform: uppercase;
-cursor: pointer;
-text-decoration: none;
-transition: background 0.2s;
-}
-.nav-cta:hover { background: var(–red-bright); }
-
-/* ═══ HERO ═══ */
-.hero {
-min-height: 100vh;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-text-align: center;
-padding: 120px 24px 80px;
-position: relative;
-overflow: hidden;
-}
-
-.hero-grid {
-position: absolute;
-inset: 0;
-background-image:
-linear-gradient(rgba(192,57,43,0.04) 1px, transparent 1px),
-linear-gradient(90deg, rgba(192,57,43,0.04) 1px, transparent 1px);
-background-size: 40px 40px;
-}
-
-.hero-vignette {
-position: absolute;
-inset: 0;
-background: radial-gradient(ellipse at center, transparent 30%, var(–bg) 80%);
-}
-
-.hero-badge {
-display: inline-flex;
-align-items: center;
-gap: 8px;
-border: 1px solid var(–red-dim);
-padding: 6px 16px;
-font-size: 10px;
-letter-spacing: 0.3em;
-text-transform: uppercase;
-color: var(–red-bright);
-margin-bottom: 32px;
-position: relative;
-z-index: 1;
-}
-
-.hero-badge::before {
-content: ‘’;
-width: 6px; height: 6px;
-border-radius: 50%;
-background: var(–red-bright);
-animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-0%, 100% { opacity: 1; }
-50% { opacity: 0.3; }
-}
-
-.hero-title {
-font-family: var(–display);
-font-size: clamp(72px, 14vw, 160px);
-line-height: 0.9;
-letter-spacing: 0.05em;
-color: var(–text);
-position: relative;
-z-index: 1;
-margin-bottom: 8px;
-}
-
-.hero-title span {
-color: var(–red-bright);
-display: block;
-}
-
-.hero-subtitle-word {
-font-family: var(–display);
-font-size: clamp(18px, 4vw, 42px);
-letter-spacing: 0.4em;
-color: var(–text-dim);
-position: relative;
-z-index: 1;
-margin-bottom: 32px;
-}
-
-.hero-desc {
-font-family: var(–serif);
-font-size: 18px;
-font-style: italic;
-color: var(–text-dim);
-max-width: 560px;
-position: relative;
-z-index: 1;
-margin-bottom: 48px;
-line-height: 1.7;
-}
-
-.hero-actions {
-display: flex;
-gap: 16px;
-position: relative;
-z-index: 1;
-flex-wrap: wrap;
-justify-content: center;
-}
-
-.btn-primary {
-background: var(–red);
-color: var(–text);
-border: none;
-padding: 14px 32px;
-font-family: var(–mono);
-font-size: 12px;
-letter-spacing: 0.2em;
-text-transform: uppercase;
-cursor: pointer;
-text-decoration: none;
-transition: all 0.2s;
-display: inline-block;
-}
-.btn-primary:hover { background: var(–red-bright); transform: translateY(-1px); }
-
-.btn-secondary {
-background: transparent;
-color: var(–text-dim);
-border: 1px solid var(–border);
-padding: 14px 32px;
-font-family: var(–mono);
-font-size: 12px;
-letter-spacing: 0.2em;
-text-transform: uppercase;
-cursor: pointer;
-text-decoration: none;
-transition: all 0.2s;
-display: inline-block;
-}
-.btn-secondary:hover { border-color: var(–text-dim); color: var(–text); }
-
-.hero-string {
-position: absolute;
-width: 100%;
-height: 100%;
-top: 0; left: 0;
-pointer-events: none;
-z-index: 0;
-}
-
-/* ═══ SECTIONS ═══ */
-section { padding: 100px 24px; position: relative; }
-.container { max-width: 1100px; margin: 0 auto; }
-
-.section-label {
-font-size: 10px;
-letter-spacing: 0.4em;
-text-transform: uppercase;
-color: var(–red-bright);
-margin-bottom: 12px;
-display: flex;
-align-items: center;
-gap: 12px;
-}
-.section-label::before {
-content: ‘’;
-width: 24px; height: 1px;
-background: var(–red-bright);
-}
-
-.section-title {
-font-family: var(–display);
-font-size: clamp(36px, 6vw, 72px);
-line-height: 1;
-letter-spacing: 0.05em;
-margin-bottom: 20px;
-}
-
-.section-desc {
-font-family: var(–serif);
-font-size: 17px;
-font-style: italic;
-color: var(–text-dim);
-max-width: 560px;
-line-height: 1.7;
-margin-bottom: 60px;
-}
-
-/* ═══ FEATURES GRID ═══ */
-#features { background: var(–bg); }
-
-.features-grid {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-gap: 1px;
-background: var(–border);
-border: 1px solid var(–border);
-}
-
-.feature-card {
-background: var(–surface);
-padding: 32px;
-position: relative;
-transition: background 0.2s;
-}
-.feature-card:hover { background: var(–surface2); }
-
-.feature-card.new::after {
-content: ‘NEW’;
-position: absolute;
-top: 16px; right: 16px;
-font-size: 9px;
-letter-spacing: 0.2em;
-color: var(–gold);
-border: 1px solid var(–gold-dim);
-padding: 2px 8px;
-}
-
-.feature-card.live::after {
-content: ‘● LIVE’;
-position: absolute;
-top: 16px; right: 16px;
-font-size: 9px;
-letter-spacing: 0.2em;
-color: #27AE60;
-}
-
-.feature-icon {
-font-size: 28px;
-margin-bottom: 16px;
-display: block;
-}
-
-.feature-name {
-font-family: var(–display);
-font-size: 22px;
-letter-spacing: 0.05em;
-margin-bottom: 8px;
-}
-
-.feature-desc {
-color: var(–text-dim);
-font-size: 12px;
-line-height: 1.7;
-}
-
-/* ═══ SECURITY SECTION ═══ */
-#security { background: var(–surface); }
-
-.security-grid {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-gap: 24px;
-margin-top: 48px;
-}
-
-.security-item {
-border: 1px solid var(–border);
-padding: 24px;
-position: relative;
-}
-
-.security-item::before {
-content: ‘’;
-position: absolute;
-top: 0; left: 0;
-width: 3px; height: 100%;
-background: var(–red);
-}
-
-.security-item-title {
-font-family: var(–display);
-font-size: 18px;
-letter-spacing: 0.05em;
-margin-bottom: 8px;
-margin-left: 12px;
-}
-
-.security-item-desc {
-color: var(–text-dim);
-font-size: 11px;
-line-height: 1.7;
-margin-left: 12px;
-}
-
-/* ═══ VOICE CANVAS FEATURE ═══ */
-.voice-canvas-section {
-background: var(–bg);
-border-top: 1px solid var(–border);
-border-bottom: 1px solid var(–border);
-}
-
-.voice-demo {
-background: var(–surface);
-border: 1px solid var(–border);
-padding: 32px;
-margin-top: 48px;
-position: relative;
-}
-
-.voice-demo::before {
-content: ‘● VOICE CONTROL DEMO’;
-position: absolute;
-top: -1px; left: 32px;
-background: var(–red);
-color: var(–text);
-font-size: 9px;
-letter-spacing: 0.2em;
-padding: 4px 12px;
-}
-
-.voice-commands {
-display: flex;
-flex-direction: column;
-gap: 16px;
-margin-top: 16px;
-}
-
-.voice-cmd {
-display: grid;
-grid-template-columns: auto 1fr auto;
-gap: 16px;
-align-items: center;
-padding: 14px 16px;
-border: 1px solid var(–border);
-background: var(–surface2);
-}
-
-.voice-cmd-icon { font-size: 16px; }
-
-.voice-cmd-text {
-font-family: var(–serif);
-font-style: italic;
-font-size: 15px;
-color: var(–text);
-}
-
-.voice-cmd-action {
-font-size: 10px;
-letter-spacing: 0.15em;
-color: var(–red-bright);
-white-space: nowrap;
-}
-
-/* ═══ TIMELINE SECTION ═══ */
-.timeline-preview {
-background: var(–surface);
-border: 1px solid var(–border);
-padding: 32px;
-margin-top: 48px;
-overflow-x: auto;
-}
-
-.timeline-bar {
-display: flex;
-align-items: center;
-gap: 0;
-position: relative;
-padding: 40px 0;
-min-width: 700px;
-}
-
-.timeline-line {
-position: absolute;
-top: 50%; left: 0; right: 0;
-height: 1px;
-background: var(–border);
-}
-
-.timeline-node {
-position: relative;
-z-index: 1;
-flex: 1;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 8px;
-}
-
-.timeline-dot {
-width: 12px; height: 12px;
-border-radius: 50%;
-border: 2px solid var(–red);
-background: var(–bg);
-position: relative;
-}
-
-.timeline-dot.flag::after {
-content: ‘⚠’;
-position: absolute;
-top: -20px; left: 50%;
-transform: translateX(-50%);
-font-size: 12px;
-color: var(–gold);
-}
-
-.timeline-dot.impossibility {
-border-color: var(–red-bright);
-background: var(–red-dim);
-}
-
-.timeline-label {
-font-size: 9px;
-letter-spacing: 0.1em;
-color: var(–text-dim);
-text-align: center;
-max-width: 80px;
-}
-
-.timeline-time {
-font-size: 8px;
-color: var(–text-muted);
-text-align: center;
-}
-
-.timeline-string {
-position: absolute;
-top: 50%;
-height: 1px;
-background: var(–red-dim);
-opacity: 0.5;
-}
-
-/* ═══ CHAIN OF CUSTODY ═══ */
-.chain-preview {
-background: var(–surface);
-border: 1px solid var(–border);
-padding: 24px;
-margin-top: 32px;
-font-size: 11px;
-}
-
-.chain-entry {
-display: grid;
-grid-template-columns: 80px 20px 1fr;
-gap: 8px 16px;
-align-items: start;
-padding: 10px 0;
-border-bottom: 1px solid var(–border);
-}
-.chain-entry:last-child { border-bottom: none; }
-
-.chain-time { color: var(–text-muted); font-size: 10px; }
-.chain-dot { width: 8px; height: 8px; border-radius: 50%; background: var(–red-dim); margin-top: 3px; border: 1px solid var(–red); }
-.chain-detail { color: var(–text-dim); line-height: 1.5; }
-.chain-detail strong { color: var(–text); }
-
-/* ═══ LIVE BROADCAST ═══ */
-.broadcast-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 24px;
-margin-top: 48px;
-}
-
-@media (max-width: 700px) {
-.broadcast-grid { grid-template-columns: 1fr; }
-nav .nav-links { display: none; }
-}
-
-.broadcast-card {
-border: 1px solid var(–border);
-padding: 28px;
-position: relative;
-}
-
-.broadcast-card-title {
-font-family: var(–display);
-font-size: 24px;
-letter-spacing: 0.05em;
-margin-bottom: 12px;
-}
-
-.broadcast-card-desc {
-color: var(–text-dim);
-font-size: 12px;
-line-height: 1.7;
-}
-
-.broadcast-card.featured {
-border-color: var(–red-dim);
-background: linear-gradient(135deg, var(–surface) 0%, rgba(192,57,43,0.05) 100%);
-}
-
-.broadcast-badge {
-display: inline-block;
-background: var(–red);
-color: var(–text);
-font-size: 9px;
-letter-spacing: 0.2em;
-padding: 3px 10px;
-margin-bottom: 16px;
-}
-
-/* ═══ ORIGIN ═══ */
-#origin { background: var(–surface); }
-
-.origin-quote {
-border-left: 3px solid var(–red);
-padding: 32px 40px;
-background: var(–surface2);
-margin: 48px 0;
-position: relative;
-}
-
-.origin-quote::before {
-content: ‘”’;
-font-family: var(–serif);
-font-size: 120px;
-color: var(–red-dim);
-position: absolute;
-top: -20px; left: 16px;
-line-height: 1;
-opacity: 0.4;
-}
-
-.origin-text {
-font-family: var(–serif);
-font-size: 18px;
-font-style: italic;
-line-height: 1.8;
-color: var(–text);
-position: relative;
-z-index: 1;
-}
-
-.origin-attr {
-margin-top: 16px;
-font-size: 11px;
-letter-spacing: 0.2em;
-color: var(–text-muted);
-}
-
-.built-for-grid {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-gap: 16px;
-margin-top: 40px;
-}
-
-.built-for-item {
-border: 1px solid var(–border);
-padding: 20px;
-font-size: 12px;
-color: var(–text-dim);
-line-height: 1.6;
-}
-
-.built-for-item strong { color: var(–text); display: block; margin-bottom: 4px; }
-
-/* ═══ COMPARISON ═══ */
-#compare { background: var(–bg); }
-
-.compare-table {
-width: 100%;
-border-collapse: collapse;
-margin-top: 48px;
-font-size: 12px;
-}
-
-.compare-table th {
-text-align: left;
-padding: 12px 16px;
-border-bottom: 1px solid var(–border);
-font-size: 10px;
-letter-spacing: 0.2em;
-text-transform: uppercase;
-color: var(–text-dim);
-}
-
-.compare-table th:last-child {
-color: var(–red-bright);
-}
-
-.compare-table td {
-padding: 12px 16px;
-border-bottom: 1px solid var(–border);
-color: var(–text-dim);
-}
-
-.compare-table td:last-child { color: var(–text); }
-.compare-table tr:hover td { background: var(–surface); }
-
-.check { color: #27AE60; }
-.cross { color: var(–text-muted); }
-
-/* ═══ PRICING ═══ */
-#pricing { background: var(–surface); }
-
-.pricing-toggle {
-display: flex;
-gap: 0;
-border: 1px solid var(–border);
-width: fit-content;
-margin-bottom: 48px;
-}
-
-.pricing-toggle button {
-background: none;
-border: none;
-padding: 10px 24px;
-font-family: var(–mono);
-font-size: 11px;
-letter-spacing: 0.15em;
-text-transform: uppercase;
-cursor: pointer;
-color: var(–text-dim);
-transition: all 0.2s;
-}
-
-.pricing-toggle button.active {
-background: var(–red);
-color: var(–text);
-}
-
-.pricing-grid {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-gap: 1px;
-background: var(–border);
-border: 1px solid var(–border);
-}
-
-.pricing-card {
-background: var(–surface2);
-padding: 32px;
-position: relative;
-}
-
-.pricing-card.featured {
-background: var(–surface);
-border-top: 3px solid var(–red);
-}
-
-.pricing-tier {
-font-size: 10px;
-letter-spacing: 0.3em;
-text-transform: uppercase;
-color: var(–text-muted);
-margin-bottom: 8px;
-}
-
-.pricing-price {
-font-family: var(–display);
-font-size: 48px;
-letter-spacing: 0.02em;
-line-height: 1;
-margin-bottom: 4px;
-}
-
-.pricing-price span {
-font-family: var(–mono);
-font-size: 14px;
-color: var(–text-dim);
-}
-
-.pricing-note {
-font-size: 10px;
-color: var(–text-muted);
-margin-bottom: 24px;
-min-height: 16px;
-}
-
-.pricing-features {
-list-style: none;
-display: flex;
-flex-direction: column;
-gap: 8px;
-margin-bottom: 28px;
-}
-
-.pricing-features li {
-font-size: 12px;
-color: var(–text-dim);
-display: flex;
-gap: 8px;
-align-items: flex-start;
-}
-
-.pricing-features li::before {
-content: ‘—’;
-color: var(–red-dim);
-flex-shrink: 0;
-}
-
-.pricing-cta {
-width: 100%;
-padding: 12px;
-font-family: var(–mono);
-font-size: 11px;
-letter-spacing: 0.15em;
-text-transform: uppercase;
-cursor: pointer;
-background: transparent;
-border: 1px solid var(–border);
-color: var(–text-dim);
-transition: all 0.2s;
-}
-
-.pricing-cta:hover { border-color: var(–text-dim); color: var(–text); }
-.pricing-card.featured .pricing-cta { background: var(–red); border-color: var(–red); color: var(–text); }
-.pricing-card.featured .pricing-cta:hover { background: var(–red-bright); }
-
-/* ═══ FEATURE VOTING ═══ */
-#vote { background: var(–bg); }
-
-.vote-grid {
-display: flex;
-flex-direction: column;
-gap: 1px;
-background: var(–border);
-border: 1px solid var(–border);
-margin-top: 48px;
-}
-
-.vote-item {
-background: var(–surface);
-padding: 20px 24px;
-display: grid;
-grid-template-columns: 1fr auto;
-align-items: center;
-gap: 24px;
-transition: background 0.2s;
-}
-.vote-item:hover { background: var(–surface2); }
-
-.vote-name {
-font-family: var(–display);
-font-size: 18px;
-letter-spacing: 0.05em;
-margin-bottom: 4px;
-}
-
-.vote-desc { font-size: 11px; color: var(–text-dim); }
-
-.vote-btn {
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 4px;
-background: var(–surface2);
-border: 1px solid var(–border);
-padding: 10px 20px;
-cursor: pointer;
-transition: all 0.2s;
-font-family: var(–mono);
-}
-.vote-btn:hover { border-color: var(–red-dim); }
-.vote-btn.voted { border-color: var(–red); background: rgba(192,57,43,0.1); }
-
-.vote-count {
-font-family: var(–display);
-font-size: 22px;
-color: var(–text);
-}
-
-.vote-label { font-size: 9px; letter-spacing: 0.2em; color: var(–text-muted); }
-
-.vote-submit {
-margin-top: 24px;
-display: flex;
-gap: 0;
-}
-
-.vote-submit input {
-flex: 1;
-background: var(–surface);
-border: 1px solid var(–border);
-border-right: none;
-padding: 12px 16px;
-font-family: var(–mono);
-font-size: 12px;
-color: var(–text);
-outline: none;
-}
-.vote-submit input:focus { border-color: var(–red-dim); }
-.vote-submit input::placeholder { color: var(–text-muted); }
-
-.vote-submit button {
-background: var(–red);
-border: none;
-padding: 12px 24px;
-font-family: var(–mono);
-font-size: 11px;
-letter-spacing: 0.15em;
-text-transform: uppercase;
-color: var(–text);
-cursor: pointer;
-transition: background 0.2s;
-}
-.vote-submit button:hover { background: var(–red-bright); }
-
-/* ═══ SUPPORT ═══ */
-#support { background: var(–surface); }
-
-.support-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 24px;
-margin-top: 48px;
-}
-
-@media (max-width: 600px) { .support-grid { grid-template-columns: 1fr; } }
-
-.support-card {
-border: 1px solid var(–border);
-padding: 28px;
-}
-
-.support-title {
-font-family: var(–display);
-font-size: 22px;
-letter-spacing: 0.05em;
-margin-bottom: 12px;
-}
-
-.support-desc {
-color: var(–text-dim);
-font-size: 12px;
-line-height: 1.7;
-margin-bottom: 20px;
-}
-
-.support-links {
-display: flex;
-flex-direction: column;
-gap: 8px;
-}
-
-.support-link {
-display: block;
-padding: 10px 16px;
-border: 1px solid var(–border);
-color: var(–text-dim);
-text-decoration: none;
-font-size: 11px;
-letter-spacing: 0.1em;
-transition: all 0.2s;
-}
-.support-link:hover { border-color: var(–red-dim); color: var(–text); }
-
-/* ═══ WAITLIST ═══ */
-#waitlist {
-background: var(–bg);
-text-align: center;
-padding: 120px 24px;
-}
-
-.waitlist-form {
-display: flex;
-gap: 0;
-max-width: 480px;
-margin: 40px auto 0;
-}
-
-.waitlist-form input {
-flex: 1;
-background: var(–surface);
-border: 1px solid var(–border);
-border-right: none;
-padding: 14px 20px;
-font-family: var(–mono);
-font-size: 12px;
-color: var(–text);
-outline: none;
-}
-.waitlist-form input:focus { border-color: var(–red-dim); }
-.waitlist-form input::placeholder { color: var(–text-muted); }
-
-.waitlist-form button {
-background: var(–red);
-border: none;
-padding: 14px 28px;
-font-family: var(–mono);
-font-size: 11px;
-letter-spacing: 0.2em;
-text-transform: uppercase;
-color: var(–text);
-cursor: pointer;
-transition: background 0.2s;
-white-space: nowrap;
-}
-.waitlist-form button:hover { background: var(–red-bright); }
-
-.waitlist-note {
-margin-top: 16px;
-font-size: 11px;
-color: var(–text-muted);
-}
-
-.waitlist-success {
-display: none;
-margin-top: 16px;
-color: #27AE60;
-font-size: 12px;
-letter-spacing: 0.1em;
-}
-
-/* ═══ FOOTER ═══ */
-footer {
-border-top: 1px solid var(–border);
-padding: 32px;
-text-align: center;
-font-size: 10px;
-letter-spacing: 0.2em;
-color: var(–text-muted);
-}
-
-/* ═══ ANIMATIONS ═══ */
-@keyframes fadeUp {
-from { opacity: 0; transform: translateY(20px); }
-to { opacity: 1; transform: translateY(0); }
-}
-
-.fade-up { animation: fadeUp 0.6s ease forwards; }
-.fade-up-2 { animation: fadeUp 0.6s 0.1s ease forwards; opacity: 0; }
-.fade-up-3 { animation: fadeUp 0.6s 0.2s ease forwards; opacity: 0; }
-.fade-up-4 { animation: fadeUp 0.6s 0.3s ease forwards; opacity: 0; }
+:root{
+  --red:#FF2D2D;--red-dim:#C0392B;--red-dark:#7B241C;
+  --gold:#D4A843;--gold-dim:rgba(212,168,67,.12);
+  --blue:#2E86AB;--cyan:#48CAE4;
+  --bg:#0A0807;--surf:#141210;--surf2:#1C1917;
+  --border:#2A2520;--muted:#8A8178;--dim:#4A4540;
+  --text:#F5F0EB;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:16px;line-height:1.5;overflow-x:hidden}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes glow{0%,100%{text-shadow:0 0 20px rgba(255,45,45,.4)}50%{text-shadow:0 0 50px rgba(255,45,45,.9),0 0 100px rgba(255,45,45,.3)}}
+@keyframes scanline{0%{transform:translateY(-100vh)}100%{transform:translateY(100vh)}}
+@keyframes fadein{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes thread{from{stroke-dashoffset:1000}to{stroke-dashoffset:0}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(42,37,32,.8);backdrop-filter:blur(12px);background:rgba(10,8,7,.85)}
+.nav-logo{font-family:‘Oswald’,sans-serif;font-size:16px;font-weight:700;letter-spacing:.15em;color:var(–red);text-transform:uppercase;text-decoration:none}
+.nav-links{display:flex;align-items:center;gap:20px}
+.nav-link{font-family:‘DM Mono’,monospace;font-size:10px;letter-spacing:.12em;color:var(–muted);text-decoration:none;text-transform:uppercase;transition:color .2s}
+.nav-link:hover{color:var(–text)}
+.nav-cta{background:var(–red-dim);border:none;color:var(–text);font-family:‘Oswald’,sans-serif;font-size:12px;font-weight:600;letter-spacing:.15em;padding:8px 18px;cursor:pointer;text-transform:uppercase;text-decoration:none;transition:background .2s}
+.nav-cta:hover{background:var(–red)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:100px 20px 60px;text-align:center;position:relative;overflow:hidden}
+#hero::before{content:’’;position:absolute;top:0;left:-50%;width:200%;height:1px;background:linear-gradient(90deg,transparent,var(–red),transparent);animation:scanline 6s linear infinite;opacity:.25}
+.hero-badge{font-family:‘DM Mono’,monospace;font-size:9px;letter-spacing:.3em;color:var(–red);border:1px solid var(–red-dark);padding:5px 16px;display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;margin-bottom:24px;animation:fadein .6s ease-out}
+.hero-badge::before{content:’’;width:5px;height:5px;border-radius:50%;background:var(–red);animation:pulse 1.5s infinite}
+.hero-pre{font-family:‘Rajdhani’,sans-serif;font-weight:300;font-size:15px;color:var(–muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;animation:fadein .7s ease-out}
+.hero-title{font-family:‘Oswald’,sans-serif;font-weight:700;font-size:clamp(64px,16vw,140px);letter-spacing:.04em;line-height:.85;text-transform:uppercase;margin-bottom:6px;animation:fadein .8s ease-out}
+.hero-title .t1{color:var(–text);display:block}
+.hero-title .t2{color:var(–red);display:block;animation:glow 3s ease-in-out infinite}
+.hero-title .t3{color:var(–text);font-size:.45em;font-weight:300;letter-spacing:.18em;display:block;margin-top:8px}
+.hero-rule{width:min(400px,80%);height:1px;background:linear-gradient(90deg,transparent,var(–red),transparent);margin:24px auto;animation:fadein .9s ease-out}
+.hero-tagline{font-family:‘Rajdhani’,sans-serif;font-weight:400;font-size:clamp(16px,3vw,20px);color:var(–muted);max-width:520px;line-height:1.65;margin-bottom:10px;animation:fadein 1s ease-out}
+.hero-tagline strong{color:var(–text);font-weight:600}
+.hero-sub{font-family:‘DM Mono’,monospace;font-size:11px;color:var(–dim);letter-spacing:.1em;margin-bottom:36px;animation:fadein 1.1s ease-out}
+.hero-btns{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;max-width:320px;animation:fadein 1.2s ease-out}
+.btn-primary{background:var(–red);border:none;color:var(–text);font-family:‘Oswald’,sans-serif;font-size:14px;font-weight:600;letter-spacing:.2em;padding:15px 36px;cursor:pointer;width:100%;text-transform:uppercase;transition:all .2s;position:relative;overflow:hidden}
+.btn-primary::after{content:’’;position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);transform:translateX(-100%);transition:transform .4s}
+.btn-primary:hover::after{transform:translateX(100%)}
+.btn-primary:hover{background:#E03030}
+.btn-secondary{background:none;border:1px solid var(–border);color:var(–muted);font-family:‘Oswald’,sans-serif;font-size:13px;font-weight:500;letter-spacing:.15em;padding:13px 36px;cursor:pointer;width:100%;text-transform:uppercase;transition:all .2s}
+.btn-secondary:hover{border-color:var(–muted);color:var(–text)}
+.hero-founding{background:var(–gold-dim);border:1px solid var(–gold);padding:10px 16px;text-align:center;margin-top:6px;animation:fadein 1.3s ease-out}
+.hero-founding-text{font-family:‘Oswald’,sans-serif;font-size:11px;font-weight:600;letter-spacing:.12em;color:var(–gold);text-transform:uppercase}
+.hero-founding-sub{font-family:‘DM Mono’,monospace;font-size:9px;color:var(–muted);margin-top:2px}
+
+/* MODES */
+#modes{padding:80px 20px;max-width:700px;margin:0 auto}
+.section-kicker{font-family:‘DM Mono’,monospace;font-size:8px;letter-spacing:.3em;color:var(–red);text-transform:uppercase;border-top:2px solid var(–red);padding-top:4px;display:inline-block;margin-bottom:14px}
+.section-title{font-family:‘Oswald’,sans-serif;font-weight:700;font-size:clamp(32px,7vw,52px);letter-spacing:.04em;text-transform:uppercase;line-height:.95;margin-bottom:10px}
+.section-sub{font-family:‘Rajdhani’,sans-serif;font-weight:400;font-size:16px;color:var(–muted);max-width:500px;line-height:1.6;margin-bottom:40px}
+.mode-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.mode-cards{grid-template-columns:1fr}}
+.mode-card{border:1px solid var(–border);padding:22px;transition:all .25s;cursor:default}
+.mode-card.inv{background:var(–surf)}
+.mode-card.res{background:#0D1117}
+.mode-card.inv:hover{border-color:var(–red);box-shadow:0 0 24px rgba(255,45,45,.1)}
+.mode-card.res:hover{border-color:var(–blue);box-shadow:0 0 24px rgba(46,134,171,.1)}
+.mode-icon{font-size:30px;margin-bottom:12px}
+.mode-name{font-family:‘Oswald’,sans-serif;font-size:20px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.mode-card.inv .mode-name{color:var(–red)}
+.mode-card.res .mode-name{color:var(–blue)}
+.mode-desc{font-family:‘Rajdhani’,sans-serif;font-weight:400;font-size:14px;color:var(–muted);line-height:1.55;margin-bottom:14px}
+.mode-tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-family:‘DM Mono’,monospace;font-size:8px;letter-spacing:.08em;padding:2px 7px;border:1px solid var(–border);color:var(–dim)}
+.mode-card.inv .tag{border-color:var(–red-dark);color:var(–red)}
+.mode-card.res .tag{border-color:#1E4A6A;color:var(–blue)}
+
+/* FEATURES */
+#features{padding:80px 20px;max-width:700px;margin:0 auto}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.feat-grid{grid-template-columns:1fr}}
+.feat{border:1px solid var(–border);padding:18px;background:var(–surf);transition:border-color .2s}
+.feat:hover{border-color:var(–muted)}
+.feat-icon{font-size:22px;margin-bottom:8px}
+.feat-name{font-family:‘Oswald’,sans-serif;font-size:15px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px;color:var(–text)}
+.feat-desc{font-family:‘Rajdhani’,sans-serif;font-size:13px;color:var(–muted);line-height:1.5}
+.feat-new{display:inline-block;font-family:‘DM Mono’,monospace;font-size:7px;letter-spacing:.12em;padding:1px 5px;background:rgba(255,45,45,.1);border:1px solid var(–red-dark);color:var(–red);margin-left:6px;vertical-align:middle}
+
+/* SPOOL */
+#spool{padding:80px 20px;max-width:700px;margin:0 auto}
+.spool-box{border:1px solid var(–border);background:var(–surf);padding:28px;position:relative;overflow:hidden}
+.spool-box::before{content:‘🧵’;position:absolute;right:-10px;top:-10px;font-size:80px;opacity:.06;transform:rotate(-15deg)}
+.spool-url{font-family:‘Special Elite’,cursive;font-size:18px;color:var(–red);margin-bottom:8px}
+.spool-desc{font-family:‘Rajdhani’,sans-serif;font-size:15px;color:var(–muted);line-height:1.6;margin-bottom:18px}
+.spool-features{display:flex;flex-direction:column;gap:8px}
+.spool-feat{display:flex;align-items:flex-start;gap:10px;font-family:‘Rajdhani’,sans-serif;font-size:14px;color:var(–muted)}
+.spool-feat::before{content:‘🧵’;flex-shrink:0;font-size:12px;margin-top:2px}
+
+/* PRICING */
+#pricing{padding:80px 20px;max-width:700px;margin:0 auto}
+.pricing-toggle{display:flex;gap:0;margin-bottom:28px;border:1px solid var(–border);width:fit-content}
+.ptog{background:none;border:none;color:var(–muted);font-family:‘Oswald’,sans-serif;font-size:11px;font-weight:600;letter-spacing:.12em;padding:8px 18px;cursor:pointer;text-transform:uppercase;transition:all .2s}
+.ptog.active{background:var(–red-dim);color:var(–text)}
+.ptog-save{color:var(–gold);font-size:9px;margin-left:4px}
+.tier-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.tier-grid{grid-template-columns:1fr}}
+.tier{border:1px solid var(–border);padding:18px;background:var(–surf);transition:border-color .2s}
+.tier:hover{border-color:var(–muted)}
+.tier.pop{border-color:var(–red);position:relative}
+.tier-tag{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(–red);color:var(–text);font-family:‘Oswald’,sans-serif;font-size:8px;font-weight:600;letter-spacing:.12em;padding:2px 10px;white-space:nowrap;text-transform:uppercase}
+.tier-name{font-family:‘Oswald’,sans-serif;font-size:16px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
+.tier.pop .tier-name{color:var(–red)}
+.tier-price{font-family:‘Oswald’,sans-serif;font-size:26px;font-weight:700;color:var(–text);line-height:1}
+.tier-price span{font-family:‘DM Mono’,monospace;font-size:11px;color:var(–muted)}
+.tier-billed{font-family:‘DM Mono’,monospace;font-size:9px;color:var(–dim);margin-top:2px;display:none}
+.tier-feats{font-family:‘Rajdhani’,sans-serif;font-size:13px;color:var(–muted);line-height:1.7;margin-top:10px}
+.tier-lifetime{border:1px solid var(–gold);padding:18px;background:rgba(212,168,67,.04);margin-top:10px}
+.tier-lifetime .tier-name{color:var(–gold)}
+.tier-lifetime .tier-price{color:var(–gold)}
+.founding-banner{background:var(–gold-dim);border:1px solid var(–gold);padding:12px 16px;margin-bottom:20px;text-align:center}
+.founding-title{font-family:‘Oswald’,sans-serif;font-size:13px;font-weight:600;letter-spacing:.12em;color:var(–gold);text-transform:uppercase;margin-bottom:3px}
+.founding-sub{font-family:‘DM Mono’,monospace;font-size:9px;color:var(–muted)}
+.addons-title{font-family:‘Oswald’,sans-serif;font-size:13px;font-weight:600;letter-spacing:.15em;color:var(–dim);text-transform:uppercase;margin:18px 0 8px}
+.addons-list{font-family:‘DM Mono’,monospace;font-size:10px;color:var(–muted);line-height:2}
+
+/* BETA SIGNUP */
+#beta{padding:80px 20px;max-width:700px;margin:0 auto}
+.beta-box{border:1px solid var(–red-dark);background:rgba(255,45,45,.03);padding:32px}
+.beta-title{font-family:‘Oswald’,sans-serif;font-size:clamp(28px,6vw,44px);font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px}
+.beta-title span{color:var(–red)}
+.beta-sub{font-family:‘Rajdhani’,sans-serif;font-size:15px;color:var(–muted);margin-bottom:6px;line-height:1.6}
+.beta-perks{display:flex;flex-direction:column;gap:6px;margin-bottom:24px}
+.beta-perk{display:flex;align-items:center;gap:8px;font-family:‘Rajdhani’,sans-serif;font-size:14px;color:var(–muted)}
+.beta-perk::before{content:‘✓’;color:var(–red);font-family:‘Oswald’,sans-serif;font-weight:700;flex-shrink:0}
+.beta-form{display:flex;flex-direction:column;gap:10px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.form-row{grid-template-columns:1fr}}
+.form-input{background:var(–surf2);border:1px solid var(–border);color:var(–text);font-family:‘Rajdhani’,sans-serif;font-size:15px;padding:12px 14px;outline:none;transition:border-color .2s;width:100%}
+.form-input::placeholder{color:var(–dim)}
+.form-input:focus{border-color:var(–red)}
+.form-select{background:var(–surf2);border:1px solid var(–border);color:var(–text);font-family:‘Rajdhani’,sans-serif;font-size:15px;padding:12px 14px;outline:none;width:100%;appearance:none;cursor:pointer}
+.form-select:focus{border-color:var(–red)}
+.form-note{font-family:‘DM Mono’,monospace;font-size:9px;color:var(–dim);letter-spacing:.08em}
+.beta-success{display:none;text-align:center;padding:24px}
+.beta-success-icon{font-size:40px;margin-bottom:12px}
+.beta-success-title{font-family:‘Oswald’,sans-serif;font-size:22px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(–red);margin-bottom:6px}
+.beta-success-sub{font-family:‘Rajdhani’,sans-serif;font-size:14px;color:var(–muted);line-height:1.6}
+
+/* REFERRAL */
+#referral{padding:80px 20px;max-width:700px;margin:0 auto}
+.ref-box{border:1px solid var(–border);background:var(–surf);padding:28px}
+.ref-tiers{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.ref-tier{display:flex;align-items:flex-start;gap:14px;border:1px solid var(–border);padding:14px;background:var(–surf2)}
+.ref-tier-num{font-family:‘Oswald’,sans-serif;font-size:26px;font-weight:700;color:var(–red);flex-shrink:0;line-height:1;min-width:36px}
+.ref-tier-name{font-family:‘Oswald’,sans-serif;font-size:14px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px}
+.ref-tier-desc{font-family:‘Rajdhani’,sans-serif;font-size:13px;color:var(–muted);line-height:1.5}
+.ref-leaderboard{margin-top:18px;border:1px solid var(–border);background:var(–surf2)}
+.ref-lb-hdr{padding:10px 14px;border-bottom:1px solid var(–border);font-family:‘Oswald’,sans-serif;font-size:11px;font-weight:600;letter-spacing:.15em;color:var(–dim);text-transform:uppercase}
+.ref-lb-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(–border)}
+.ref-lb-row:last-child{border-bottom:none}
+.ref-lb-rank{font-family:‘Oswald’,sans-serif;font-size:16px;font-weight:700;color:var(–dim);width:24px;flex-shrink:0}
+.ref-lb-rank.gold{color:var(–gold)}
+.ref-lb-rank.silver{color:#A8A8A8}
+.ref-lb-rank.bronze{color:#CD7F32}
+.ref-lb-name{font-family:‘DM Mono’,monospace;font-size:11px;color:var(–text);flex:1}
+.ref-lb-count{font-family:‘Oswald’,sans-serif;font-size:13px;font-weight:600;color:var(–red)}
+.ref-lb-badge{font-family:‘DM Mono’,monospace;font-size:8px;padding:1px 6px;background:var(–gold-dim);border:1px solid var(–gold);color:var(–gold)}
+
+/* SUGGESTION BOX */
+#suggest{padding:80px 20px;max-width:700px;margin:0 auto}
+.suggest-box{border:1px solid var(–border);background:var(–surf);padding:28px}
+.suggest-form{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.form-textarea{background:var(–surf2);border:1px solid var(–border);color:var(–text);font-family:‘Rajdhani’,sans-serif;font-size:15px;padding:12px 14px;outline:none;transition:border-color .2s;width:100%;resize:vertical;min-height:100px}
+.form-textarea::placeholder{color:var(–dim)}
+.form-textarea:focus{border-color:var(–red)}
+.suggest-success{display:none;padding:16px;text-align:center;border:1px solid var(–border);background:var(–surf2)}
+.suggest-success-text{font-family:‘Oswald’,sans-serif;font-size:14px;font-weight:600;letter-spacing:.07em;color:var(–red);text-transform:uppercase}
+
+/* ORIGIN */
+#origin{padding:80px 20px;max-width:600px;margin:0 auto}
+.origin-quote{border-left:3px solid var(–red);padding:16px 20px;margin-bottom:20px}
+.origin-quote-text{font-family:‘Special Elite’,cursive;font-size:clamp(15px,3vw,18px);color:var(–text);line-height:1.7;margin-bottom:8px}
+.origin-quote-attr{font-family:‘DM Mono’,monospace;font-size:9px;color:var(–dim);letter-spacing:.1em}
+.origin-body{font-family:‘Rajdhani’,sans-serif;font-size:15px;color:var(–muted);line-height:1.7}
+
+/* FOOTER */
+footer{border-top:1px solid var(–border);padding:32px 20px;max-width:700px;margin:0 auto}
+.footer-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-bottom:20px}
+.footer-logo{font-family:‘Oswald’,sans-serif;font-size:18px;font-weight:700;letter-spacing:.15em;color:var(–red);text-transform:uppercase}
+.footer-tagline{font-family:‘Special Elite’,cursive;font-size:11px;color:var(–dim);margin-top:3px}
+.footer-links{display:flex;gap:18px;flex-wrap:wrap}
+.footer-link{font-family:‘DM Mono’,monospace;font-size:9px;letter-spacing:.1em;color:var(–dim);text-decoration:none;text-transform:uppercase;transition:color .2s}
+.footer-link:hover{color:var(–text)}
+.footer-bottom{border-top:1px solid var(–border);padding-top:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-copy{font-family:‘DM Mono’,monospace;font-size:9px;color:var(–dim);letter-spacing:.08em}
+.footer-built{font-family:‘Special Elite’,cursive;font-size:10px;color:var(–dim)}
+
+/* UTILS */
+.container{max-width:700px;margin:0 auto;padding:0 20px}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(–border),transparent);margin:0 20px}
 </style>
 
 </head>
 <body>
 
-<!-- NAV -->
-
 <nav>
-  <a href="#" class="nav-logo">RED STRING<span>RESEARCH</span></a>
+  <a href="javascript:void(0)" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="nav-logo">Red String Research</a>
   <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#security">Security</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#vote">Roadmap</a>
-    <a href="#support">Support</a>
+    <a href="javascript:void(0)" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})" class="nav-link">Features</a>
+    <a href="javascript:void(0)" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})" class="nav-link">Pricing</a>
+    <a href="javascript:void(0)" onclick="document.getElementById('beta').scrollIntoView({behavior:'smooth'})" class="nav-cta">Join Beta</a>
   </div>
-  <a href="#waitlist" class="nav-cta">Get Early Access</a>
 </nav>
 
 <!-- HERO -->
 
-<section class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-vignette"></div>
-
-  <svg class="hero-string" viewBox="0 0 1200 800" preserveAspectRatio="none">
-    <path d="M 100 200 Q 400 100 700 350 Q 900 500 1100 200" stroke="#C0392B" stroke-width="0.5" fill="none" opacity="0.15"/>
-    <path d="M 50 600 Q 300 300 600 500 Q 800 650 1150 400" stroke="#C0392B" stroke-width="0.5" fill="none" opacity="0.1"/>
-    <path d="M 200 100 Q 500 400 900 150 Q 1050 50 1180 300" stroke="#C0392B" stroke-width="0.3" fill="none" opacity="0.08"/>
-    <circle cx="100" cy="200" r="4" fill="#C0392B" opacity="0.3"/>
-    <circle cx="700" cy="350" r="4" fill="#C0392B" opacity="0.3"/>
-    <circle cx="1100" cy="200" r="4" fill="#C0392B" opacity="0.3"/>
-    <circle cx="600" cy="500" r="4" fill="#C0392B" opacity="0.2"/>
-    <circle cx="300" cy="300" r="3" fill="#D4A843" opacity="0.25"/>
-    <circle cx="900" cy="150" r="3" fill="#D4A843" opacity="0.25"/>
-  </svg>
-
-  <div class="hero-badge fade-up">● Independent Investigative Platform ●</div>
-  <h1 class="hero-title fade-up-2">RED<br><span>STRING</span></h1>
-  <div class="hero-subtitle-word fade-up-3">RESEARCH</div>
-  <p class="hero-desc fade-up-3">The mobile-first investigation workspace for citizen researchers, independent journalists, and truth-seekers. Build cases. Connect evidence. Broadcast live.</p>
-  <div class="hero-actions fade-up-4">
-    <a href="#waitlist" class="btn-primary">Get Early Access</a>
-    <a href="#features" class="btn-secondary">See How It Works</a>
+<section id="hero">
+  <div class="hero-badge">● Now in Beta — TestFlight Available</div>
+  <div class="hero-pre">For the ones who need to know</div>
+  <h1 class="hero-title">
+    <span class="t1">RED</span>
+    <span class="t2">STRING</span>
+    <span class="t3">Research</span>
+  </h1>
+  <div class="hero-rule"></div>
+  <p class="hero-tagline">
+    You have the facts. You know the things.<br>
+    <strong>Now connect them.</strong><br>
+    For rabbit holers, dot connectors, hyperfixaters,<br>research nerds &amp; neurospicy deep divers.
+  </p>
+  <p class="hero-sub">Mobile-first investigation + research workspace · iOS</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('beta').scrollIntoView({behavior:'smooth'})">Join the Beta →</button>
+    <a href="demo.html" class="btn-secondary" style="display:block;text-align:center;text-decoration:none;color:var(--muted);font-family:'Oswald',sans-serif;font-size:13px;font-weight:500;letter-spacing:.15em;padding:13px 36px;border:1px solid var(--border);transition:all .2s">See the Demo →</a>
+    <div class="hero-founding">
+      <div class="hero-founding-text">★ Beta Founding Member — $7.99/mo locked forever</div>
+      <div class="hero-founding-sub">TestFlight only · Disappears at App Store launch · Limited spots</div>
+    </div>
   </div>
 </section>
+
+<div class="divider"></div>
+
+<!-- MODES -->
+
+<section id="modes">
+  <div class="section-kicker">Two Modes. One Tool.</div>
+  <h2 class="section-title">Built for every<br>kind of deep dive</h2>
+  <p class="section-sub">Whether you're connecting evidence or synthesizing sources — Red String gives your research a home.</p>
+  <div class="mode-cards">
+    <div class="mode-card inv">
+      <div class="mode-icon">🕵️</div>
+      <div class="mode-name">Investigation Board</div>
+      <p class="mode-desc">Connect evidence, track leads, build a case. Red strings. Gold pins. Tips inbox. Forensic timeline. War Room.</p>
+      <div class="mode-tags">
+        <span class="tag">Citizen Journalists</span>
+        <span class="tag">Truth Seekers</span>
+        <span class="tag">FOIA Researchers</span>
+        <span class="tag">Podcasters</span>
+      </div>
+    </div>
+    <div class="mode-card res">
+      <div class="mode-icon">🔍</div>
+      <div class="mode-name">Research Board</div>
+      <p class="mode-desc">Organize sources, map connections, synthesize findings. Blue connections. Mama Bear AI. Research Report export.</p>
+      <div class="mode-tags">
+        <span class="tag">Students</span>
+        <span class="tag">Parents</span>
+        <span class="tag">Doctors</span>
+        <span class="tag">Deep Learners</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
 
 <!-- FEATURES -->
 
 <section id="features">
-  <div class="container">
-    <div class="section-label">What's Built</div>
-    <h2 class="section-title">BUILT FOR<br>SERIOUS RESEARCH</h2>
-    <p class="section-desc">Every feature designed by a citizen investigator, for citizen investigators. No fluff. No corporate gatekeeping.</p>
-
-```
-<div class="features-grid">
-
-  <div class="feature-card live">
-    <span class="feature-icon">🕸️</span>
-    <div class="feature-name">VISUAL CANVAS</div>
-    <p class="feature-desc">Drag-and-drop corkboard with bezier red strings, color-coded nodes, gold pushpins. Your investigation as a living map.</p>
-  </div>
-
-  <div class="feature-card live">
-    <span class="feature-icon">🤖</span>
-    <div class="feature-name">AI RESEARCH ASSISTANT</div>
-    <p class="feature-desc">6 investigator personas — Detective, Interrogator, Analyst, Journalist, Archivist, Informant. Each thinks differently. All work your case.</p>
-  </div>
-
-  <div class="feature-card new">
-    <span class="feature-icon">🎙️</span>
-    <div class="feature-name">VOICE CANVAS CONTROL</div>
-    <p class="feature-desc">Speak to your canvas and it acts. "Connect Epstein to Maxwell — label it handler." The AI executes. No tapping required. Nothing like it exists.</p>
-  </div>
-
-  <div class="feature-card new">
-    <span class="feature-icon">📡</span>
-    <div class="feature-name">AI LIVE PRESENTATION</div>
-    <p class="feature-desc">You speak. The canvas moves for your audience in real time. AI narrates in your chosen persona voice. A documentary that builds itself live.</p>
-  </div>
-
-  <div class="feature-card live">
-    <span class="feature-icon">🎥</span>
-    <div class="feature-name">WAR ROOM</div>
-    <p class="feature-desc">Real-time encrypted video collaboration. Multiple investigators on the same canvas simultaneously. Secure. Logged. Controlled.</p>
-  </div>
-
-  <div class="feature-card new">
-    <span class="feature-icon">📺</span>
-    <div class="feature-name">LIVE MULTISTREAM</div>
-    <p class="feature-desc">Stream your investigation live to YouTube, Twitch, and TikTok simultaneously. Face cam overlay on canvas. Record locally. Your research as content.</p>
-  </div>
-
-  <div class="feature-card new">
-    <span class="feature-icon">⏱️</span>
-    <div class="feature-name">FORENSIC TIMELINE</div>
-    <p class="feature-desc">Plot events to the second. Drag evidence onto a scrollable timeline. AI detects gaps, flags impossibilities, identifies patterns. Year to minute granularity.</p>
-  </div>
-
-  <div class="feature-card new">
-    <span class="feature-icon">🔗</span>
-    <div class="feature-name">CHAIN OF CUSTODY</div>
-    <p class="feature-desc">Every node has a full provenance trail. Who found it. Who verified it. Every hand-off timestamped. Exportable as a legal-style custody document.</p>
-  </div>
-
-  <div class="feature-card new">
-    <span class="feature-icon">🏅</span>
-    <div class="feature-name">CONTRIBUTOR CREDITS</div>
-    <p class="feature-desc">Citizen researchers get credited permanently. Tips, nodes, connections — all attributed. The first tool that protects your research identity and contribution.</p>
-  </div>
-
-  <div class="feature-card live">
-    <span class="feature-icon">📬</span>
-    <div class="feature-name">ANONYMOUS TIPS INBOX</div>
-    <p class="feature-desc">Your personal tip URL: redstring.app/tip/username. Say it on your podcast. Encrypted. AI-vetted. Anonymous. No IP stored. Ever.</p>
-  </div>
-
-  <div class="feature-card new">
-    <span class="feature-icon">🎞️</span>
-    <div class="feature-name">INVESTIGATION PRESENTATION</div>
-    <p class="feature-desc">Auto-generate a full slide deck from your canvas. Reorder manually. Export as PDF, PowerPoint, or a password-protected shareable link.</p>
-  </div>
-
-  <div class="feature-card live">
-    <span class="feature-icon">📋</span>
-    <div class="feature-name">INTELLIGENCE DOSSIER</div>
-    <p class="feature-desc">Classified-style PDF export with cover sheet, entity profiles, evidence section, timeline, contributor credits, and chain of custody appendix.</p>
-  </div>
-
-  <div class="feature-card new">
-    <span class="feature-icon">🔍</span>
-    <div class="feature-name">TRACE A LEAK</div>
-    <p class="feature-desc">Every export is forensically watermarked. If your investigation leaks, upload the document and Red String identifies exactly who shared it and when.</p>
-  </div>
-
-  <div class="feature-card new">
-    <span class="feature-icon">🤝</span>
-    <div class="feature-name">AI SUPPORT AGENT</div>
-    <p class="feature-desc">24/7 AI customer support trained on Red String's full feature set. Resolves most questions instantly. Escalates to Jess when it can't.</p>
-  </div>
-
-  <div class="feature-card live">
-    <span class="feature-icon">📊</span>
-    <div class="feature-name">DATASET AI</div>
-    <p class="feature-desc">Upload your own documents. AI reads only what you give it and cites specific pages. No hallucinations. Your evidence, analyzed privately.</p>
-  </div>
-
-</div>
-```
-
+  <div class="section-kicker">Feature Set</div>
+  <h2 class="section-title">Everything you need<br>to pull the thread</h2>
+  <p class="section-sub">Built for serious researchers. Designed for people who can't stop until they have the full picture.</p>
+  <div class="feat-grid">
+    <div class="feat">
+      <div class="feat-icon">📌</div>
+      <div class="feat-name">Visual Canvas</div>
+      <p class="feat-desc">Nodes, connections, and strings on an infinite canvas. Connect any two pieces of information with a labeled thread.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">🤖</div>
+      <div class="feat-name">10 AI Personas <span class="feat-new">NEW</span></div>
+      <p class="feat-desc">Detective, Mama Bear, Scholar, Verify Val, Alice the Rabbit Holer and more. Each with a distinct research voice.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">🎙️</div>
+      <div class="feat-name">Voice Notes <span class="feat-new">NEW</span></div>
+      <p class="feat-desc">Record a voice note on any node. Auto-transcribed by Groq Whisper, AI-summarized, and connected to related nodes.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">📬</div>
+      <div class="feat-name">Tips Inbox</div>
+      <p class="feat-desc">Public tip URL live the moment you sign up. Name and contact required. AI vets every submission. E2E encrypted.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">🔐</div>
+      <div class="feat-name">Forensic Watermark</div>
+      <p class="feat-desc">Every export invisibly watermarked. If your work leaks, Red String identifies exactly who shared it and when.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">👻</div>
+      <div class="feat-name">Invisible Ink</div>
+      <p class="feat-desc">Sensitive nodes appear blank. Hold to reveal. Release and they vanish. Nobody glancing at your screen sees a thing.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">📅</div>
+      <div class="feat-name">Forensic Timeline</div>
+      <p class="feat-desc">AI auto-detects timeline gaps and impossibilities. Granularity from year to second. Drag-and-drop node placement.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">🤝</div>
+      <div class="feat-name">Collaboration</div>
+      <p class="feat-desc">4 permission levels: Viewer, Annotator, Contributor, Co-Investigator. Pending node approval queue. Full audit log.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">🎭</div>
+      <div class="feat-name">Decoy Mode</div>
+      <p class="feat-desc">Wrong PIN opens a fake notes app. All boards completely hidden. Your work is invisible to anyone who shouldn't see it.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">📡</div>
+      <div class="feat-name">Live Presentation</div>
+      <p class="feat-desc">AI-directed live canvas presentation. Speak to direct your board in real time for thousands of viewers.</p>
+    </div>
   </div>
 </section>
 
-<!-- VOICE CANVAS -->
+<div class="divider"></div>
 
-<section class="voice-canvas-section">
-  <div class="container">
-    <div class="section-label">Killer Feature</div>
-    <h2 class="section-title">SPEAK.<br>THE CANVAS MOVES.</h2>
-    <p class="section-desc">Voice-directed AI canvas control. You give the directive. The AI executes it on your board in real time. Nothing like this exists anywhere.</p>
+<!-- THE SPOOL -->
 
-```
-<div class="voice-demo">
-  <div class="voice-commands">
-    <div class="voice-cmd">
-      <span class="voice-cmd-icon">🎙️</span>
-      <span class="voice-cmd-text">"Connect Epstein to Maxwell and label it handler"</span>
-      <span class="voice-cmd-action">→ STRING DRAWN</span>
+<section id="spool">
+  <div class="section-kicker">The Spool 🧵</div>
+  <h2 class="section-title">Pull the thread<br>with your audience</h2>
+  <p class="section-sub">Your public research page. Your community. Your tip line. All in one place.</p>
+  <div class="spool-box">
+    <div class="spool-url">redstring.app/spool/yourname</div>
+    <p class="spool-desc">When you activate The Spool, your audience can follow your public investigations and research boards, comment on your findings, submit tips directly, and get notified when you publish something new.</p>
+    <div class="spool-features">
+      <div class="spool-feat">Community comments under every public board</div>
+      <div class="spool-feat">Prominent tip submission button — straight to your inbox</div>
+      <div class="spool-feat">Follower count shown as "X pulling threads"</div>
+      <div class="spool-feat">Email notifications when you publish new findings</div>
+      <div class="spool-feat">You control which boards are public or private</div>
     </div>
-    <div class="voice-cmd">
-      <span class="voice-cmd-icon">🎙️</span>
-      <span class="voice-cmd-text">"Add a new node called Deutsche Bank and tag it financial"</span>
-      <span class="voice-cmd-action">→ NODE CREATED</span>
+    <div style="margin-top:18px;padding:12px 14px;border:1px solid var(--gold);background:var(--gold-dim);text-align:center">
+      <div style="font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;color:var(--gold);text-transform:uppercase">The Spool — $7.99/mo Add-On</div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-top:3px">Available on Investigator plan and above</div>
     </div>
-    <div class="voice-cmd">
-      <span class="voice-cmd-icon">🎙️</span>
-      <span class="voice-cmd-text">"Highlight everything connected to Little St James"</span>
-      <span class="voice-cmd-action">→ NODES HIGHLIGHTED</span>
-    </div>
-    <div class="voice-cmd">
-      <span class="voice-cmd-icon">🎙️</span>
-      <span class="voice-cmd-text">"Read the flight logs node out loud"</span>
-      <span class="voice-cmd-action">→ TTS NARRATION</span>
-    </div>
-    <div class="voice-cmd">
-      <span class="voice-cmd-icon">🎙️</span>
-      <span class="voice-cmd-text">"Move all the red nodes to the left side"</span>
-      <span class="voice-cmd-action">→ CANVAS REORGANIZED</span>
-    </div>
-    <div class="voice-cmd">
-      <span class="voice-cmd-icon">🎙️</span>
-      <span class="voice-cmd-text">"Pin this as critical evidence"</span>
-      <span class="voice-cmd-action">→ NODE PINNED</span>
-    </div>
-  </div>
-</div>
-```
-
   </div>
 </section>
 
-<!-- TIMELINE -->
-
-<section id="timeline" style="background: var(--bg);">
-  <div class="container">
-    <div class="section-label">Forensic Timeline</div>
-    <h2 class="section-title">PLOT EVERY<br>SECOND.</h2>
-    <p class="section-desc">Timestamp evidence to the second. AI flags impossibilities — same person in two locations three minutes apart. The kind of timeline that holds up.</p>
-
-```
-<div class="timeline-preview">
-  <div class="timeline-bar">
-    <div class="timeline-line"></div>
-
-    <div class="timeline-node">
-      <div class="timeline-label">Subject photographed — Location A</div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-time">12:00:00 PM<br>12/1/2024</div>
-    </div>
-
-    <div class="timeline-node">
-      <div class="timeline-label">Gas purchase — Location B</div>
-      <div class="timeline-dot flag"></div>
-      <div class="timeline-time">12:03:00 PM<br>12/1/2024</div>
-    </div>
-
-    <div class="timeline-node">
-      <div class="timeline-label" style="color: var(--red-bright);">IMPOSSIBILITY FLAG</div>
-      <div class="timeline-dot impossibility"></div>
-      <div class="timeline-time" style="color: var(--red-dim);">Same subject<br>2 locations</div>
-    </div>
-
-    <div class="timeline-node">
-      <div class="timeline-label">Flight manifest — Airport C</div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-time">2:15:00 PM<br>12/1/2024</div>
-    </div>
-
-    <div class="timeline-node">
-      <div class="timeline-label">— GAP DETECTED —</div>
-      <div class="timeline-dot" style="border-color: var(--gold); background: rgba(212,168,67,0.1);"></div>
-      <div class="timeline-time" style="color: var(--gold-dim);">AI flagged<br>3 week gap</div>
-    </div>
-
-    <div class="timeline-node">
-      <div class="timeline-label">Meeting logged — Location D</div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-time">1/22/2025</div>
-    </div>
-  </div>
-</div>
-```
-
-  </div>
-</section>
-
-<!-- CHAIN OF CUSTODY -->
-
-<section style="background: var(--surface);">
-  <div class="container">
-    <div class="section-label">Chain of Custody + Contributor Credits</div>
-    <h2 class="section-title">YOUR WORK.<br>YOUR CREDIT.</h2>
-    <p class="section-desc">The first investigation tool that permanently attributes citizen research. Every node has a full provenance trail. Your name stays on your discoveries.</p>
-
-```
-<div class="chain-preview">
-  <div style="font-size:10px; letter-spacing:0.2em; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase;">PROVENANCE — Flight Logs Node — Operation Shadow Network</div>
-
-  <div class="chain-entry">
-    <div class="chain-time">01/14/25<br>09:42 AM</div>
-    <div class="chain-dot"></div>
-    <div class="chain-detail"><strong>@citizen_researcher_jess</strong> added node via direct entry — Primary source: FOIA document #2024-DOJ-4421 — Credibility: High</div>
-  </div>
-
-  <div class="chain-entry">
-    <div class="chain-time">01/14/25<br>11:15 AM</div>
-    <div class="chain-dot" style="background: var(--gold-dim); border-color: var(--gold);"></div>
-    <div class="chain-detail"><strong>Anonymous Tip #TIP-0042</strong> corroborated with secondary source — Tip submitted via redstring.app/tip/jessmonte</div>
-  </div>
-
-  <div class="chain-entry">
-    <div class="chain-time">01/15/25<br>02:30 PM</div>
-    <div class="chain-dot"></div>
-    <div class="chain-detail"><strong>Detective AI Persona</strong> analyzed node — flagged 3 cross-references to Epstein Network investigation</div>
-  </div>
-
-  <div class="chain-entry">
-    <div class="chain-time">01/16/25<br>08:00 AM</div>
-    <div class="chain-dot" style="background: #1A4A2E; border-color: #27AE60;"></div>
-    <div class="chain-detail"><strong>Verified by @investigator_collab</strong> — cross-referenced with public record — Credibility upgraded to: Verified</div>
-  </div>
-
-  <div class="chain-entry">
-    <div class="chain-time">01/17/25<br>10:22 AM</div>
-    <div class="chain-dot" style="background: var(--surface2); border-color: var(--text-muted);"></div>
-    <div class="chain-detail">Exported in Dossier PDF — Watermark ID: WM-8821-X9K — Recipient: @journalist_contact — Via: Email</div>
-  </div>
-</div>
-```
-
-  </div>
-</section>
-
-<!-- SECURITY -->
-
-<section id="security" style="background: var(--bg);">
-  <div class="container">
-    <div class="section-label">Security Infrastructure</div>
-    <h2 class="section-title">LOCK IT<br>DOWN.</h2>
-    <p class="section-desc">Investigating powerful people requires protecting your work from them. Red String is built with that assumption from the ground up.</p>
-
-```
-<div class="security-grid">
-  <div class="security-item">
-    <div class="security-item-title">BIOMETRIC LOCK</div>
-    <div class="security-item-desc">Face ID and Touch ID on every launch. Your investigation never visible without your face or finger.</div>
-  </div>
-  <div class="security-item">
-    <div class="security-item-title">DECOY MODE</div>
-    <div class="security-item-desc">Wrong PIN shows a completely different innocent-looking app. Your real investigations are invisible.</div>
-  </div>
-  <div class="security-item">
-    <div class="security-item-title">INVISIBLE INK</div>
-    <div class="security-item-desc">Mark any node as invisible. It shows as a blank card. Content only appears while you actively hold it — release and it vanishes.</div>
-  </div>
-  <div class="security-item">
-    <div class="security-item-title">SCREENSHOT BLOCKING</div>
-    <div class="security-item-desc">Screenshots are blocked system-wide within the app. What's on your canvas stays on your canvas.</div>
-  </div>
-  <div class="security-item">
-    <div class="security-item-title">AES-256 ENCRYPTION</div>
-    <div class="security-item-desc">All investigation data encrypted at rest. Tips end-to-end encrypted — only your device can decrypt them.</div>
-  </div>
-  <div class="security-item">
-    <div class="security-item-title">FORENSIC WATERMARKING</div>
-    <div class="security-item-desc">Every export invisibly watermarked with recipient identity. If your work leaks, Red String tells you exactly who did it.</div>
-  </div>
-  <div class="security-item">
-    <div class="security-item-title">PERMISSION LAYERS</div>
-    <div class="security-item-desc">Granular control per user and per role. Who can view, save, export, screenshot, or share — all configurable per investigation.</div>
-  </div>
-  <div class="security-item">
-    <div class="security-item-title">OWNER NOTIFICATIONS</div>
-    <div class="security-item-desc">Real-time push alert every time someone views, downloads, shares, or screenshots anything in your investigation.</div>
-  </div>
-</div>
-```
-
-  </div>
-</section>
-
-<!-- BROADCAST -->
-
-<section style="background: var(--surface);">
-  <div class="container">
-    <div class="section-label">Live Operations</div>
-    <h2 class="section-title">GO LIVE.<br>BUILD THE CASE.</h2>
-    <p class="section-desc">Your investigation as live content. Your audience watching the case build in real time as you speak.</p>
-
-```
-<div class="broadcast-grid">
-  <div class="broadcast-card featured">
-    <div class="broadcast-badge">KILLER FEATURE</div>
-    <div class="broadcast-card-title">AI LIVE PRESENTATION</div>
-    <p class="broadcast-card-desc">You speak. The canvas animates for viewers. AI narrates in Detective or Analyst voice. Nodes zoom, strings draw, evidence surfaces — all live. A documentary that builds itself as you investigate out loud. Your audience has never seen anything like this.</p>
-  </div>
-
-  <div class="broadcast-card">
-    <div class="broadcast-badge">MULTISTREAM</div>
-    <div class="broadcast-card-title">STREAM EVERYWHERE</div>
-    <p class="broadcast-card-desc">One tap streams simultaneously to YouTube, Twitch, and TikTok Live. Face cam overlaid as draggable bubble on your canvas. Record locally. Stream saved automatically at end.</p>
-  </div>
-
-  <div class="broadcast-card">
-    <div class="broadcast-badge">COLLABORATION</div>
-    <div class="broadcast-card-title">WAR ROOM</div>
-    <p class="broadcast-card-desc">Encrypted video call with collaborators. Everyone on the same canvas simultaneously. Full permission control. Every action logged.</p>
-  </div>
-
-  <div class="broadcast-card">
-    <div class="broadcast-badge">PRESENTATION</div>
-    <div class="broadcast-card-title">SLIDE DECK EXPORT</div>
-    <p class="broadcast-card-desc">Auto-generate a full investigation presentation from your canvas. Reorder slides. Export as PDF or PowerPoint. Share via password-protected link with expiry date.</p>
-  </div>
-</div>
-```
-
-  </div>
-</section>
-
-<!-- ORIGIN -->
-
-<section id="origin">
-  <div class="container">
-    <div class="section-label">The Origin</div>
-    <h2 class="section-title">BORN FROM<br>THE SEARCH.</h2>
-
-```
-<div class="origin-quote">
-  <p class="origin-text">I'm a stay-at-home mom. A self-taught researcher. Someone who loves a deep dive and can't let a loose thread go. For years I followed independent investigators doing extraordinary work — connecting dots across documents, social media, and public records that mainstream outlets wouldn't touch.<br><br>The problem was always the same: the evidence lived everywhere and the workspace lived nowhere. I wanted one place where all of it could live together — organized, connected, searchable, and secure. So I built it.</p>
-  <div class="origin-attr">— JESS, CREATOR OF RED STRING RESEARCH</div>
-</div>
-
-<div class="built-for-grid">
-  <div class="built-for-item"><strong>👩‍💻 Mommy Sleuths</strong>Everyday researchers doing serious investigative work from their kitchen tables at 2am.</div>
-  <div class="built-for-item"><strong>🎙️ Independent Podcasters</strong>Citizen journalists who need a workspace as serious as their research.</div>
-  <div class="built-for-item"><strong>🔍 Truth Seekers</strong>Rabbit hole researchers, FOIA hunters, document diggers, thread-pullers.</div>
-  <div class="built-for-item"><strong>🔒 Privacy-First Researchers</strong>Anyone who needs their research to stay private, organized, and in their hands only.</div>
-</div>
-```
-
-  </div>
-</section>
-
-<!-- COMPARE -->
-
-<section id="compare">
-  <div class="container">
-    <div class="section-label">Why Red String</div>
-    <h2 class="section-title">THE TOOL<br>THAT WAS MISSING.</h2>
-
-```
-<table class="compare-table">
-  <thead>
-    <tr>
-      <th>Feature</th>
-      <th>Other Tools</th>
-      <th>Red String</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td>Visual corkboard canvas</td><td class="cross">✗</td><td class="check">✓</td></tr>
-    <tr><td>Mobile-first native app</td><td class="cross">✗</td><td class="check">✓</td></tr>
-    <tr><td>Voice-directed AI canvas control</td><td class="cross">✗</td><td class="check">✓</td></tr>
-    <tr><td>AI live presentation mode</td><td class="cross">✗</td><td class="check">✓</td></tr>
-    <tr><td>Live multistream from canvas</td><td class="cross">✗</td><td class="check">✓</td></tr>
-    <tr><td>Forensic timeline to the second</td><td class="cross">✗</td><td class="check">✓</td></tr>
-    <tr><td>Contributor credit chain</td><td class="cross">✗</td><td class="check">✓</td></tr>
-    <tr><td>Legal chain of custody export</td><td class="cross">✗</td><td class="check">✓</td></tr>
-    <tr><td>Anonymous tips inbox with tip URL</td><td class="cross">✗</td><td class="check">✓</td></tr>
-    <tr><td>Invisible ink nodes</td><td class="cross">✗</td><td class="check">✓</td></tr>
-    <tr><td>Forensic watermark + leak tracing</td><td class="cross">✗</td><td class="check">✓</td></tr>
-    <tr><td>Decoy mode</td><td class="cross">✗</td><td class="check">✓</td></tr>
-    <tr><td>Video War Room collaboration</td><td class="cross">✗</td><td class="check">✓</td></tr>
-    <tr><td>Free tier available</td><td class="check">✓</td><td class="check">✓</td></tr>
-  </tbody>
-</table>
-```
-
-  </div>
-</section>
+<div class="divider"></div>
 
 <!-- PRICING -->
 
 <section id="pricing">
-  <div class="container">
-    <div class="section-label">Access Tiers</div>
-    <h2 class="section-title">FIND YOUR<br>LEVEL.</h2>
-    <p class="section-desc">From curious to committed to outcome-driven. Every researcher has a place here.</p>
-
-```
-<div class="pricing-toggle">
-  <button class="active" onclick="setPricing('monthly', this)">Monthly</button>
-  <button onclick="setPricing('annual', this)">Annual — Save ~33%</button>
-</div>
-
-<!-- BETA FOUNDING MEMBER BANNER -->
-<div style="border: 1px solid var(--gold-dim); background: rgba(212,168,67,0.05); padding: 20px 24px; margin-bottom: 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;">
-  <div>
-    <div style="font-size:10px; letter-spacing:0.3em; color: var(--gold); margin-bottom:6px; text-transform:uppercase;">● Beta Founding Member — TestFlight Only</div>
-    <div style="font-family: var(--display); font-size: 20px; letter-spacing:0.05em; margin-bottom:4px;">$7.99/mo — Locked Forever</div>
-    <div style="font-size:11px; color: var(--text-dim);">Full Investigator access during beta. This price disappears the day the app goes live on the App Store. Never available again.</div>
+  <div class="section-kicker">Plans & Pricing</div>
+  <h2 class="section-title">Start free.<br>Go deep when ready.</h2>
+  <p class="section-sub">Cancel anytime. Restore purchases. All plans include both Investigation and Research modes.</p>
+  <div class="founding-banner">
+    <div class="founding-title">★ Beta Founding Member — TestFlight Only</div>
+    <div class="founding-sub">$7.99/mo locked forever · Disappears at App Store launch · Join the beta to claim it</div>
   </div>
-  <div style="text-align:center;">
-    <div style="font-family: var(--display); font-size:32px; color: var(--gold);">∞</div>
-    <div style="font-size:9px; letter-spacing:0.2em; color: var(--gold-dim);">FOUNDING<br>MEMBER</div>
+  <div style="display:flex;gap:0;margin-bottom:24px;border:1px solid var(--border);width:fit-content">
+    <button class="ptog active" id="ptog-mo" onclick="setPrice('mo')">Monthly</button>
+    <button class="ptog" id="ptog-yr" onclick="setPrice('yr')">Annual <span class="ptog-save">2 months free</span></button>
   </div>
-</div>
-
-<div class="pricing-grid" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
-
-  <!-- FREE -->
-  <div class="pricing-card">
-    <div class="pricing-tier">Free</div>
-    <div class="pricing-price">$0<span>/mo</span></div>
-    <div class="pricing-note">No credit card · No expiry</div>
-    <ul class="pricing-features">
-      <li>3 investigations</li>
-      <li>50 nodes each</li>
-      <li>Visual canvas + red strings</li>
-      <li>AI research chat</li>
-      <li>Anonymous tips inbox</li>
-      <li>Basic security</li>
-    </ul>
-    <button class="pricing-cta">Start Free</button>
-  </div>
-
-  <!-- RESEARCHER -->
-  <div class="pricing-card">
-    <div class="pricing-tier">Researcher</div>
-    <div class="pricing-price" id="researcher-price">$9.99<span>/mo</span></div>
-    <div class="pricing-note" id="researcher-note">Billed monthly · cancel anytime</div>
-    <ul class="pricing-features">
-      <li>25 investigations</li>
-      <li>200 nodes each</li>
-      <li>Color tags + labels</li>
-      <li>Voice canvas control</li>
-      <li>Forensic timeline</li>
-      <li>ElevenLabs AI voice</li>
-      <li>Dataset uploads</li>
-      <li>Priority AI personas</li>
-    </ul>
-    <button class="pricing-cta">Get Researcher</button>
-  </div>
-
-  <!-- INVESTIGATOR -->
-  <div class="pricing-card featured">
-    <div class="pricing-tier">★ Investigator — Most Popular</div>
-    <div class="pricing-price" id="investigator-price">$19.99<span>/mo</span></div>
-    <div class="pricing-note" id="investigator-note">Billed monthly · cancel anytime</div>
-    <ul class="pricing-features">
-      <li>Unlimited investigations</li>
-      <li>Unlimited nodes</li>
-      <li>War Room video collaboration</li>
-      <li>Live multistream (YouTube/Twitch/TikTok)</li>
-      <li>Investigation presentation + PowerPoint</li>
-      <li>Intelligence dossier PDF</li>
-      <li>Contributor credit chain</li>
-      <li>Invisible ink nodes</li>
-      <li>Early feature access</li>
-    </ul>
-    <button class="pricing-cta">Get Investigator</button>
-  </div>
-
-  <!-- PROFESSIONAL -->
-  <div class="pricing-card" style="border-top: 3px solid var(--red-bright); position:relative;">
-    <div style="position:absolute; top:-1px; left:50%; transform:translateX(-50%); background:var(--red); font-size:9px; letter-spacing:0.2em; padding:3px 12px; white-space:nowrap; color:var(--text);">OUTCOME-DRIVEN</div>
-    <div class="pricing-tier" style="margin-top:12px;">Professional</div>
-    <div class="pricing-price" id="professional-price">$49.99<span>/mo</span></div>
-    <div class="pricing-note" id="professional-note">Billed monthly · cancel anytime</div>
-    <ul class="pricing-features">
-      <li>Everything in Investigator</li>
-      <li>Legal chain of custody export</li>
-      <li>Forensic watermarking</li>
-      <li>Trace a Leak — identify leakers</li>
-      <li>AI live presentation mode</li>
-      <li>Advanced permission layers</li>
-      <li>End-to-end encrypted tips</li>
-      <li>Full viewer + share audit log</li>
-      <li>Priority support + direct escalation</li>
-    </ul>
-    <button class="pricing-cta" style="background:var(--red); border-color:var(--red); color:var(--text);">Get Professional</button>
-  </div>
-
-</div>
-
-<!-- LIFETIME -->
-<div style="border: 1px solid var(--red-dim); background: linear-gradient(135deg, var(--surface) 0%, rgba(192,57,43,0.06) 100%); padding: 32px; margin-top: 24px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center;">
-  <div>
-    <div style="font-size:10px; letter-spacing:0.3em; color: var(--red-bright); margin-bottom:8px; text-transform:uppercase;">Lifetime Access</div>
-    <div style="font-family: var(--display); font-size: 28px; letter-spacing:0.05em; margin-bottom:6px;">Professional Forever — $299.99</div>
-    <div style="font-size:12px; color: var(--text-dim); line-height:1.7; margin-bottom: 16px;">One payment. Every feature in Professional tier. Every future feature included. Never pay again. Founding member status permanently recorded in the app. For the researcher who knows this is their tool.</div>
-    <div style="display:flex; gap:16px; flex-wrap:wrap;">
-      <span style="font-size:11px; color:var(--text-dim);">✓ Professional tier forever</span>
-      <span style="font-size:11px; color:var(--text-dim);">✓ All future features</span>
-      <span style="font-size:11px; color:var(--text-dim);">✓ Founding member badge</span>
-      <span style="font-size:11px; color:var(--text-dim);">✓ Pays for itself in 6 months</span>
+  <div class="tier-grid">
+    <div class="tier">
+      <div class="tier-name">Free</div>
+      <div class="tier-price">$0</div>
+      <div class="tier-feats">3 boards · 50 tips · 500MB<br>Core AI · Basic export</div>
+    </div>
+    <div class="tier">
+      <div class="tier-name">Researcher</div>
+      <div class="tier-price" id="p-res">$9.99<span>/mo</span></div>
+      <div class="tier-billed" id="b-res">billed $79.99/yr</div>
+      <div class="tier-feats">Unlimited boards · 500 tips · 5GB<br>All AI personas · Voice notes · Collab</div>
+    </div>
+    <div class="tier pop">
+      <div class="tier-tag">★ Most Popular</div>
+      <div class="tier-name">Investigator</div>
+      <div class="tier-price" id="p-inv">$19.99<span>/mo</span></div>
+      <div class="tier-billed" id="b-inv">billed $159.99/yr</div>
+      <div class="tier-feats">Everything + Unlimited tips · 20GB<br>Priority AI · The Spool · Live streaming</div>
+    </div>
+    <div class="tier">
+      <div class="tier-name">Professional</div>
+      <div style="font-family:'Special Elite',cursive;font-size:10px;color:var(--gold);margin-bottom:3px">Outcome-Driven</div>
+      <div class="tier-price" id="p-pro">$49.99<span>/mo</span></div>
+      <div class="tier-billed" id="b-pro">billed $399.99/yr</div>
+      <div class="tier-feats">Everything · 100GB<br>Co-branded exports · Team seats</div>
     </div>
   </div>
-  <div style="text-align:center; min-width:120px;">
-    <button class="pricing-cta" style="background:var(--red); border-color:var(--red); color:var(--text); width:100%; padding:14px 20px;">Get Lifetime</button>
-    <div style="font-size:10px; color:var(--text-muted); margin-top:8px;">One-time · No renewals</div>
+  <div class="tier-lifetime" style="margin-top:10px">
+    <div class="tier-name">Lifetime</div>
+    <div class="tier-price">$299.99</div>
+    <div class="tier-feats">Professional forever · All future features · One-time payment</div>
   </div>
-</div>
-```
-
+  <div class="addons-title">Add-Ons</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
+    <div style="border:1px solid var(--border);padding:12px;background:var(--surf)">
+      <div style="font-size:16px;margin-bottom:4px">🧵</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text);margin-bottom:2px">The Spool</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;color:var(--gold)">$7.99<span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">/mo</span></div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:12px;color:var(--muted);margin-top:3px">Your public page + community comments</div>
+    </div>
+    <div style="border:1px solid var(--border);padding:12px;background:var(--surf)">
+      <div style="font-size:16px;margin-bottom:4px">⚡</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text);margin-bottom:2px">Priority AI</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;color:var(--text)">$2.99<span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">/mo</span></div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:12px;color:var(--muted);margin-top:3px">Faster responses, higher context limit</div>
+    </div>
+    <div style="border:1px solid var(--border);padding:12px;background:var(--surf)">
+      <div style="font-size:16px;margin-bottom:4px">🗄️</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text);margin-bottom:2px">Archive Vault</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;color:var(--text)">$1.99<span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">/mo</span></div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:12px;color:var(--muted);margin-top:3px">Unlimited archived boards</div>
+    </div>
+    <div style="border:1px solid var(--border);padding:12px;background:var(--surf)">
+      <div style="font-size:16px;margin-bottom:4px">👥</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text);margin-bottom:2px">Team Seat</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;color:var(--text)">$6.99<span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">/mo</span></div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:12px;color:var(--muted);margin-top:3px">Add a collaborator seat to any plan</div>
+    </div>
+    <div style="border:1px solid var(--border);padding:12px;background:var(--surf)">
+      <div style="font-size:16px;margin-bottom:4px">🔗</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text);margin-bottom:2px">Custom Tip URL</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;color:var(--text)">$4.99<span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)"> one-time</span></div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:12px;color:var(--muted);margin-top:3px">redstring.app/tip/yourname</div>
+    </div>
+    <div style="border:1px solid var(--border);padding:12px;background:var(--surf)">
+      <div style="font-size:16px;margin-bottom:4px">📁</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text);margin-bottom:2px">Template Packs</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;color:var(--text)">$4.99<span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)"> each</span></div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:12px;color:var(--muted);margin-top:3px">Cold case · Medical · Corporate · Thesis</div>
+    </div>
   </div>
 </section>
 
-<!-- VOTE -->
+<div class="divider"></div>
 
-<section id="vote">
-  <div class="container">
-    <div class="section-label">Community Driven</div>
-    <h2 class="section-title">WHAT SHOULD<br>WE BUILD NEXT?</h2>
-    <p class="section-desc">Vote on what matters most. Highest voted features get built first. Your upvote moves the roadmap.</p>
+<!-- REFERRAL -->
 
-```
-<div class="vote-grid" id="vote-list">
-  <div class="vote-item">
-    <div>
-      <div class="vote-name">PUBLIC DOCUMENT LIBRARY</div>
-      <div class="vote-desc">Pre-indexed Epstein files, FBI Vault, 9/11 FOIA records — searchable in-app</div>
+<section id="referral">
+  <div class="section-kicker">The Thread Network 🧵</div>
+  <h2 class="section-title">Share Red String.<br>Get rewarded.</h2>
+  <p class="section-sub">Every account gets a unique referral code. Pull others in and earn real rewards — no gimmicks.</p>
+  <div class="ref-box">
+    <div class="ref-tiers">
+      <div class="ref-tier">
+        <div class="ref-tier-num">1–5</div>
+        <div>
+          <div class="ref-tier-name">Free Month Per Referral</div>
+          <div class="ref-tier-desc">Every paying subscriber who signs up under your code earns you one free month on your plan. Up to 5 referrals.</div>
+        </div>
+      </div>
+      <div class="ref-tier">
+        <div class="ref-tier-num" style="color:var(--gold)">6+</div>
+        <div>
+          <div class="ref-tier-name">50% Off That Month</div>
+          <div class="ref-tier-desc">For every paying subscriber beyond your first 5, get 50% off your bill that month. Stack them up.</div>
+        </div>
+      </div>
+      <div class="ref-tier" style="border-color:var(--gold-dim)">
+        <div class="ref-tier-num" style="color:var(--gold)">🏆</div>
+        <div>
+          <div class="ref-tier-name" style="color:var(--gold)">Beta Pioneer Bonus</div>
+          <div class="ref-tier-desc">Beta testers who refer 3+ paying subscribers get first access to every new feature before public release — permanently. Plus your name in the Beta Pioneer credits inside the app.</div>
+        </div>
+      </div>
     </div>
-    <button class="vote-btn" onclick="vote(this, 312)">
-      <span class="vote-count">312</span>
-      <span class="vote-label">▲ VOTE</span>
-    </button>
-  </div>
-  <div class="vote-item">
-    <div>
-      <div class="vote-name">RESEARCH TOOL INTEGRATION</div>
-      <div class="vote-desc">Import findings from Webb.io and other research tools directly into your canvas</div>
+    <div class="ref-leaderboard">
+      <div class="ref-lb-hdr">🧵 Top Thread Pullers — Live Leaderboard</div>
+      <div class="ref-lb-row">
+        <div class="ref-lb-rank gold">1</div>
+        <div class="ref-lb-name">@mama_sleuth</div>
+        <div class="ref-lb-count">47 threads pulled</div>
+        <div class="ref-lb-badge">Pioneer</div>
+      </div>
+      <div class="ref-lb-row">
+        <div class="ref-lb-rank silver">2</div>
+        <div class="ref-lb-name">@truthseeker_47</div>
+        <div class="ref-lb-count">31 threads pulled</div>
+        <div class="ref-lb-badge">Pioneer</div>
+      </div>
+      <div class="ref-lb-row">
+        <div class="ref-lb-rank bronze">3</div>
+        <div class="ref-lb-name">@dotconnector</div>
+        <div class="ref-lb-count">28 threads pulled</div>
+      </div>
+      <div class="ref-lb-row">
+        <div class="ref-lb-rank">4</div>
+        <div class="ref-lb-name">@deepdive_donna</div>
+        <div class="ref-lb-count">19 threads pulled</div>
+      </div>
+      <div class="ref-lb-row">
+        <div class="ref-lb-rank">5</div>
+        <div class="ref-lb-name">@rabbit_holer</div>
+        <div class="ref-lb-count">12 threads pulled</div>
+      </div>
     </div>
-    <button class="vote-btn" onclick="vote(this, 428)">
-      <span class="vote-count">428</span>
-      <span class="vote-label">▲ VOTE</span>
-    </button>
-  </div>
-  <div class="vote-item">
-    <div>
-      <div class="vote-name">ENCRYPTED CLOUD BACKUP</div>
-      <div class="vote-desc">End-to-end encrypted sync across devices — your data, only yours</div>
-    </div>
-    <button class="vote-btn" onclick="vote(this, 334)">
-      <span class="vote-count">334</span>
-      <span class="vote-label">▲ VOTE</span>
-    </button>
-  </div>
-  <div class="vote-item">
-    <div>
-      <div class="vote-name">ANDROID VERSION</div>
-      <div class="vote-desc">Red String for Android — bring the full investigation workspace to all devices</div>
-    </div>
-    <button class="vote-btn" onclick="vote(this, 519)">
-      <span class="vote-count">519</span>
-      <span class="vote-label">▲ VOTE</span>
-    </button>
-  </div>
-  <div class="vote-item">
-    <div>
-      <div class="vote-name">DESKTOP WEB VERSION</div>
-      <div class="vote-desc">Full Red String canvas accessible from any browser on desktop</div>
-    </div>
-    <button class="vote-btn" onclick="vote(this, 287)">
-      <span class="vote-count">287</span>
-      <span class="vote-label">▲ VOTE</span>
-    </button>
-  </div>
-  <div class="vote-item">
-    <div>
-      <div class="vote-name">AI OUTREACH ASSISTANT</div>
-      <div class="vote-desc">AI identifies journalists, podcasters, and officials to contact about your findings and drafts the outreach</div>
-    </div>
-    <button class="vote-btn" onclick="vote(this, 198)">
-      <span class="vote-count">198</span>
-      <span class="vote-label">▲ VOTE</span>
-    </button>
-  </div>
-</div>
-
-<div class="vote-submit">
-  <input type="text" id="feature-input" placeholder="Suggest a feature...">
-  <button onclick="submitFeature()">Submit Idea</button>
-</div>
-
-<div id="submit-confirm" style="display:none; margin-top:12px; font-size:11px; color: #27AE60; letter-spacing:0.1em;">
-  ✓ Feature suggestion submitted. Thanks for building Red String with us.
-</div>
-```
-
+    <div style="margin-top:14px;font-family:'DM Mono',monospace;font-size:9px;color:var(--dim);text-align:center;letter-spacing:.08em">Your referral code is generated automatically when you sign up · Tracked in your account dashboard</div>
   </div>
 </section>
 
-<!-- SUPPORT -->
+<div class="divider"></div>
 
-<section id="support">
-  <div class="container">
-    <div class="section-label">Support the Mission</div>
-    <h2 class="section-title">BUILT INDEPENDENT.<br>STAY INDEPENDENT.</h2>
-    <p class="section-desc">No investors. No advertisers. No outside funding. Built by one citizen researcher. If this tool matters to you, consider supporting its development.</p>
+<!-- BETA SIGNUP -->
 
-```
-<div class="support-grid">
-  <div class="support-card">
-    <div class="support-title">CONTRIBUTE</div>
-    <p class="support-desc">Every contribution directly funds development, server costs, and API usage. No amount is too small. Supporters get early access and founding member credit.</p>
-    <div class="support-links">
-      <a href="https://paypal.me/jessmonte" class="support-link" target="_blank">💳 PayPal — paypal.me/jessmonte</a>
-      <a href="https://venmo.com/u/journeythrutherain" class="support-link" target="_blank">💸 Venmo — @journeythrutherain</a>
-      <a href="https://cash.app/$merakimademagick" class="support-link" target="_blank">💵 Cash App — $merakimademagick</a>
+<section id="beta">
+  <div class="section-kicker">Join the Beta</div>
+  <div class="beta-box">
+    <h2 class="beta-title">Be the first to<br>pull the <span>thread</span></h2>
+    <p class="beta-sub">Limited TestFlight spots. Beta testers get the Founding Member price locked forever, early access to every feature, and a voice in what gets built next.</p>
+    <div class="beta-perks">
+      <div class="beta-perk">Founding Member pricing — $7.99/mo locked forever</div>
+      <div class="beta-perk">First access to every new feature before public release</div>
+      <div class="beta-perk">Your name in the Beta Pioneer credits inside the app</div>
+      <div class="beta-perk">Direct line to the builder — your feedback shapes the roadmap</div>
+      <div class="beta-perk">Private beta feedback portal link sent to your email</div>
     </div>
-  </div>
-
-  <div class="support-card">
-    <div class="support-title">SPREAD THE WORD</div>
-    <p class="support-desc">Share this page with your community, your podcast audience, or anyone who investigates. That's the most valuable support you can give.</p>
-    <div class="support-links">
-      <a href="https://twitter.com/intent/tweet?text=Red+String+Research+—+The+mobile+investigation+workspace+for+citizen+researchers.+Finally.+https://thrivehivecollab-stack.github.io/redstring-landing" class="support-link" target="_blank">🐦 Share on X / Twitter</a>
-      <a href="#" class="support-link" onclick="copyLink(event)">🔗 Copy Link</a>
-      <a href="https://thrivehivecollab-stack.github.io/redstring-landing" class="support-link" target="_blank">🌐 View Landing Page</a>
+    <div class="beta-form" id="beta-form">
+      <div class="form-row">
+        <input class="form-input" type="text" id="beta-name" placeholder="Your name" required>
+        <input class="form-input" type="email" id="beta-email" placeholder="Email address" required>
+      </div>
+      <select class="form-select" id="beta-use">
+        <option value="" disabled selected>How will you use Red String?</option>
+        <option value="investigation">Investigation / Truth Seeking</option>
+        <option value="research">Research / Academic</option>
+        <option value="parenting">Parent Research</option>
+        <option value="journalism">Journalism / Podcasting</option>
+        <option value="both">Both Investigation + Research</option>
+        <option value="other">Something else entirely</option>
+      </select>
+      <input class="form-input" type="text" id="beta-ref" placeholder="Referral code (optional)">
+      <p class="form-note">● By signing up you agree to provide at least one piece of feedback during the beta. That's it. No spam. Ever.</p>
+      <button class="btn-primary" onclick="submitBeta()">Claim My Beta Spot →</button>
     </div>
-  </div>
-</div>
-```
-
+    <div class="beta-success" id="beta-success">
+      <div class="beta-success-icon">🧵</div>
+      <div class="beta-success-title">You're on the thread</div>
+      <div class="beta-success-sub">Check your email for your TestFlight invite and your private beta feedback portal link.<br><br>Your Founding Member price is locked. Welcome to the CIA.</div>
+    </div>
   </div>
 </section>
 
-<!-- WAITLIST -->
+<div class="divider"></div>
 
-<section id="waitlist">
-  <div class="container">
-    <div class="section-label">Early Access</div>
-    <h2 class="section-title">GET NOTIFIED<br>AT LAUNCH.</h2>
-    <p class="section-desc" style="margin: 0 auto 0; text-align:center;">Be first when Red String hits the App Store. Early access members get 1 month of Researcher free.</p>
+<!-- SUGGESTION BOX -->
 
-```
-<div class="waitlist-form">
-  <input type="email" id="email-input" placeholder="your@email.com">
-  <button onclick="joinWaitlist()">Join Waitlist</button>
-</div>
-<div class="waitlist-note">No spam. Launch notification only. Unsubscribe anytime.</div>
-<div class="waitlist-success" id="waitlist-success">✓ You're on the list. We'll be in touch at launch.</div>
-```
-
+<section id="suggest">
+  <div class="section-kicker">Suggestion Box</div>
+  <h2 class="section-title">What should we<br>build next?</h2>
+  <p class="section-sub">Open to everyone. No account needed. If it's a good idea it goes on the roadmap.</p>
+  <div class="suggest-box">
+    <div class="suggest-form" id="suggest-form">
+      <input class="form-input" type="text" id="sug-title" placeholder="Feature or idea title">
+      <textarea class="form-textarea" id="sug-body" placeholder="Describe it — the more detail the better. What problem does it solve? Who benefits?"></textarea>
+      <select class="form-select" id="sug-cat">
+        <option value="" disabled selected>Category</option>
+        <option value="canvas">Canvas Features</option>
+        <option value="ai">AI / Personas</option>
+        <option value="collab">Collaboration</option>
+        <option value="security">Security / Privacy</option>
+        <option value="export">Export / Sharing</option>
+        <option value="tips">Tips System</option>
+        <option value="spool">The Spool</option>
+        <option value="other">Other</option>
+      </select>
+      <input class="form-input" type="email" id="sug-email" placeholder="Email (optional — if you want a reply)">
+      <button class="btn-primary" onclick="submitSuggest()">Submit Suggestion →</button>
+    </div>
+    <div class="suggest-success" id="suggest-success">
+      <div class="suggest-success-text">✓ Suggestion received — thank you 🧵</div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--dim);margin-top:6px">Jess reviews every single one.</div>
+    </div>
   </div>
 </section>
+
+<div class="divider"></div>
+
+<!-- ORIGIN -->
+
+<section id="origin">
+  <div class="section-kicker">The Story</div>
+  <h2 class="section-title">Built by a mom<br>who needed it</h2>
+  <div class="origin-quote">
+    <div class="origin-quote-text">"I'm a stay-at-home mom of two boys, one autistic. I built Red String Research in my free time because I needed it. I had facts, I had tabs, I had voice memos, I had screenshots — but I couldn't connect them. This is the app I wish existed."</div>
+    <div class="origin-quote-attr">— Jess, Creator of Red String Research</div>
+  </div>
+  <p class="origin-body">Red String is built for the people who can't let go of a question until they have the full picture. Whether that's a parent researching treatments for their kid, a citizen journalist following a thread that won't quit, or a student who goes five layers deeper than the assignment requires — this app is yours.</p>
+</section>
+
+<div class="divider"></div>
 
 <!-- FOOTER -->
 
 <footer>
-  <div style="font-family: var(--display); font-size: 18px; letter-spacing: 0.2em; color: var(--red-bright); margin-bottom: 12px;">RED STRING RESEARCH</div>
-  Independent · No Advertisers · No Investors · Built by a citizen researcher who needed a tool that didn't exist<br><br>
-  <span style="color: var(--text-muted);">© 2026 Red String Research · redstring.app/tip/{username} · Coming to App Store Soon</span>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Red String Research</div>
+      <div class="footer-tagline">Pull the thread.</div>
+    </div>
+    <div class="footer-links">
+      <a href="demo.html" class="footer-link">Demo</a>
+      <a href="javascript:void(0)" onclick="document.getElementById('beta').scrollIntoView({behavior:'smooth'})" class="footer-link">Beta</a>
+      <a href="javascript:void(0)" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})" class="footer-link">Pricing</a>
+      <a href="javascript:void(0)" onclick="document.getElementById('suggest').scrollIntoView({behavior:'smooth'})" class="footer-link">Suggest</a>
+      <a href="privacy.html" class="footer-link">Privacy</a>
+      <a href="terms.html" class="footer-link">Terms</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Red String Research · RedStringResearch.app</div>
+    <div class="footer-built">Built by a mom. For the deep divers. 🧵</div>
+  </div>
 </footer>
 
 <script>
 // PRICING TOGGLE
-const prices = {
-  monthly: {
-    researcher: '$9.99<span>/mo</span>', researcherNote: 'Billed monthly · cancel anytime',
-    investigator: '$19.99<span>/mo</span>', investigatorNote: 'Billed monthly · cancel anytime',
-    professional: '$49.99<span>/mo</span>', professionalNote: 'Billed monthly · cancel anytime'
-  },
-  annual: {
-    researcher: '$6.66<span>/mo</span>', researcherNote: 'Billed $79.99/yr · save ~33%',
-    investigator: '$13.33<span>/mo</span>', investigatorNote: 'Billed $159.99/yr · save ~33%',
-    professional: '$33.33<span>/mo</span>', professionalNote: 'Billed $399.99/yr · save ~33%'
+function setPrice(mode){
+  const mo=mode==='mo';
+  document.getElementById('ptog-mo').classList.toggle('active',mo);
+  document.getElementById('ptog-yr').classList.toggle('active',!mo);
+  const tiers=[
+    {p:'p-res',b:'b-res',mo:'$9.99',yr:'$6.67',bill:'billed $79.99/yr'},
+    {p:'p-inv',b:'b-inv',mo:'$19.99',yr:'$13.33',bill:'billed $159.99/yr'},
+    {p:'p-pro',b:'b-pro',mo:'$49.99',yr:'$33.33',bill:'billed $399.99/yr'},
+  ];
+  tiers.forEach(t=>{
+    const pel=document.getElementById(t.p);
+    const bel=document.getElementById(t.b);
+    const unit=mo?t.mo:t.yr;
+    pel.innerHTML=unit+'<span>/mo</span>';
+    bel.style.display=mo?'none':'block';
+  });
+}
+
+// BETA SIGNUP
+function submitBeta(){
+  const name=document.getElementById('beta-name').value.trim();
+  const email=document.getElementById('beta-email').value.trim();
+  if(!name||!email){
+    alert('Please enter your name and email to join the beta.');
+    return;
   }
-};
-
-function setPricing(period, btn) {
-  document.querySelectorAll('.pricing-toggle button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const p = prices[period];
-  document.getElementById('researcher-price').innerHTML = p.researcher;
-  document.getElementById('researcher-note').textContent = p.researcherNote;
-  document.getElementById('investigator-price').innerHTML = p.investigator;
-  document.getElementById('investigator-note').textContent = p.investigatorNote;
-  document.getElementById('professional-price').innerHTML = p.professional;
-  document.getElementById('professional-note').textContent = p.professionalNote;
-}
-
-// VOTING
-function vote(btn, base) {
-  if (btn.classList.contains('voted')) {
-    btn.classList.remove('voted');
-    btn.querySelector('.vote-count').textContent = base;
-  } else {
-    btn.classList.add('voted');
-    btn.querySelector('.vote-count').textContent = base + 1;
+  if(!email.includes('@')){
+    alert('Please enter a valid email address.');
+    return;
   }
+  // In production this POSTs to your backend
+  // For now show success state
+  document.getElementById('beta-form').style.display='none';
+  document.getElementById('beta-success').style.display='block';
+  // Scroll to success
+  document.getElementById('beta-success').scrollIntoView({behavior:'smooth',block:'center'});
 }
 
-// FEATURE SUBMIT
-function submitFeature() {
-  const val = document.getElementById('feature-input').value.trim();
-  if (!val) return;
-  document.getElementById('feature-input').value = '';
-  document.getElementById('submit-confirm').style.display = 'block';
-  setTimeout(() => { document.getElementById('submit-confirm').style.display = 'none'; }, 4000);
+// SUGGESTION BOX
+function submitSuggest(){
+  const title=document.getElementById('sug-title').value.trim();
+  const body=document.getElementById('sug-body').value.trim();
+  if(!title||!body){
+    alert('Please fill in a title and description for your suggestion.');
+    return;
+  }
+  document.getElementById('suggest-form').style.display='none';
+  document.getElementById('suggest-success').style.display='block';
 }
 
-// WAITLIST
-function joinWaitlist() {
-  const val = document.getElementById('email-input').value.trim();
-  if (!val || !val.includes('@')) return;
-  document.getElementById('email-input').value = '';
-  document.getElementById('waitlist-success').style.display = 'block';
-}
-
-// COPY LINK
-function copyLink(e) {
-  e.preventDefault();
-  navigator.clipboard.writeText('https://thrivehivecollab-stack.github.io/redstring-landing');
-  e.target.textContent = '✓ Link Copied';
-  setTimeout(() => { e.target.textContent = '🔗 Copy Link'; }, 2000);
-}
+// SCROLL ANIMATIONS
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.animation='fadein .6s ease-out forwards';
+    }
+  });
+},{threshold:.1});
+document.querySelectorAll('section').forEach(s=>observer.observe(s));
 </script>
 
 </body>
