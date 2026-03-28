@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Red String Research — Interactive Demo</title>
+<title>Known — Interactive Demo</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&family=Special+Elite&family=DM+Mono:wght@300;400;500&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -50,12 +50,10 @@ font-family:‘Rajdhani’,sans-serif;font-weight:300;font-size:13px;color:var(�
 }
 .sp-title{
 font-family:‘Oswald’,sans-serif;font-weight:700;
-font-size:clamp(58px,16vw,120px);letter-spacing:.04em;line-height:.88;
+font-size:clamp(72px,22vw,140px);letter-spacing:.08em;line-height:1;
 text-transform:uppercase;
 }
-.sp-title .r1{color:var(–text)}
-.sp-title .r2{color:var(–red);animation:glow 3s ease-in-out infinite}
-.sp-title .r3{color:var(–text);font-size:.55em;font-weight:300;letter-spacing:.12em;display:block;margin-top:4px}
+.sp-title .r1{color:var(–text);animation:glow 3s ease-in-out infinite}
 .sp-rule{width:100%;max-width:300px;height:1px;background:linear-gradient(90deg,transparent,var(–red),transparent)}
 .tog-active{background:var(–red-dim)!important;color:var(–text)!important}
 .tog-inactive{background:none!important;color:var(–muted)!important}
@@ -444,11 +442,7 @@ header.res{background:var(–surf-res)}
   <div class="sbadge">● Full Feature Interactive Demo</div>
   <div class="sp-hero">
     <div class="sp-pre">For the ones who need to know</div>
-    <div class="sp-title">
-      <span class="r1">RED</span>
-      <span class="r2">STRING</span>
-      <span class="r3">Research</span>
-    </div>
+    <div class="sp-title"><span class="r1">KNOWN</span></div>
   </div>
   <div class="sp-rule"></div>
   <div class="sp-tagline">
@@ -485,7 +479,7 @@ header.res{background:var(–surf-res)}
 <!-- BIO -->
 
 <div id="bio">
-  <div class="bio-logo" id="bio-logo">Red String Research</div>
+  <div class="bio-logo" id="bio-logo">Known</div>
   <div class="bio-icon">🔐</div>
   <div class="bio-title">Verify Identity</div>
   <div class="bio-sub" id="bio-sub">Biometric lock active<br>Your board is protected</div>
@@ -541,11 +535,11 @@ header.res{background:var(–surf-res)}
 <div id="hm" onclick="closeMenu()">
   <div id="hmp" class="inv" onclick="event.stopPropagation()">
     <div class="hmh">
-      <div class="hml inv" id="hml">Red String Research</div>
+      <div class="hml inv" id="hml">Known</div>
       <button class="hmc" onclick="closeMenu()">✕</button>
     </div>
     <div id="hmbody"></div>
-    <div class="hmfoot">RedStringResearch.app · Built for the deep divers</div>
+    <div class="hmfoot">knownapp.com · Built for the deep divers</div>
   </div>
 </div>
 
@@ -553,31 +547,31 @@ header.res{background:var(–surf-res)}
 <div id="canvas-pan" style="position:absolute;inset:0;transform-origin:0 0;will-change:transform;touch-action:none">
   <svg id="csvg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:20"></svg>
 
-<!-- INV NODES -->
-<div id="inv-nodes">
-  <div class="node inv-n" id="n0" style="left:11%;top:10%;border-left:3px solid var(--red)" onclick="if(!handleNodeConnect(this,'n0','LEAD RESEARCHER'))showNode(0)"><div class="npin inv"></div><div class="ntype">Person — Lead</div><div class="nt">LEAD RESEARCHER</div><div class="nd">47 tips received</div></div>
-  <div class="node inv-n" id="n1" style="left:40%;top:14%;border-left:3px solid var(--red)" onclick="if(!handleNodeConnect(this,'n1','SUBJECT ALPHA'))showNode(1)"><div class="npin inv"></div><div class="ntype">Person — Subject</div><div class="nt">SUBJECT ALPHA</div><div class="nd">Timeline disputed</div></div>
-  <div class="node inv-n" id="n2" style="left:65%;top:9%" onclick="if(!handleNodeConnect(this,'n2','ASSOCIATE EPSILON'))showNode(2)"><div class="ntype">Person of Interest</div><div class="nt">ASSOCIATE EPSILON</div><div class="nd">Location unverified</div></div>
-  <div class="node inv-n" id="n3" style="left:26%;top:44%;border-left:3px solid var(--gold)" onclick="if(!handleNodeConnect(this,'n3','LAST KNOWN LOCATION'))showNode(3)"><div class="ntype">Location</div><div class="nt">LAST KNOWN LOCATION</div><div class="nd">Contradicts official</div></div>
-  <div class="node inv-n" id="n4" style="left:56%;top:41%;border-left:3px solid var(--muted)" onclick="if(!handleNodeConnect(this,'n4','COMM LOGS'))showNode(4)"><div class="ntype">Document — FOIA</div><div class="nt">COMM LOGS</div><div class="nd">3 unanswered contacts</div></div>
-  <div class="node inv-n" id="n5" style="left:10%;top:54%;border-left:3px solid var(--blue)" onclick="if(!handleNodeConnect(this,'n5','NEXUS GROUP'))showNode(5)"><div class="ntype">Organization</div><div class="nt">NEXUS GROUP</div><div class="nd">Financial ties flagged</div></div>
-  <div class="node inv-n" id="n6" style="left:67%;top:52%;border-left:3px solid var(--red)" onclick="if(!handleNodeConnect(this,'n6','72-HOUR GAP'))showNode(6)"><div class="npin inv"></div><div class="ntype">⚠ AI Flagged</div><div class="nt">72-HOUR GAP</div><div class="nd">No alibi · 2 tips</div></div>
-  <div class="node inv-n inv-ink" id="n7" style="left:42%;top:65%" onclick="showInk()"><div class="ink-hint">👻 Hold to reveal</div></div>
-  <div class="node inv-n" id="n8" style="left:26%;top:69%;border-left:3px solid #27AE60" onclick="if(!handleNodeConnect(this,'n8','WITNESS DELTA'))showNode(8)"><div class="ntype">Witness — Tip</div><div class="nt">WITNESS DELTA</div><div class="nd">AI: High credibility</div></div>
-</div>
+  <!-- INV NODES -->
+  <div id="inv-nodes">
+    <div class="node inv-n" id="n0" style="left:11%;top:10%;border-left:3px solid var(--red)" onclick="if(!handleNodeConnect(this,'n0','LEAD RESEARCHER'))showNode(0)"><div class="npin inv"></div><div class="ntype">Person — Lead</div><div class="nt">LEAD RESEARCHER</div><div class="nd">47 tips received</div></div>
+    <div class="node inv-n" id="n1" style="left:40%;top:14%;border-left:3px solid var(--red)" onclick="if(!handleNodeConnect(this,'n1','SUBJECT ALPHA'))showNode(1)"><div class="npin inv"></div><div class="ntype">Person — Subject</div><div class="nt">SUBJECT ALPHA</div><div class="nd">Timeline disputed</div></div>
+    <div class="node inv-n" id="n2" style="left:65%;top:9%" onclick="if(!handleNodeConnect(this,'n2','ASSOCIATE EPSILON'))showNode(2)"><div class="ntype">Person of Interest</div><div class="nt">ASSOCIATE EPSILON</div><div class="nd">Location unverified</div></div>
+    <div class="node inv-n" id="n3" style="left:26%;top:44%;border-left:3px solid var(--gold)" onclick="if(!handleNodeConnect(this,'n3','LAST KNOWN LOCATION'))showNode(3)"><div class="ntype">Location</div><div class="nt">LAST KNOWN LOCATION</div><div class="nd">Contradicts official</div></div>
+    <div class="node inv-n" id="n4" style="left:56%;top:41%;border-left:3px solid var(--muted)" onclick="if(!handleNodeConnect(this,'n4','COMM LOGS'))showNode(4)"><div class="ntype">Document — FOIA</div><div class="nt">COMM LOGS</div><div class="nd">3 unanswered contacts</div></div>
+    <div class="node inv-n" id="n5" style="left:10%;top:54%;border-left:3px solid var(--blue)" onclick="if(!handleNodeConnect(this,'n5','NEXUS GROUP'))showNode(5)"><div class="ntype">Organization</div><div class="nt">NEXUS GROUP</div><div class="nd">Financial ties flagged</div></div>
+    <div class="node inv-n" id="n6" style="left:67%;top:52%;border-left:3px solid var(--red)" onclick="if(!handleNodeConnect(this,'n6','72-HOUR GAP'))showNode(6)"><div class="npin inv"></div><div class="ntype">⚠ AI Flagged</div><div class="nt">72-HOUR GAP</div><div class="nd">No alibi · 2 tips</div></div>
+    <div class="node inv-n inv-ink" id="n7" style="left:42%;top:65%" onclick="showInk()"><div class="ink-hint">👻 Hold to reveal</div></div>
+    <div class="node inv-n" id="n8" style="left:26%;top:69%;border-left:3px solid #27AE60" onclick="if(!handleNodeConnect(this,'n8','WITNESS DELTA'))showNode(8)"><div class="ntype">Witness — Tip</div><div class="nt">WITNESS DELTA</div><div class="nd">AI: High credibility</div></div>
+  </div>
 
-<!-- RES NODES -->
-<div id="res-nodes" style="display:none">
-  <div class="node res-n" style="left:11%;top:10%;border-left:3px solid var(--blue)" id="rn0" onclick="if(!handleNodeConnect(this,'rn0','DR. SARAH CHEN'))showResNode(0)"><div class="npin res"></div><div class="ntype">Person — Researcher</div><div class="nt">DR. SARAH CHEN</div><div class="nd">Lead author · 2019</div></div>
-  <div class="node res-n" style="left:40%;top:14%;border-left:3px solid var(--blue)" id="rn1" onclick="if(!handleNodeConnect(this,'rn1','2019 META-ANALYSIS'))showResNode(1)"><div class="npin res"></div><div class="ntype">Source — Peer Reviewed</div><div class="nt">2019 META-ANALYSIS</div><div class="nd">Credibility: High</div></div>
-  <div class="node res-n" style="left:65%;top:9%;border-left:3px solid var(--cyan)" id="rn2" onclick="if(!handleNodeConnect(this,'rn2','SENSORY PROCESSING'))showResNode(2)"><div class="ntype">Study — 2022</div><div class="nt">SENSORY PROCESSING</div><div class="nd">3 connected sources</div></div>
-  <div class="node res-n" style="left:26%;top:44%;border-left:3px solid var(--muted)" id="rn3" onclick="if(!handleNodeConnect(this,'rn3','CO-OCCURRING CONDITIONS'))showResNode(3)"><div class="ntype">Note</div><div class="nt">CO-OCCURRING CONDITIONS</div><div class="nd">ADHD · ~70% rate</div></div>
-  <div class="node res-n" style="left:56%;top:41%;border-left:3px solid var(--blue)" id="rn4" onclick="if(!handleNodeConnect(this,'rn4','GUT-BRAIN CONNECTION'))showResNode(4)"><div class="ntype">Topic — Emerging</div><div class="nt">GUT-BRAIN CONNECTION</div><div class="nd">4 sources attached</div></div>
-  <div class="node res-n" style="left:10%;top:54%;border-left:3px solid var(--cyan)" id="rn5" onclick="if(!handleNodeConnect(this,'rn5','SPEECH OUTCOMES'))showResNode(5)"><div class="ntype">Question — Open</div><div class="nt">SPEECH OUTCOMES</div><div class="nd">Unanswered</div></div>
-  <div class="node res-n" style="left:67%;top:52%;border-left:3px solid var(--blue)" id="rn6" onclick="if(!handleNodeConnect(this,'rn6','RESEARCH OPPORTUNITY'))showResNode(6)"><div class="npin res"></div><div class="ntype">⚡ AI Gap Detected</div><div class="nt">RESEARCH OPPORTUNITY</div><div class="nd">Unstudied connection</div></div>
-  <div class="node res-n inv-ink" style="left:42%;top:65%" onclick="showInk()"><div class="ink-hint">👻 Hold to reveal</div></div>
-  <div class="node res-n" style="left:26%;top:69%;border-left:3px solid var(--cyan)" id="rn8" onclick="if(!handleNodeConnect(this,'rn8','SOURCE CONTRIBUTOR'))showResNode(8)"><div class="ntype">Contributor — Parent</div><div class="nt">SOURCE CONTRIBUTOR</div><div class="nd">3 submissions · Credited</div></div>
-</div>
+  <!-- RES NODES -->
+  <div id="res-nodes" style="display:none">
+    <div class="node res-n" style="left:11%;top:10%;border-left:3px solid var(--blue)" id="rn0" onclick="if(!handleNodeConnect(this,'rn0','DR. SARAH CHEN'))showResNode(0)"><div class="npin res"></div><div class="ntype">Person — Researcher</div><div class="nt">DR. SARAH CHEN</div><div class="nd">Lead author · 2019</div></div>
+    <div class="node res-n" style="left:40%;top:14%;border-left:3px solid var(--blue)" id="rn1" onclick="if(!handleNodeConnect(this,'rn1','2019 META-ANALYSIS'))showResNode(1)"><div class="npin res"></div><div class="ntype">Source — Peer Reviewed</div><div class="nt">2019 META-ANALYSIS</div><div class="nd">Credibility: High</div></div>
+    <div class="node res-n" style="left:65%;top:9%;border-left:3px solid var(--cyan)" id="rn2" onclick="if(!handleNodeConnect(this,'rn2','SENSORY PROCESSING'))showResNode(2)"><div class="ntype">Study — 2022</div><div class="nt">SENSORY PROCESSING</div><div class="nd">3 connected sources</div></div>
+    <div class="node res-n" style="left:26%;top:44%;border-left:3px solid var(--muted)" id="rn3" onclick="if(!handleNodeConnect(this,'rn3','CO-OCCURRING CONDITIONS'))showResNode(3)"><div class="ntype">Note</div><div class="nt">CO-OCCURRING CONDITIONS</div><div class="nd">ADHD · ~70% rate</div></div>
+    <div class="node res-n" style="left:56%;top:41%;border-left:3px solid var(--blue)" id="rn4" onclick="if(!handleNodeConnect(this,'rn4','GUT-BRAIN CONNECTION'))showResNode(4)"><div class="ntype">Topic — Emerging</div><div class="nt">GUT-BRAIN CONNECTION</div><div class="nd">4 sources attached</div></div>
+    <div class="node res-n" style="left:10%;top:54%;border-left:3px solid var(--cyan)" id="rn5" onclick="if(!handleNodeConnect(this,'rn5','SPEECH OUTCOMES'))showResNode(5)"><div class="ntype">Question — Open</div><div class="nt">SPEECH OUTCOMES</div><div class="nd">Unanswered</div></div>
+    <div class="node res-n" style="left:67%;top:52%;border-left:3px solid var(--blue)" id="rn6" onclick="if(!handleNodeConnect(this,'rn6','RESEARCH OPPORTUNITY'))showResNode(6)"><div class="npin res"></div><div class="ntype">⚡ AI Gap Detected</div><div class="nt">RESEARCH OPPORTUNITY</div><div class="nd">Unstudied connection</div></div>
+    <div class="node res-n inv-ink" style="left:42%;top:65%" onclick="showInk()"><div class="ink-hint">👻 Hold to reveal</div></div>
+    <div class="node res-n" style="left:26%;top:69%;border-left:3px solid var(--cyan)" id="rn8" onclick="if(!handleNodeConnect(this,'rn8','SOURCE CONTRIBUTOR'))showResNode(8)"><div class="ntype">Contributor — Parent</div><div class="nt">SOURCE CONTRIBUTOR</div><div class="nd">3 submissions · Credited</div></div>
+  </div>
 
 </div><!-- /canvas-pan -->
 
@@ -586,6 +580,7 @@ header.res{background:var(–surf-res)}
   <div id="coach-txt" style="background:var(--red-dim);color:var(--text);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.08em;padding:5px 10px;max-width:160px;text-align:right;line-height:1.5">Tap 🔗 Connect<br>then tap two nodes<br>to draw a string</div>
   <div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--red-dim);margin-right:14px"></div>
 </div>
+
 <div id="tb">
   <button class="tbtn inv-t" id="tb-connect" onclick="toggleConnect()"><span>🔗</span><span class="tlbl">Connect</span></button>
   <button class="tbtn inv-t" onclick="toast('＋ Add — choose node type for your current board mode')"><span>＋</span><span class="tlbl">Add</span></button>
@@ -631,7 +626,7 @@ header.res{background:var(–surf-res)}
 <div class="panel inv-p" id="wmp" style="left:50%;top:50%;transform:translate(-50%,-50%);width:min(288px,88vw);max-height:80vh;overflow-y:auto">
   <div class="ph"><div><div class="pt">Forensic Watermark</div><div class="ps inv-a">Every export is traceable</div></div><button class="pc" onclick="cp('wmp')">✕</button></div>
   <div style="padding:10px">
-    <div style="font-family:'Rajdhani',sans-serif;font-weight:400;font-size:13px;color:var(--muted);margin-bottom:9px;line-height:1.5">Every export is invisibly watermarked. If your work leaks, Red String identifies exactly who shared it — name, timestamp, destination.</div>
+    <div style="font-family:'Rajdhani',sans-serif;font-weight:400;font-size:13px;color:var(--muted);margin-bottom:9px;line-height:1.5">Every export is invisibly watermarked. If your work leaks, Known identifies exactly who shared it — name, timestamp, destination.</div>
     <div style="border:1px solid var(--border);padding:10px;background:var(--surf2);margin-bottom:9px">
       <div style="font-family:'Oswald',sans-serif;font-size:9px;font-weight:600;letter-spacing:.15em;color:var(--red);margin-bottom:6px">EMBEDDED METADATA</div>
       <div class="wmf"><span class="wmk">Recipient</span><span class="wmv">@source_gamma</span></div>
@@ -642,9 +637,9 @@ header.res{background:var(–surf-res)}
     </div>
     <div style="border:1px solid var(--red-dark);background:rgba(255,45,45,.04);padding:10px;font-family:'Rajdhani',sans-serif;font-weight:400;font-size:12px;color:var(--muted);line-height:1.5">
       <div style="font-family:'Oswald',sans-serif;font-style:normal;font-size:9px;font-weight:600;letter-spacing:.15em;color:var(--red);margin-bottom:4px">TRACE A LEAK</div>
-      If this document surfaces publicly, upload it. Red String cross-references the watermark ID and returns the exact recipient, timestamp, and destination.
+      If this document surfaces publicly, upload it. Known cross-references the watermark ID and returns the exact recipient, timestamp, and destination.
     </div>
-    <div style="font-family:'Special Elite',cursive;font-size:8px;color:var(--dim);text-align:center;padding:8px">RedStringResearch.app · Watermark never removable</div>
+    <div style="font-family:'Special Elite',cursive;font-size:8px;color:var(--dim);text-align:center;padding:8px">knownapp.com · Watermark never removable</div>
   </div>
 </div>
 
@@ -720,12 +715,12 @@ header.res{background:var(–surf-res)}
     <button class="tipback" onclick="hideTips()" style="font-size:22px;padding:4px 8px">←</button>
     <div>
       <div class="tiptitle" id="tip-title">Tips Inbox</div>
-      <div class="tipsub" id="tip-sub">redstring.app/tip/username · 3 new · Name + contact required</div>
+      <div class="tipsub" id="tip-sub">knownapp.com/tip/username · 3 new · Name + contact required</div>
     </div>
   </div>
   <div class="tiplist">
     <div class="tc inv" onclick="toast('✓ Tip added to board · Chain of custody started · Reply sent in-app')">
-      <div class="tchr"><div class="tcwho">Jane M. · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1f757e717a5f7a727e7673317c7072">[email&#160;protected]</a> · Standard</div><div class="tcscore">AI: HIGH</div></div>
+      <div class="tchr"><div class="tcwho">Jane M. · contact hidden · Standard</div><div class="tcscore">AI: HIGH</div></div>
       <div class="tcbody">Documentation showing a meeting 3 days before the incident at a location never publicly disclosed. Timestamped photo available.</div>
       <div class="tctag">● Matches 72-Hour Gap</div>
     </div>
@@ -735,7 +730,7 @@ header.res{background:var(–surf-res)}
       <div class="tctag">● Matches Nexus Group</div><div class="tcpriv">🔒 Owner only — identity protected</div>
     </div>
     <div class="tc inv" onclick="toast('✓ Contact verified · High credibility · Owner notified')">
-      <div class="tchr"><div class="tcwho">R. Thompson · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3a484e5255574a4955547a4a48554e555414575f">[email&#160;protected]</a> · Standard</div><div class="tcscore">AI: HIGH</div></div>
+      <div class="tchr"><div class="tcwho">R. Thompson · contact hidden · Standard</div><div class="tcscore">AI: HIGH</div></div>
       <div class="tcbody">Present at the last known location. Official timeline is incorrect. Formal statement available.</div>
       <div class="tctag">● Matches Last Known Location</div>
     </div>
@@ -745,7 +740,7 @@ header.res{background:var(–surf-res)}
 <!-- MESSAGING PANEL -->
 <div class="panel inv-p" id="msgp" style="left:50%;top:50%;transform:translate(-50%,-50%);width:min(288px,88vw);max-height:80vh;overflow-y:auto">
   <div class="ph"><div><div class="pt" id="msg-title">In-House Messaging</div><div class="ps inv-a">No external apps — ever</div></div><button class="pc" onclick="cp('msgp')">✕</button></div>
-  <div style="padding:10px;font-family:'Rajdhani',sans-serif;font-weight:400;font-size:12px;color:var(--muted);line-height:1.5;border-bottom:1px solid var(--border)">Tip replies, collaborator messages, and source discussions stay inside Red String. Every message logged in audit trail.</div>
+  <div style="padding:10px;font-family:'Rajdhani',sans-serif;font-weight:400;font-size:12px;color:var(--muted);line-height:1.5;border-bottom:1px solid var(--border)">Tip replies, collaborator messages, and source discussions stay inside Known. Every message logged in audit trail.</div>
   <div style="padding:10px;display:flex;flex-direction:column;gap:7px">
     <div class="msgcard"><div class="msglbl inv-a" id="msg1-lbl">Tip Reply — Jane M.</div><div class="msgbody" id="msg1-body">Can you clarify the timestamp on the photo? We need exact metadata for the record.</div><div class="msgnote">Sent via backend · Jane receives email · No app switch</div></div>
     <div class="msgcard"><div class="msglbl" style="color:var(--gold)" id="msg2-lbl">Co-Researcher — Source B</div><div class="msgbody" id="msg2-body">Got the FOIA docs. Adding to the 72hr gap node now. Canvas updating in real time.</div><div class="msgnote">In-app thread · Logged · Audit trail</div></div>
@@ -762,34 +757,33 @@ header.res{background:var(–surf-res)}
   <div class="ph"><div><div class="pt" id="pres-title">Presentation Builder</div><div class="ps inv-a" id="pres-sub">Auto-generated from your board</div></div><button class="pc" onclick="cp('presp')">✕</button></div>
   <div style="padding:9px;font-family:'Rajdhani',sans-serif;font-weight:400;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border)" id="pres-desc">Auto-build a full slide deck from your board. Export as PDF, PPTX, or shareable password-protected link.</div>
   <div style="padding:8px">
-    <div class="presslide" onclick="toast('Slide 1: Cover — board title, date, your name, Red String logo · Watermarked')"><span class="presnum">01</span><span class="preslabel" id="ps1">Cover Slide</span><span class="presstatus">✓ Generated</span></div>
+    <div class="presslide" onclick="toast('Slide 1: Cover — board title, date, your name, Known logo · Watermarked')"><span class="presnum">01</span><span class="preslabel" id="ps1">Cover Slide</span><span class="presstatus">✓ Generated</span></div>
     <div class="presslide" onclick="toast('Slide 2: AI-written summary narrative from all board data')"><span class="presnum">02</span><span class="preslabel" id="ps2">Executive Summary</span><span class="presstatus">✓ AI written</span></div>
     <div class="presslide" onclick="toast('Slide 3: Key AI-flagged finding from your most critical node')"><span class="presnum" style="color:var(--gold)">03</span><span class="preslabel" id="ps3">72-Hour Gap — Critical</span><span class="presstatus">⚠ AI flagged</span></div>
     <div class="presslide" onclick="toast('Slide 4: Timeline auto-generated with AI gap detection')"><span class="presnum">04</span><span class="preslabel" id="ps4">Timeline Slide</span><span class="presstatus">✓ Auto-built</span></div>
     <div class="presslide" onclick="toast('Slide 5: All image and document nodes in grid layout')"><span class="presnum">05</span><span class="preslabel" id="ps5">Evidence Gallery</span><span class="presstatus">✓ Generated</span></div>
     <div class="presslide" onclick="toast('Slide 6: All verified sources with credibility ratings and URLs')"><span class="presnum">06</span><span class="preslabel" id="ps6">Sources</span><span class="presstatus">✓ Indexed</span></div>
     <div class="presslide" onclick="toast('Slide 7: Key conclusions from all AI persona conversations')"><span class="presnum">07</span><span class="preslabel">AI Findings</span><span class="presstatus">✓ AI written</span></div>
-    <div class="presslide" onclick="toast('Final: RedStringResearch.app · Your tip URL · All contributors credited permanently')"><span class="presnum" style="color:var(--dim)">09</span><span class="preslabel">Final Slide</span><span class="presstatus" style="color:var(--red)">RedString</span></div>
+    <div class="presslide" onclick="toast('Final: knownapp.com · Your tip URL · All contributors credited permanently')"><span class="presnum" style="color:var(--dim)">09</span><span class="preslabel">Final Slide</span><span class="presstatus" style="color:var(--red)">Known</span></div>
   </div>
   <div style="padding:8px;border-top:1px solid var(--border);display:flex;gap:5px;flex-wrap:wrap">
     <button onclick="toast('📄 Exported — forensically watermarked · WM-DW-2026-0047 · Any leak is traceable')" id="pres-pdf" style="flex:1;border:none;color:var(--text);font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;letter-spacing:.1em;padding:8px;cursor:pointer;text-transform:uppercase;background:var(--red-dim)">Export PDF</button>
-    <button onclick="toast('📊 PPTX exported — Red String dark theme · All slides watermarked')" id="pres-pptx" style="flex:1;background:none;border:1px solid var(--red);color:var(--red);font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;letter-spacing:.1em;padding:8px;cursor:pointer;text-transform:uppercase">PPTX</button>
+    <button onclick="toast('📊 PPTX exported — Known dark theme · All slides watermarked')" id="pres-pptx" style="flex:1;background:none;border:1px solid var(--red);color:var(--red);font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;letter-spacing:.1em;padding:8px;cursor:pointer;text-transform:uppercase">PPTX</button>
     <button onclick="toast('🔗 Shareable link · Password protected · Expires 7 days · Every view logged to owner')" style="flex:1;background:none;border:1px solid var(--border);color:var(--muted);font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;letter-spacing:.1em;padding:8px;cursor:pointer;text-transform:uppercase">Share Link</button>
   </div>
 </div>
 
 <!-- THE SPOOL PANEL -->
 <div class="panel inv-p" id="hubp" style="left:50%;top:50%;transform:translate(-50%,-50%);width:min(288px,88vw);max-height:82vh;overflow-y:auto">
-  <div class="ph"><div><div class="pt" id="hub-title">The Spool</div><div class="ps inv-a" id="hub-sub">Pull the thread with your audience</div></div><button class="pc" onclick="cp('hubp')">✕</button></div>
+  <div class="ph"><div><div class="pt" id="hub-title">The Spool 🧵</div><div class="ps inv-a" id="hub-sub">Pull the thread with your audience</div></div><button class="pc" onclick="cp('hubp')">✕</button></div>
   <div style="padding:10px;background:var(--surf2);border-bottom:1px solid var(--border)">
     <div style="font-family:'Oswald',sans-serif;font-size:9px;font-weight:600;letter-spacing:.15em;color:var(--red);margin-bottom:3px" id="hub-url-lbl">YOUR SPOOL</div>
-    <div style="font-family:'Special Elite',cursive;font-size:13px;color:var(--text)">redstring.app/spool/yourname</div>
+    <div style="font-family:'Special Elite',cursive;font-size:13px;color:var(--text)">knownapp.com/spool/yourname</div>
     <div style="font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);margin-top:3px" id="hub-desc">Your community pulls threads with you</div>
   </div>
   <div style="padding:10px;display:flex;flex-direction:column;gap:7px">
     <div class="hubboard"><div class="hubname" id="hub-b1">OPERATION DEEP WATER</div><div class="hubmeta" id="hub-b1m">12 nodes · Active · 247 pulling threads · 3 tips · 12 comments</div><span class="hubstatus pub">PUBLIC</span></div>
     <div class="hubboard"><div class="hubname" id="hub-b2">OPERATION LOOKING GLASS</div><div class="hubmeta">8 nodes · Active · Invite only</div><span class="hubstatus priv">PRIVATE</span></div>
-
     <div style="border-top:1px solid var(--border);padding:10px">
       <div style="font-family:'Oswald',sans-serif;font-size:9px;font-weight:600;letter-spacing:.15em;color:var(--red);margin-bottom:8px;text-transform:uppercase">🧵 Community Threads</div>
       <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:9px">
@@ -806,8 +800,8 @@ header.res{background:var(–surf-res)}
           <div style="font-family:'Rajdhani',sans-serif;font-size:11px;color:var(--muted)">Just pulled the thread on Nexus Group separately. We need to talk. Tip incoming.</div>
         </div>
       </div>
-      <button onclick="toast('🧵 Ready to pull the thread? Join The Spool at redstring.app/spool/yourname and pull on all the threads with me')" style="width:100%;background:var(--red-dim);border:none;color:var(--text);font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.12em;padding:10px;cursor:pointer;text-transform:uppercase">Join The Spool — Pull the Thread →</button>
-      <div style="font-family:'DM Mono',monospace;font-size:8px;color:var(--dim);text-align:center;margin-top:6px;letter-spacing:.08em">redstring.app/spool/yourname</div>
+      <button onclick="toast('🧵 Ready to pull the thread? Join The Spool at knownapp.com/spool/yourname and pull on all the threads with me')" style="width:100%;background:var(--red-dim);border:none;color:var(--text);font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.12em;padding:10px;cursor:pointer;text-transform:uppercase">Join The Spool — Pull the Thread →</button>
+      <div style="font-family:'DM Mono',monospace;font-size:8px;color:var(--dim);text-align:center;margin-top:6px;letter-spacing:.08em">knownapp.com/spool/yourname</div>
     </div>
     <div style="border:1px solid var(--gold);padding:10px;background:var(--gold-dim)">
       <div style="font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;letter-spacing:.12em;color:var(--gold);margin-bottom:4px" id="hub-addon">THE SPOOL — $7.99/mo ADD-ON</div>
@@ -818,7 +812,7 @@ header.res{background:var(–surf-res)}
 
 <!-- PRICING PANEL -->
 <div class="panel inv-p" id="pricep" style="left:50%;top:50%;transform:translate(-50%,-50%);width:min(298px,92vw);max-height:88vh;overflow-y:auto">
-  <div class="ph"><div><div class="pt">Plans & Pricing</div><div class="ps inv-a">Cancel anytime</div></div><button class="pc" onclick="cp('pricep')">✕</button></div>
+  <div class="ph"><div><div class="pt">Plans &amp; Pricing</div><div class="ps inv-a">Cancel anytime</div></div><button class="pc" onclick="cp('pricep')">✕</button></div>
   <div style="padding:8px">
     <div class="pfound"><div class="pfound-title">★ Beta Founding Member — TestFlight Only</div><div class="pfound-sub">$7.99/mo locked forever · Disappears at App Store launch</div></div>
     <div style="display:flex;gap:0;margin-bottom:10px;border:1px solid var(--border);width:fit-content">
@@ -908,10 +902,10 @@ header.res{background:var(–surf-res)}
   <button class="dosclose inv" id="dos-close" onclick="hideDos()">✕ Close</button>
   <div class="doscont">
     <div class="doshdr inv" id="dos-hdr">
-      <div class="doscls inv-a" id="dos-cls">Classified — Red String Research</div>
+      <div class="doscls inv-a" id="dos-cls">Classified — Known</div>
       <div class="dostitle" id="dos-title">Intelligence Dossier</div>
       <div class="dosmeta" id="dos-meta">Board: Operation Deep Water · March 27, 2026<br>Owner: @lead_researcher · Nodes: 12 · Chain of Custody: Verified</div>
-      <div class="doswm inv" id="dos-wm">🔐 FORENSIC WATERMARK ACTIVE · WM-DW-2026-0047 · Any unauthorized distribution is traceable · RedStringResearch.app</div>
+      <div class="doswm inv" id="dos-wm">🔐 FORENSIC WATERMARK ACTIVE · WM-DW-2026-0047 · Any unauthorized distribution is traceable · knownapp.com</div>
     </div>
     <div class="dossec">
       <div class="dossectitle inv-a" id="dos-sec1">Executive Summary</div>
@@ -927,16 +921,8 @@ header.res{background:var(–surf-res)}
       <div class="dossectitle inv-a" id="dos-sec3">Contributor Credits</div>
       <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);line-height:1.9;padding:12px;background:var(--surf);border:1px solid var(--border)" id="dos-credits">@lead_researcher — Owner · 8 nodes · Lead<br>Jane M. — Tip contributor · Timeline corroboration · Permanently credited<br>R. Thompson — Tip contributor · Location witness · Permanently credited<br>M. Rivera — Tip contributor · Financial connection · Privacy protected<br><span style="color:var(--dim);font-size:8px">Credits are permanent and cannot be removed by any user.</span></div>
     </div>
-    <div class="dosfoot">RED STRING RESEARCH · REDSTRINGRESEARCH.APP<br>FORENSICALLY WATERMARKED · WM-DW-2026-0047<br><span style="font-family:'Special Elite',cursive">Unauthorized distribution is traceable to recipient</span></div>
+    <div class="dosfoot">KNOWN · KNOWNAPP.COM<br>FORENSICALLY WATERMARKED · WM-DW-2026-0047<br><span style="font-family:'Special Elite',cursive">Unauthorized distribution is traceable to recipient</span></div>
   </div>
-</div>
-
-
-<!-- ZOOM CONTROLS -->
-<div id="zoom-controls" style="position:absolute;bottom:68px;left:8px;z-index:35;display:flex;flex-direction:column;gap:3px">
-  <button onclick="zoomIn()" style="width:30px;height:30px;background:var(--surf);border:1px solid var(--border);color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">+</button>
-  <button onclick="zoomOut()" style="width:30px;height:30px;background:var(--surf);border:1px solid var(--border);color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">−</button>
-  <button onclick="resetZoom()" style="width:30px;height:30px;background:var(--surf);border:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:7px;cursor:pointer;display:flex;align-items:center;justify-content:center;letter-spacing:.04em;transition:all .2s" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">FIT</button>
 </div>
 
 <!-- ZOOM CONTROLS -->
@@ -945,6 +931,7 @@ header.res{background:var(–surf-res)}
   <button onclick="zoomOut()" style="width:30px;height:30px;background:var(--surf2);border:1px solid var(--border);color:var(--muted);font-size:18px;line-height:1;cursor:pointer;transition:color .2s" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">−</button>
   <button onclick="resetZoom()" style="width:30px;height:30px;background:var(--surf2);border:1px solid var(--border);color:var(--dim);font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.05em;cursor:pointer;transition:color .2s" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--dim)'">FIT</button>
 </div>
+
 <!-- MODE BADGE -->
 <div id="mb" class="inv">🕵️ Investigation Mode</div>
 ```
@@ -962,148 +949,143 @@ header.res{background:var(–surf-res)}
 </div><!-- /app -->
 <div id="toast"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-
-let mode=‘investigation’,aiI=0,lI=0,lT=null;
+<script>
+let mode='investigation',aiI=0,lI=0,lT=null;
 let connectMode=false,connectA=null;
 
 function undoLastString(){
-const svg=document.getElementById(‘csvg’);
+const svg=document.getElementById('csvg');
 const children=Array.from(svg.children);
-// Remove last user-drawn path+text pair (dashed strings added by user)
-const dashed=children.filter(el=>el.getAttribute(‘stroke-dasharray’)===‘4’);
-if(dashed.length===0){toast(‘Nothing to undo’);return;}
+const dashed=children.filter(el=>el.getAttribute('stroke-dasharray')==='4');
+if(dashed.length===0){toast('Nothing to undo');return;}
 const last=dashed[dashed.length-1];
-// Also remove the text label after it
 const idx=children.indexOf(last);
-if(idx>=0 && children[idx+1] && children[idx+1].tagName===‘text’){
+if(idx>=0 && children[idx+1] && children[idx+1].tagName==='text'){
 svg.removeChild(children[idx+1]);
 }
 svg.removeChild(last);
-toast(‘↩ Connection removed’);
+toast('↩ Connection removed');
 }
 
 function toggleConnect(){
 connectMode=!connectMode;
 connectA=null;
-const btn=document.getElementById(‘tb-connect’);
-const inv=mode===‘investigation’;
+const btn=document.getElementById('tb-connect');
+const inv=mode==='investigation';
 if(connectMode){
-[‘secp’,‘wmp’,‘vnp’,‘msgp’,‘presp’,‘hubp’,‘pricep’,‘np’,‘aip’].forEach(cp);
-btn.style.borderColor=inv?‘var(–red)’:‘var(–blue)’;
-btn.style.color=inv?‘var(–red)’:‘var(–blue)’;
-btn.style.background=inv?‘rgba(255,45,45,.1)’:‘rgba(46,134,171,.1)’;
-toast(‘🔗 Connect Mode ON — tap the first node’);
+['secp','wmp','vnp','msgp','presp','hubp','pricep','np','aip'].forEach(cp);
+btn.style.borderColor=inv?'var(--red)':'var(--blue)';
+btn.style.color=inv?'var(--red)':'var(--blue)';
+btn.style.background=inv?'rgba(255,45,45,.1)':'rgba(46,134,171,.1)';
+toast('🔗 Connect Mode ON — tap the first node');
 } else {
-btn.style.borderColor=’’;btn.style.color=’’;btn.style.background=’’;
-toast(‘Connect Mode off’);
+btn.style.borderColor='';btn.style.color='';btn.style.background='';
+toast('Connect Mode off');
 }
 }
 
 function handleNodeConnect(nodeEl,nodeId,title){
 if(!connectMode) return false;
-const inv=mode===‘investigation’;
+const inv=mode==='investigation';
 if(!connectA){
 connectA={el:nodeEl,id:nodeId,title:title};
-nodeEl.style.boxShadow=inv?‘0 0 0 2px var(–red)’:‘0 0 0 2px var(–blue)’;
+nodeEl.style.boxShadow=inv?'0 0 0 2px var(--red)':'0 0 0 2px var(--blue)';
 toast(`✓ "${title}" selected — now tap the second node`);
 return true;
 } else {
-if(connectA.id===nodeId){toast(‘Tap a different node to connect to’);return true;}
-// Draw the string
-connectA.el.style.boxShadow=’’;
+if(connectA.id===nodeId){toast('Tap a different node to connect to');return true;}
+connectA.el.style.boxShadow='';
 drawUserString(connectA.id,nodeId,connectA.title,title);
 connectA=null;
 connectMode=false;
-const btn=document.getElementById(‘tb-connect’);
-btn.style.borderColor=’’;btn.style.color=’’;btn.style.background=’’;
+const btn=document.getElementById('tb-connect');
+btn.style.borderColor='';btn.style.color='';btn.style.background='';
 return true;
 }
 }
 
 function drawUserString(idA,idB,titleA,titleB){
-const svg=document.getElementById(‘csvg’);
-const pan=document.getElementById(‘canvas-pan’);
-const pr=pan?pan.getBoundingClientRect():document.getElementById(‘cw’).getBoundingClientRect();
-const inv=mode===‘investigation’;
+const svg=document.getElementById('csvg');
+const pan=document.getElementById('canvas-pan');
+const pr=pan?pan.getBoundingClientRect():document.getElementById('cw').getBoundingClientRect();
+const inv=mode==='investigation';
 const a=document.getElementById(idA),b=document.getElementById(idB);
 if(!a||!b)return;
 const ar=a.getBoundingClientRect(),br=b.getBoundingClientRect();
 const x1=(ar.left-pr.left+ar.width/2)/scale,y1=(ar.top-pr.top+ar.height/2)/scale;
 const x2=(br.left-pr.left+br.width/2)/scale,y2=(br.top-pr.top+br.height/2)/scale;
 const mx=(x1+x2)/2,my=(y1+y2)/2-22;
-const col=inv?’#FF2D2D’:’#2E86AB’;
-const path=document.createElementNS(‘http://www.w3.org/2000/svg’,‘path’);
-path.setAttribute(‘d’,`M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`);
-path.setAttribute(‘stroke’,col);path.setAttribute(‘stroke-width’,‘2’);
-path.setAttribute(‘fill’,‘none’);path.setAttribute(‘opacity’,’.85’);
-path.setAttribute(‘stroke-dasharray’,‘4’);
+const col=inv?'#FF2D2D':'#2E86AB';
+const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+path.setAttribute('d',`M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`);
+path.setAttribute('stroke',col);path.setAttribute('stroke-width','2');
+path.setAttribute('fill','none');path.setAttribute('opacity','.85');
+path.setAttribute('stroke-dasharray','4');
 svg.appendChild(path);
-// Label
-const label=inv?‘CONNECTED’:‘LINKED’;
-const txt=document.createElementNS(‘http://www.w3.org/2000/svg’,‘text’);
-txt.setAttribute(‘x’,mx);txt.setAttribute(‘y’,my-5);txt.setAttribute(‘text-anchor’,‘middle’);
-txt.setAttribute(‘font-family’,‘DM Mono’);txt.setAttribute(‘font-size’,‘7’);
-txt.setAttribute(‘fill’,col);txt.setAttribute(‘letter-spacing’,‘1’);
+const label=inv?'CONNECTED':'LINKED';
+const txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+txt.setAttribute('x',mx);txt.setAttribute('y',my-5);txt.setAttribute('text-anchor','middle');
+txt.setAttribute('font-family','DM Mono');txt.setAttribute('font-size','7');
+txt.setAttribute('fill',col);txt.setAttribute('letter-spacing','1');
 txt.textContent=label;svg.appendChild(txt);
 toast(`✓ "${titleA}" → "${titleB}" connected with a ${inv?'red string':'blue connection'}`);
-cp(‘np’);
+cp('np');
 }
 
 const invMenu=[
-{sec:‘YOUR BOARDS’},
-{ico:‘📌’,lbl:‘All Boards’,fn:“hideAll();toast(‘📌 All boards — Investigation + Research modes’)”},
-{ico:‘📬’,lbl:‘Tips Inbox’,badge:‘3’,bc:‘r’,fn:“hideAll();showTips()”},
-{ico:‘🤝’,lbl:‘Collaborations’,fn:“toast(‘🤝 Invite co-investigators · Set permissions · View audit log’)”},
-{ico:‘⛓’,lbl:‘Chain of Custody’,fn:“toast(‘⛓ Full provenance trail per node · Export legal PDF’)”},
-{sec:‘BROADCAST’},
-{ico:‘🎥’,lbl:‘War Room’,fn:“hideAll();showWR()”},
-{ico:‘📡’,lbl:‘Live Stream’,fn:“hideAll();showLive()”},
-{ico:‘🌐’,lbl:‘The Spool 🧵’,badge:‘Pull the thread’,bc:‘g’,fn:“showPanel(‘hubp’)”},
-{sec:‘TOOLS’},
-{ico:‘👻’,lbl:‘Invisible Ink’,fn:“showInk()”},
-{ico:‘🎙️’,lbl:‘Voice Notes’,fn:“showPanel(‘vnp’)”},
-{ico:‘📅’,lbl:‘Timeline’,fn:“hideAll();showTL()”},
-{ico:‘🎞️’,lbl:‘Presentation’,fn:“showPanel(‘presp’)”},
-{ico:‘💬’,lbl:‘Messaging’,fn:“showPanel(‘msgp’)”},
-{ico:‘🔐’,lbl:‘Forensic Watermark’,fn:“showPanel(‘wmp’)”},
-{sec:‘ACCOUNT’},
-{ico:‘🔒’,lbl:‘Security’,fn:“showPanel(‘secp’)”},
-{ico:‘⭐’,lbl:‘Plans & Pricing’,fn:“showPanel(‘pricep’)”},
-{ico:‘🐛’,lbl:‘Help & Support’,fn:“toast(‘FAQ · Bug report · AI support agent · Feature requests’)”},
-{ico:‘👤’,lbl:‘Account Settings’,fn:“toast(‘Profile · Notifications · API keys · Delete account’)”},
+{sec:'YOUR BOARDS'},
+{ico:'📌',lbl:'All Boards',fn:"hideAll();toast('📌 All boards — Investigation + Research modes')"},
+{ico:'📬',lbl:'Tips Inbox',badge:'3',bc:'r',fn:"hideAll();showTips()"},
+{ico:'🤝',lbl:'Collaborations',fn:"toast('🤝 Invite co-investigators · Set permissions · View audit log')"},
+{ico:'⛓',lbl:'Chain of Custody',fn:"toast('⛓ Full provenance trail per node · Export legal PDF')"},
+{sec:'BROADCAST'},
+{ico:'🎥',lbl:'War Room',fn:"hideAll();showWR()"},
+{ico:'📡',lbl:'Live Stream',fn:"hideAll();showLive()"},
+{ico:'🌐',lbl:'The Spool 🧵',badge:'Pull the thread',bc:'g',fn:"showPanel('hubp')"},
+{sec:'TOOLS'},
+{ico:'👻',lbl:'Invisible Ink',fn:"showInk()"},
+{ico:'🎙️',lbl:'Voice Notes',fn:"showPanel('vnp')"},
+{ico:'📅',lbl:'Timeline',fn:"hideAll();showTL()"},
+{ico:'🎞️',lbl:'Presentation',fn:"showPanel('presp')"},
+{ico:'💬',lbl:'Messaging',fn:"showPanel('msgp')"},
+{ico:'🔐',lbl:'Forensic Watermark',fn:"showPanel('wmp')"},
+{sec:'ACCOUNT'},
+{ico:'🔒',lbl:'Security',fn:"showPanel('secp')"},
+{ico:'⭐',lbl:'Plans & Pricing',fn:"showPanel('pricep')"},
+{ico:'🐛',lbl:'Help & Support',fn:"toast('FAQ · Bug report · AI support agent · Feature requests')"},
+{ico:'👤',lbl:'Account Settings',fn:"toast('Profile · Notifications · API keys · Delete account')"},
 ];
 
 const resMenu=[
-{sec:‘YOUR BOARDS’},
-{ico:‘📌’,lbl:‘All Boards’,fn:“hideAll();toast(‘📌 All boards — Research + Investigation modes’)”},
-{ico:‘🤝’,lbl:‘Collaborators’,fn:“toast(‘🤝 Invite research partners · Set permissions · Activity log’)”},
-{ico:‘⛓’,lbl:‘Source Provenance’,fn:“toast(‘⛓ Full source trail · Verify credibility · Export bibliography’)”},
-{sec:‘SHARE’},
-{ico:‘🎥’,lbl:‘Study Groups’,fn:“hideAll();showWR()”},
-{ico:‘📡’,lbl:‘Share Research’,fn:“hideAll();showLive()”},
-{ico:‘🌐’,lbl:‘The Spool’,badge:’$7.99/mo’,bc:‘g’,fn:“showPanel(‘hubp’)”},
-{sec:‘TOOLS’},
-{ico:‘👻’,lbl:‘Invisible Ink’,fn:“showInk()”},
-{ico:‘🎙️’,lbl:‘Voice Notes’,fn:“showPanel(‘vnp’)”},
-{ico:‘📅’,lbl:‘Research Timeline’,fn:“hideAll();showTL()”},
-{ico:‘🎞️’,lbl:‘Research Report’,fn:“showPanel(‘presp’)”},
-{ico:‘💬’,lbl:‘Messaging’,fn:“showPanel(‘msgp’)”},
-{ico:‘🔐’,lbl:‘Forensic Watermark’,fn:“showPanel(‘wmp’)”},
-{sec:‘ACCOUNT’},
-{ico:‘🔒’,lbl:‘Security’,fn:“showPanel(‘secp’)”},
-{ico:‘⭐’,lbl:‘Plans & Pricing’,fn:“showPanel(‘pricep’)”},
-{ico:‘🐛’,lbl:‘Help & Support’,fn:“toast(‘FAQ · Bug report · AI support agent · Feature requests’)”},
-{ico:‘👤’,lbl:‘Account Settings’,fn:“toast(‘Profile · Notifications · API keys · Delete account’)”},
+{sec:'YOUR BOARDS'},
+{ico:'📌',lbl:'All Boards',fn:"hideAll();toast('📌 All boards — Research + Investigation modes')"},
+{ico:'🤝',lbl:'Collaborators',fn:"toast('🤝 Invite research partners · Set permissions · Activity log')"},
+{ico:'⛓',lbl:'Source Provenance',fn:"toast('⛓ Full source trail · Verify credibility · Export bibliography')"},
+{sec:'SHARE'},
+{ico:'🎥',lbl:'Study Groups',fn:"hideAll();showWR()"},
+{ico:'📡',lbl:'Share Research',fn:"hideAll();showLive()"},
+{ico:'🌐',lbl:'The Spool',badge:'$7.99/mo',bc:'g',fn:"showPanel('hubp')"},
+{sec:'TOOLS'},
+{ico:'👻',lbl:'Invisible Ink',fn:"showInk()"},
+{ico:'🎙️',lbl:'Voice Notes',fn:"showPanel('vnp')"},
+{ico:'📅',lbl:'Research Timeline',fn:"hideAll();showTL()"},
+{ico:'🎞️',lbl:'Research Report',fn:"showPanel('presp')"},
+{ico:'💬',lbl:'Messaging',fn:"showPanel('msgp')"},
+{ico:'🔐',lbl:'Forensic Watermark',fn:"showPanel('wmp')"},
+{sec:'ACCOUNT'},
+{ico:'🔒',lbl:'Security',fn:"showPanel('secp')"},
+{ico:'⭐',lbl:'Plans & Pricing',fn:"showPanel('pricep')"},
+{ico:'🐛',lbl:'Help & Support',fn:"toast('FAQ · Bug report · AI support agent · Feature requests')"},
+{ico:'👤',lbl:'Account Settings',fn:"toast('Profile · Notifications · API keys · Delete account')"},
 ];
 
 function buildMenu(items){
-const inv=mode===‘investigation’;
-const b=document.getElementById(‘hmbody’);b.innerHTML=’’;
+const inv=mode==='investigation';
+const b=document.getElementById('hmbody');b.innerHTML='';
 items.forEach(it=>{
-if(it.sec){const s=document.createElement(‘div’);s.className=‘hmsec’;s.textContent=it.sec;b.appendChild(s);}
+if(it.sec){const s=document.createElement('div');s.className='hmsec';s.textContent=it.sec;b.appendChild(s);}
 else{
-const btn=document.createElement(‘button’);btn.className=‘hmitem’;
+const btn=document.createElement('button');btn.className='hmitem';
 btn.onclick=()=>{closeMenu();eval(it.fn)};
 let h=`<span class="hmico">${it.ico}</span><span>${it.lbl}</span>`;
 if(it.badge)h+=`<span class="hmbadge ${it.bc}">${it.badge}</span>`;
@@ -1113,323 +1095,321 @@ btn.innerHTML=h;b.appendChild(btn);
 }
 
 function openMenu(){
-const inv=mode===‘investigation’;
-const p=document.getElementById(‘hmp’);
+const inv=mode==='investigation';
+const p=document.getElementById('hmp');
 p.className=`${inv?'inv':'res'}`;
-document.getElementById(‘hml’).className=`hml ${inv?'inv':'res'}`;
+document.getElementById('hml').className=`hml ${inv?'inv':'res'}`;
 buildMenu(inv?invMenu:resMenu);
-document.getElementById(‘hm’).classList.add(‘on’);
+document.getElementById('hm').classList.add('on');
 }
-function closeMenu(){document.getElementById(‘hm’).classList.remove(‘on’)}
+function closeMenu(){document.getElementById('hm').classList.remove('on')}
 
-function goMode(){document.getElementById(‘splash’).style.opacity=‘0’;setTimeout(()=>{document.getElementById(‘splash’).style.display=‘none’;document.getElementById(‘msel’).style.display=‘flex’},700)}
+function goMode(){document.getElementById('splash').style.opacity='0';setTimeout(()=>{document.getElementById('splash').style.display='none';document.getElementById('msel').style.display='flex'},700)}
 function pickMode(m){
-mode=m;document.getElementById(‘msel’).style.display=‘none’;
-const b=document.getElementById(‘bio’);b.style.display=‘flex’;
-if(m===‘research’){
-document.getElementById(‘bio-logo’).style.color=‘var(–blue)’;
-document.getElementById(‘bio-sub’).textContent=‘Biometric lock active\nYour research board is protected’;
-document.getElementById(‘bio-btn’).className=‘bio-btn res’;
+mode=m;document.getElementById('msel').style.display='none';
+const b=document.getElementById('bio');b.style.display='flex';
+if(m==='research'){
+document.getElementById('bio-logo').style.color='var(--blue)';
+document.getElementById('bio-sub').textContent='Biometric lock active\nYour research board is protected';
+document.getElementById('bio-btn').className='bio-btn res';
 }
 }
 function launch(){
-document.getElementById(‘bio’).style.display=‘none’;
-document.getElementById(‘app’).classList.add(‘on’);
+document.getElementById('bio').style.display='none';
+document.getElementById('app').classList.add('on');
 applyMode(mode);
 setTimeout(()=>{drawStrings();toast(`✓ Authenticated — ${mode==='investigation'?'🕵️ Investigation':'🔍 Research'} Mode`)},100);
 }
-function showDecoy(){document.getElementById(‘decoy’).style.display=‘flex’}
-function hideDecoy(){document.getElementById(‘decoy’).style.display=‘none’}
+function showDecoy(){document.getElementById('decoy').style.display='flex'}
+function hideDecoy(){document.getElementById('decoy').style.display='none'}
 
-function cp(id){const e=document.getElementById(id);if(e){e.classList.remove(‘on’);e.style.display=‘none’}}
+function cp(id){const e=document.getElementById(id);if(e){e.classList.remove('on');e.style.display='none'}}
 function showPanel(id){
 closeMenu();
-[‘secp’,‘wmp’,‘vnp’,‘msgp’,‘presp’,‘hubp’,‘pricep’,‘np’,‘aip’].forEach(cp);
-const e=document.getElementById(id);if(e){e.classList.add(‘on’);e.style.display=‘flex’}
+['secp','wmp','vnp','msgp','presp','hubp','pricep','np','aip'].forEach(cp);
+const e=document.getElementById(id);if(e){e.classList.add('on');e.style.display='flex'}
 }
-function hideAll(){hideTL();hideWR();hideLive();hideTips();hideDos();[‘secp’,‘wmp’,‘vnp’,‘msgp’,‘presp’,‘hubp’,‘pricep’,‘np’,‘aip’].forEach(cp)}
-function toggleAI(){closeMenu();const p=document.getElementById(‘aip’);if(p.classList.contains(‘on’)||p.style.display===‘flex’){cp(‘aip’)}else{hideAll();showPanel(‘aip’)}}
-function showInk(){closeMenu();document.getElementById(‘ink-demo’).style.display=‘flex’}
-function closeInk(){document.getElementById(‘ink-demo’).style.display=‘none’}
-function revInk(el){el.querySelector(’.ink-content’).style.opacity=‘1’}
-function hideInk(el){el.querySelector(’.ink-content’).style.opacity=‘0’}
-function showTL(){closeMenu();hideWR();hideLive();hideTips();hideDos();hideCoach();const e=document.getElementById(‘tlp’);e.classList.add(‘on’);e.style.display=‘flex’}
-function hideTL(){const e=document.getElementById(‘tlp’);e.classList.remove(‘on’);e.style.display=‘none’}
-function showWR(){closeMenu();hideTL();hideLive();hideTips();hideDos();hideCoach();const e=document.getElementById(‘wrp’);e.classList.add(‘on’);e.style.display=‘flex’}
-function hideWR(){const e=document.getElementById(‘wrp’);e.classList.remove(‘on’);e.style.display=‘none’}
-function showLive(){closeMenu();hideWR();hideTL();hideTips();hideDos();hideCoach();const e=document.getElementById(‘lvp’);e.classList.add(‘on’);e.style.display=‘flex’;setTimeout(()=>{drawLiveStrings();runLive()},200)}
-function hideLive(){const e=document.getElementById(‘lvp’);e.classList.remove(‘on’);e.style.display=‘none’;if(lT)clearTimeout(lT)}
-function showTips(){closeMenu();hideWR();hideLive();hideTL();hideDos();hideCoach();const e=document.getElementById(‘tipp’);e.style.display=‘flex’}
-function hideTips(){document.getElementById(‘tipp’).style.display=‘none’}
-function showDos(){closeMenu();hideWR();hideLive();hideTL();hideTips();hideCoach();const e=document.getElementById(‘dosp’);e.classList.add(‘on’);e.style.display=‘block’}
-function hideDos(){const e=document.getElementById(‘dosp’);e.classList.remove(‘on’);e.style.display=‘none’}
-function hideCoach(){const c=document.getElementById(‘coach’);if(c)c.style.display=‘none’}
-function setGran(btn){document.querySelectorAll(’.gb’).forEach(b=>b.classList.remove(‘active’));btn.classList.add(‘active’);toast(`Timeline granularity: ${btn.textContent} — drag nodes to assign timestamps`)}
+function hideAll(){hideTL();hideWR();hideLive();hideTips();hideDos();['secp','wmp','vnp','msgp','presp','hubp','pricep','np','aip'].forEach(cp)}
+function toggleAI(){closeMenu();const p=document.getElementById('aip');if(p.classList.contains('on')||p.style.display==='flex'){cp('aip')}else{hideAll();showPanel('aip')}}
+function showInk(){closeMenu();document.getElementById('ink-demo').style.display='flex'}
+function closeInk(){document.getElementById('ink-demo').style.display='none'}
+function revInk(el){el.querySelector('.ink-content').style.opacity='1'}
+function hideInk(el){el.querySelector('.ink-content').style.opacity='0'}
+function showTL(){closeMenu();hideWR();hideLive();hideTips();hideDos();hideCoach();const e=document.getElementById('tlp');e.classList.add('on');e.style.display='flex'}
+function hideTL(){const e=document.getElementById('tlp');e.classList.remove('on');e.style.display='none'}
+function showWR(){closeMenu();hideTL();hideLive();hideTips();hideDos();hideCoach();const e=document.getElementById('wrp');e.classList.add('on');e.style.display='flex'}
+function hideWR(){const e=document.getElementById('wrp');e.classList.remove('on');e.style.display='none'}
+function showLive(){closeMenu();hideWR();hideTL();hideTips();hideDos();hideCoach();const e=document.getElementById('lvp');e.classList.add('on');e.style.display='flex';setTimeout(()=>{drawLiveStrings();runLive()},200)}
+function hideLive(){const e=document.getElementById('lvp');e.classList.remove('on');e.style.display='none';if(lT)clearTimeout(lT)}
+function showTips(){closeMenu();hideWR();hideLive();hideTL();hideDos();hideCoach();const e=document.getElementById('tipp');e.style.display='flex'}
+function hideTips(){document.getElementById('tipp').style.display='none'}
+function showDos(){closeMenu();hideWR();hideLive();hideTL();hideTips();hideCoach();const e=document.getElementById('dosp');e.classList.add('on');e.style.display='block'}
+function hideDos(){const e=document.getElementById('dosp');e.classList.remove('on');e.style.display='none'}
+function hideCoach(){const c=document.getElementById('coach');if(c)c.style.display='none'}
+function setGran(btn){document.querySelectorAll('.gb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');toast(`Timeline granularity: ${btn.textContent} — drag nodes to assign timestamps`)}
 
 function navTo(t,btn){
-document.querySelectorAll(’.nb’).forEach(b=>b.classList.remove(‘inv-act’,‘res-act’));
-btn.classList.add(mode===‘investigation’?‘inv-act’:‘res-act’);
+document.querySelectorAll('.nb').forEach(b=>b.classList.remove('inv-act','res-act'));
+btn.classList.add(mode==='investigation'?'inv-act':'res-act');
 hideAll();
-if(t===‘tips’)mode===‘investigation’?showTips():toast(‘📄 Source Submissions in hamburger menu’);
-else if(t===‘ai’)toggleAI();
-else if(t===‘wr’)showWR();
-else if(t===‘live’)showLive();
+if(t==='tips')mode==='investigation'?showTips():toast('📄 Source Submissions in hamburger menu');
+else if(t==='ai')toggleAI();
+else if(t==='wr')showWR();
+else if(t==='live')showLive();
 }
 
 const ndData=[
-{t:‘LEAD RESEARCHER’,s:‘Person — Lead’,b:`<b style="color:var(--red)">Role:</b> Lead Researcher<br><b style="color:var(--red)">Tip URL:</b> redstring.app/tip/username<br><b style="color:var(--red)">Tips received:</b> 47 total · 3 new<br><b style="color:var(--red)">All tips require:</b> Name + contact info<br><b style="color:var(--red)">War Room:</b> Active with 2 collaborators<br><br><em style="color:var(--muted)">The board owner. All tips require real name and contact — ensures credibility and follow-up.</em>`},
-{t:‘SUBJECT ALPHA’,s:‘Person — Subject’,b:`<b style="color:var(--red)">Status:</b> Under active investigation<br><b style="color:var(--red)">Connections:</b> 6 nodes<br><b style="color:var(--red)">AI flag:</b> Timeline discrepancy<br><b style="color:var(--red)">72hr gap:</b> No verified alibi<br><br><em style="color:var(--muted)">Generic placeholder names used in seed data — real investigations use verified identities.</em>`},
-{t:‘ASSOCIATE EPSILON’,s:‘Person — Unverified’,b:`<b style="color:var(--red)">Status:</b> Unverified<br><b style="color:var(--red)">Last contact:</b> 48 hours prior<br><b style="color:var(--red)">Location:</b> Disputed<br><b style="color:var(--red)">Source:</b> 3 verified tips<br><br><em style="color:var(--muted)">Three independent verified tipsters referenced this associate.</em>`},
-{t:‘LAST KNOWN LOCATION’,s:‘Location — Verified’,b:`<b style="color:var(--red)">Timestamp:</b> Verified to the hour<br><b style="color:var(--red)">Sources:</b> Witness + CCTV<br><b style="color:var(--red)">Credibility:</b> High<br><b style="color:var(--red)">AI flag:</b> Contradicts official account<br><br><em style="color:var(--muted)">Official timeline places subject elsewhere — impossibility flagged by AI.</em>`},
-{t:‘COMMUNICATION LOGS’,s:‘Document — FOIA’,b:`<b style="color:var(--red)">Type:</b> FOIA Document<br><b style="color:var(--red)">Key finding:</b> 3 unanswered contacts in 72hr window<br><b style="color:var(--red)">Credibility:</b> High — primary source<br><b style="color:var(--red)">Chain of custody:</b> Verified<br><br><em style="color:var(--muted)">Three contact attempts went unanswered during the critical window. Legally significant.</em>`},
-{t:‘NEXUS GROUP’,s:‘Organization — Under Review’,b:`<b style="color:var(--red)">Status:</b> Under review<br><b style="color:var(--red)">Flagged:</b> Financial ties — undisclosed<br><b style="color:var(--red)">Tracked:</b> 8 months<br><b style="color:var(--red)">Cross-refs:</b> 3 other boards<br><br><em style="color:var(--muted)">Financial connections documented by a verified tip contributor over 8 months.</em>`},
-{t:‘72-HOUR GAP’,s:‘⚠ AI-Flagged Critical’,b:`<b style="color:var(--red)">Duration:</b> 72 hours<br><b style="color:var(--red)">Verified alibi:</b> NONE<br><b style="color:var(--red)">Unanswered contacts:</b> 3<br><b style="color:var(--red)">Corroborated by:</b> 2 verified tips<br><b style="color:var(--red)">Legal significance:</b> High<br><br><em style="color:var(--muted)">Auto-detected by AI cross-referencing all dated nodes. Single most critical anomaly.</em>`},
-{t:‘INVISIBLE INK’,s:‘Tap toolbar Ink button’,b:`<b style="color:var(--red)">Feature:</b> Invisible Ink<br><br>Sensitive content hidden from anyone glancing at your screen. Hold to reveal.<br><br><em style="color:var(--muted)">Tap the 👻 Ink button in the toolbar to demo this feature.</em>`},
-{t:‘WITNESS DELTA’,s:‘Witness — Verified Tip’,b:`<b style="color:var(--red)">Contact info:</b> On file with owner<br><b style="color:var(--red)">Privacy toggle:</b> Standard<br><b style="color:var(--red)">AI credibility:</b> High<br><b style="color:var(--red)">Claim:</b> Present at last known location<br><br><em style="color:var(--muted)">Identity verified via tip form. Owner can reply in-app — no external app needed.</em>`}
+{t:'LEAD RESEARCHER',s:'Person — Lead',b:`<b style="color:var(--red)">Role:</b> Lead Researcher<br><b style="color:var(--red)">Tip URL:</b> knownapp.com/tip/username<br><b style="color:var(--red)">Tips received:</b> 47 total · 3 new<br><b style="color:var(--red)">All tips require:</b> Name + contact info<br><b style="color:var(--red)">War Room:</b> Active with 2 collaborators<br><br><em style="color:var(--muted)">The board owner. All tips require real name and contact — ensures credibility and follow-up.</em>`},
+{t:'SUBJECT ALPHA',s:'Person — Subject',b:`<b style="color:var(--red)">Status:</b> Under active investigation<br><b style="color:var(--red)">Connections:</b> 6 nodes<br><b style="color:var(--red)">AI flag:</b> Timeline discrepancy<br><b style="color:var(--red)">72hr gap:</b> No verified alibi<br><br><em style="color:var(--muted)">Generic placeholder names used in seed data — real investigations use verified identities.</em>`},
+{t:'ASSOCIATE EPSILON',s:'Person — Unverified',b:`<b style="color:var(--red)">Status:</b> Unverified<br><b style="color:var(--red)">Last contact:</b> 48 hours prior<br><b style="color:var(--red)">Location:</b> Disputed<br><b style="color:var(--red)">Source:</b> 3 verified tips<br><br><em style="color:var(--muted)">Three independent verified tipsters referenced this associate.</em>`},
+{t:'LAST KNOWN LOCATION',s:'Location — Verified',b:`<b style="color:var(--red)">Timestamp:</b> Verified to the hour<br><b style="color:var(--red)">Sources:</b> Witness + CCTV<br><b style="color:var(--red)">Credibility:</b> High<br><b style="color:var(--red)">AI flag:</b> Contradicts official account<br><br><em style="color:var(--muted)">Official timeline places subject elsewhere — impossibility flagged by AI.</em>`},
+{t:'COMMUNICATION LOGS',s:'Document — FOIA',b:`<b style="color:var(--red)">Type:</b> FOIA Document<br><b style="color:var(--red)">Key finding:</b> 3 unanswered contacts in 72hr window<br><b style="color:var(--red)">Credibility:</b> High — primary source<br><b style="color:var(--red)">Chain of custody:</b> Verified<br><br><em style="color:var(--muted)">Three contact attempts went unanswered during the critical window. Legally significant.</em>`},
+{t:'NEXUS GROUP',s:'Organization — Under Review',b:`<b style="color:var(--red)">Status:</b> Under review<br><b style="color:var(--red)">Flagged:</b> Financial ties — undisclosed<br><b style="color:var(--red)">Tracked:</b> 8 months<br><b style="color:var(--red)">Cross-refs:</b> 3 other boards<br><br><em style="color:var(--muted)">Financial connections documented by a verified tip contributor over 8 months.</em>`},
+{t:'72-HOUR GAP',s:'⚠ AI-Flagged Critical',b:`<b style="color:var(--red)">Duration:</b> 72 hours<br><b style="color:var(--red)">Verified alibi:</b> NONE<br><b style="color:var(--red)">Unanswered contacts:</b> 3<br><b style="color:var(--red)">Corroborated by:</b> 2 verified tips<br><b style="color:var(--red)">Legal significance:</b> High<br><br><em style="color:var(--muted)">Auto-detected by AI cross-referencing all dated nodes. Single most critical anomaly.</em>`},
+{t:'INVISIBLE INK',s:'Tap toolbar Ink button',b:`<b style="color:var(--red)">Feature:</b> Invisible Ink<br><br>Sensitive content hidden from anyone glancing at your screen. Hold to reveal.<br><br><em style="color:var(--muted)">Tap the 👻 Ink button in the toolbar to demo this feature.</em>`},
+{t:'WITNESS DELTA',s:'Witness — Verified Tip',b:`<b style="color:var(--red)">Contact info:</b> On file with owner<br><b style="color:var(--red)">Privacy toggle:</b> Standard<br><b style="color:var(--red)">AI credibility:</b> High<br><b style="color:var(--red)">Claim:</b> Present at last known location<br><br><em style="color:var(--muted)">Identity verified via tip form. Owner can reply in-app — no external app needed.</em>`}
 ];
 
-function showNode(i){const d=ndData[i];if(!d)return;document.getElementById(‘np-t’).textContent=d.t;document.getElementById(‘np-s’).textContent=d.s;document.getElementById(‘np-b’).innerHTML=d.b;document.getElementById(‘np’).className=‘panel inv-p’;document.getElementById(‘np-s’).className=‘ps inv-a’;showPanel(‘np’)}
+function showNode(i){const d=ndData[i];if(!d)return;document.getElementById('np-t').textContent=d.t;document.getElementById('np-s').textContent=d.s;document.getElementById('np-b').innerHTML=d.b;document.getElementById('np').className='panel inv-p';document.getElementById('np-s').className='ps inv-a';showPanel('np')}
 
-const invR=[“Cross-referencing all 12 nodes — the communication logs are the strongest primary source. Three unanswered contacts in a 72-hour window is both statistically and legally anomalous.”,“Witness Delta’s tip directly corroborates the location discrepancy. Recommend elevating to critical and initiating chain of custody before any external sharing.”,“Pattern: Nexus Group appears in 3 separate node clusters. Central coordinating role not yet mapped. Should I generate a connection analysis?”,“The 72-hour gap is the thread that unravels everything. Primary source documentation for even one of those hours makes the entire official account publicly questionable.”];
-const resR=[“Cross-referencing your research question — the peer-reviewed studies show conflicting methodologies. Triangulate with at least 3 independent primary sources before drawing conclusions.”,“I’ve identified a gap: your sources don’t address the underlying mechanism. This is a significant weakness a peer reviewer would flag immediately.”,“Pattern: three of your sources cite the same 2019 study — citation chain risk. If that study has methodological issues it undermines all three branches.”,“The open question node you flagged is unanswered in the literature. This is your strongest research angle and could be the basis of an original contribution.”];
+const invR=["Cross-referencing all 12 nodes — the communication logs are the strongest primary source. Three unanswered contacts in a 72-hour window is both statistically and legally anomalous.","Witness Delta's tip directly corroborates the location discrepancy. Recommend elevating to critical and initiating chain of custody before any external sharing.","Pattern: Nexus Group appears in 3 separate node clusters. Central coordinating role not yet mapped. Should I generate a connection analysis?","The 72-hour gap is the thread that unravels everything. Primary source documentation for even one of those hours makes the entire official account publicly questionable."];
+const resR=["Cross-referencing your research question — the peer-reviewed studies show conflicting methodologies. Triangulate with at least 3 independent primary sources before drawing conclusions.","I've identified a gap: your sources don't address the underlying mechanism. This is a significant weakness a peer reviewer would flag immediately.","Pattern: three of your sources cite the same 2019 study — citation chain risk. If that study has methodological issues it undermines all three branches.","The open question node you flagged is unanswered in the literature. This is your strongest research angle and could be the basis of an original contribution."];
 
 const resNdData=[
-{t:‘DR. SARAH CHEN’,s:‘Person — Researcher’,b:`<b style="color:var(--blue)">Role:</b> Lead Author<br><b style="color:var(--blue)">Study:</b> 2019 Early Intervention Meta-Analysis<br><b style="color:var(--blue)">Citations:</b> 47<br><b style="color:var(--blue)">Credibility:</b> High — peer reviewed<br><br><em style="color:var(--muted)">Foundational researcher on your board. Her 2019 study is the most-cited source in your research.</em>`},
-{t:‘2019 META-ANALYSIS’,s:‘Source — Peer Reviewed’,b:`<b style="color:var(--blue)">Type:</b> Peer-reviewed meta-analysis<br><b style="color:var(--blue)">Finding:</b> Early intervention before age 3 significantly improves long-term outcomes<br><b style="color:var(--blue)">Credibility:</b> High<br><b style="color:var(--blue)">Citations:</b> 47<br><br><em style="color:var(--muted)">Foundational source. AI cross-referenced with all other board sources — 3 direct connections found.</em>`},
-{t:‘SENSORY PROCESSING’,s:‘Study — 2022’,b:`<b style="color:var(--blue)">Type:</b> Controlled trial<br><b style="color:var(--blue)">Topic:</b> Sensory processing in ASD<br><b style="color:var(--blue)">Connected sources:</b> 3<br><b style="color:var(--blue)">Methodology:</b> Controlled trial<br><br><em style="color:var(--muted)">AI flagged: overlaps with 2019 meta-analysis findings in 3 areas. Suggests a connection worth exploring.</em>`},
-{t:‘CO-OCCURRING CONDITIONS’,s:‘Note’,b:`<b style="color:var(--blue)">Content:</b> ADHD present in ~70% of autistic children<br><b style="color:var(--blue)">Status:</b> Open question flagged<br><b style="color:var(--blue)">Source:</b> Voice note — Mama Bear<br><br><em style="color:var(--muted)">Mama Bear flagged this as important for parents to understand before researching interventions.</em>`},
-{t:‘GUT-BRAIN CONNECTION’,s:‘Topic — Emerging’,b:`<b style="color:var(--blue)">Type:</b> Emerging research topic<br><b style="color:var(--blue)">Sources attached:</b> 4<br><b style="color:var(--blue)">Status:</b> Active area of study<br><br><em style="color:var(--muted)">AI flagged: no studies currently address gut-brain connection alongside sensory processing in the same ASD population. Original research opportunity.</em>`},
-{t:‘SPEECH OUTCOMES’,s:‘Question — Open’,b:`<b style="color:var(--blue)">Question:</b> Does early speech therapy improve long-term social outcomes in autistic children?<br><b style="color:var(--blue)">Status:</b> Unanswered in literature<br><b style="color:var(--blue)">Potential:</b> Original thesis angle<br><br><em style="color:var(--muted)">Scholar: This is the strongest unanswered question on your board. No controlled trials address this specifically.</em>`},
-{t:‘RESEARCH OPPORTUNITY’,s:‘⚡ AI Gap Detected’,b:`<b style="color:var(--blue)">Gap:</b> No studies address gut-brain connection alongside sensory processing in same ASD population<br><b style="color:var(--blue)">Significance:</b> Original research contribution<br><b style="color:var(--blue)">Detected by:</b> AI cross-referencing all board sources<br><br><em style="color:var(--muted)">This is your most important finding. Publish first and this becomes the foundational study in this area.</em>`},
-{t:‘INVISIBLE INK NODE’,s:‘Hold to reveal’,b:`<b style="color:var(--blue)">Feature:</b> Invisible Ink<br><br>Private research notes hidden from anyone glancing at your screen. Hold to reveal, release to hide.<br><br><em style="color:var(--muted)">Tap the 👻 Ink button in the toolbar to demo this feature.</em>`},
-{t:‘SOURCE CONTRIBUTOR’,s:‘Contributor — Parent’,b:`<b style="color:var(--blue)">Contact:</b> On file with owner<br><b style="color:var(--blue)">Submissions:</b> 3 peer-reviewed sources<br><b style="color:var(--blue)">Status:</b> All verified<br><b style="color:var(--blue)">Credit:</b> Permanently attributed<br><br><em style="color:var(--muted)">Parent submitted 3 sources via your research link. Their name is permanently credited in every export. Cannot be removed.</em>`},
+{t:'DR. SARAH CHEN',s:'Person — Researcher',b:`<b style="color:var(--blue)">Role:</b> Lead Author<br><b style="color:var(--blue)">Study:</b> 2019 Early Intervention Meta-Analysis<br><b style="color:var(--blue)">Citations:</b> 47<br><b style="color:var(--blue)">Credibility:</b> High — peer reviewed<br><br><em style="color:var(--muted)">Foundational researcher on your board. Her 2019 study is the most-cited source in your research.</em>`},
+{t:'2019 META-ANALYSIS',s:'Source — Peer Reviewed',b:`<b style="color:var(--blue)">Type:</b> Peer-reviewed meta-analysis<br><b style="color:var(--blue)">Finding:</b> Early intervention before age 3 significantly improves long-term outcomes<br><b style="color:var(--blue)">Credibility:</b> High<br><b style="color:var(--blue)">Citations:</b> 47<br><br><em style="color:var(--muted)">Foundational source. AI cross-referenced with all other board sources — 3 direct connections found.</em>`},
+{t:'SENSORY PROCESSING',s:'Study — 2022',b:`<b style="color:var(--blue)">Type:</b> Controlled trial<br><b style="color:var(--blue)">Topic:</b> Sensory processing in ASD<br><b style="color:var(--blue)">Connected sources:</b> 3<br><b style="color:var(--blue)">Methodology:</b> Controlled trial<br><br><em style="color:var(--muted)">AI flagged: overlaps with 2019 meta-analysis findings in 3 areas. Suggests a connection worth exploring.</em>`},
+{t:'CO-OCCURRING CONDITIONS',s:'Note',b:`<b style="color:var(--blue)">Content:</b> ADHD present in ~70% of autistic children<br><b style="color:var(--blue)">Status:</b> Open question flagged<br><b style="color:var(--blue)">Source:</b> Voice note — Mama Bear<br><br><em style="color:var(--muted)">Mama Bear flagged this as important for parents to understand before researching interventions.</em>`},
+{t:'GUT-BRAIN CONNECTION',s:'Topic — Emerging',b:`<b style="color:var(--blue)">Type:</b> Emerging research topic<br><b style="color:var(--blue)">Sources attached:</b> 4<br><b style="color:var(--blue)">Status:</b> Active area of study<br><br><em style="color:var(--muted)">AI flagged: no studies currently address gut-brain connection alongside sensory processing in the same ASD population. Original research opportunity.</em>`},
+{t:'SPEECH OUTCOMES',s:'Question — Open',b:`<b style="color:var(--blue)">Question:</b> Does early speech therapy improve long-term social outcomes in autistic children?<br><b style="color:var(--blue)">Status:</b> Unanswered in literature<br><b style="color:var(--blue)">Potential:</b> Original thesis angle<br><br><em style="color:var(--muted)">Scholar: This is the strongest unanswered question on your board. No controlled trials address this specifically.</em>`},
+{t:'RESEARCH OPPORTUNITY',s:'⚡ AI Gap Detected',b:`<b style="color:var(--blue)">Gap:</b> No studies address gut-brain connection alongside sensory processing in same ASD population<br><b style="color:var(--blue)">Significance:</b> Original research contribution<br><b style="color:var(--blue)">Detected by:</b> AI cross-referencing all board sources<br><br><em style="color:var(--muted)">This is your most important finding. Publish first and this becomes the foundational study in this area.</em>`},
+{t:'INVISIBLE INK NODE',s:'Hold to reveal',b:`<b style="color:var(--blue)">Feature:</b> Invisible Ink<br><br>Private research notes hidden from anyone glancing at your screen. Hold to reveal, release to hide.<br><br><em style="color:var(--muted)">Tap the 👻 Ink button in the toolbar to demo this feature.</em>`},
+{t:'SOURCE CONTRIBUTOR',s:'Contributor — Parent',b:`<b style="color:var(--blue)">Contact:</b> On file with owner<br><b style="color:var(--blue)">Submissions:</b> 3 peer-reviewed sources<br><b style="color:var(--blue)">Status:</b> All verified<br><b style="color:var(--blue)">Credit:</b> Permanently attributed<br><br><em style="color:var(--muted)">Parent submitted 3 sources via your research link. Their name is permanently credited in every export. Cannot be removed.</em>`},
 ];
 
 function showResNode(i){
 const d=resNdData[i];if(!d)return;
-document.getElementById(‘np-t’).textContent=d.t;
-document.getElementById(‘np-s’).textContent=d.s;
-document.getElementById(‘np-b’).innerHTML=d.b;
-document.getElementById(‘np’).className=‘panel res-p’;
-document.getElementById(‘np-s’).className=‘ps res-a’;
-showPanel(‘np’);
+document.getElementById('np-t').textContent=d.t;
+document.getElementById('np-s').textContent=d.s;
+document.getElementById('np-b').innerHTML=d.b;
+document.getElementById('np').className='panel res-p';
+document.getElementById('np-s').className='ps res-a';
+showPanel('np');
 }
 
 function sendAI(){
-const inp=document.getElementById(‘ai-in’);const v=inp.value.trim();if(!v)return;
-const msgs=document.getElementById(‘ai-msgs’);const inv=mode===‘investigation’;
-const u=document.createElement(‘div’);u.className=‘am usr’;u.innerHTML=`<div class="aml">You</div>${v}`;msgs.appendChild(u);inp.value=’’;
-setTimeout(()=>{const a=document.createElement(‘div’);a.className=`am ${inv?'det':'sch'}`;a.innerHTML=`<div class="aml">${inv?'Detective':'Mama Bear'}</div>${(inv?invR:resR)[aiI%4]}`;msgs.appendChild(a);aiI++;msgs.scrollTop=msgs.scrollHeight},700);
+const inp=document.getElementById('ai-in');const v=inp.value.trim();if(!v)return;
+const msgs=document.getElementById('ai-msgs');const inv=mode==='investigation';
+const u=document.createElement('div');u.className='am usr';u.innerHTML=`<div class="aml">You</div>${v}`;msgs.appendChild(u);inp.value='';
+setTimeout(()=>{const a=document.createElement('div');a.className=`am ${inv?'det':'sch'}`;a.innerHTML=`<div class="aml">${inv?'Detective':'Mama Bear'}</div>${(inv?invR:resR)[aiI%4]}`;msgs.appendChild(a);aiI++;msgs.scrollTop=msgs.scrollHeight},700);
 msgs.scrollTop=msgs.scrollHeight;
 }
 
 function sendWR(){
-const inp=document.getElementById(‘wrin’);const v=inp.value.trim();if(!v)return;
-const msgs=document.getElementById(‘wrmsgs’);const inv=mode===‘investigation’;
-const m=document.createElement(‘div’);m.className=`wm ${inv?'im':'rm'}`;m.innerHTML=`<div class="wmwho">You</div>${v}`;msgs.appendChild(m);inp.value=’’;msgs.scrollTop=msgs.scrollHeight;
-setTimeout(()=>{const r=document.createElement(‘div’);r.className=`wm ${inv?'io':'ro'}`;r.innerHTML=`<div class="wmwho">${inv?'Source B':'Research Partner'}</div>${inv?'Got it — canvas updating in real time. This is significant.':'Good point — found a study addressing this. Adding to board now.'}`;msgs.appendChild(r);msgs.scrollTop=msgs.scrollHeight},900);
+const inp=document.getElementById('wrin');const v=inp.value.trim();if(!v)return;
+const msgs=document.getElementById('wrmsgs');const inv=mode==='investigation';
+const m=document.createElement('div');m.className=`wm ${inv?'im':'rm'}`;m.innerHTML=`<div class="wmwho">You</div>${v}`;msgs.appendChild(m);inp.value='';msgs.scrollTop=msgs.scrollHeight;
+setTimeout(()=>{const r=document.createElement('div');r.className=`wm ${inv?'io':'ro'}`;r.innerHTML=`<div class="wmwho">${inv?'Source B':'Research Partner'}</div>${inv?'Got it — canvas updating in real time. This is significant.':'Good point — found a study addressing this. Adding to board now.'}`;msgs.appendChild(r);msgs.scrollTop=msgs.scrollHeight},900);
 }
 
 const lSeqInv=[
-{v:’“Show me the 72-hour gap — highlight everything connected”’,c:‘AI highlighting all nodes connected to the critical timeline gap…’,s:‘ll2’},
-{v:’“Read the communication logs out loud”’,c:‘Detective: “Three unanswered contacts in the 72-hour window. Legally significant.”’,s:‘ll3’},
-{v:’“Connect comm logs to the gap — label it no alibi”’,c:‘AI drawing connection: Comm Logs → 72-Hour Gap — labeled NO ALIBI…’,s:null},
-{v:’“Focus on the lead researcher — show all connections”’,c:‘AI: “Lead Researcher — 47 tips received, 3 verified high credibility.”’,s:‘ll0’},
-{v:’“Pin the 72-hour gap as critical and narrate”’,c:‘Detective: “The gap is the anomaly. No alibi. This is the thread.”’,s:‘ll2’},
+{v:'"Show me the 72-hour gap — highlight everything connected"',c:'AI highlighting all nodes connected to the critical timeline gap…',s:'ll2'},
+{v:'"Read the communication logs out loud"',c:'Detective: "Three unanswered contacts in the 72-hour window. Legally significant."',s:'ll3'},
+{v:'"Connect comm logs to the gap — label it no alibi"',c:'AI drawing connection: Comm Logs → 72-Hour Gap — labeled NO ALIBI…',s:null},
+{v:'"Focus on the lead researcher — show all connections"',c:'AI: "Lead Researcher — 47 tips received, 3 verified high credibility."',s:'ll0'},
+{v:'"Pin the 72-hour gap as critical and narrate"',c:'Detective: "The gap is the anomaly. No alibi. This is the thread."',s:'ll2'},
 ];
 const lSeqRes=[
-{v:’“Show me the research gap — highlight everything connected”’,c:‘AI highlighting all nodes connected to the detected research opportunity…’,s:‘ll2’},
-{v:’“Summarize the 2019 meta-analysis findings”’,c:‘Mama Bear: “Early intervention before age 3 significantly improves outcomes. In plain terms — earlier is better.”’,s:‘ll1’},
-{v:’“Connect sensory study to the gap — label it unexplored”’,c:‘AI drawing connection: Sensory Processing → Research Opportunity — labeled UNEXPLORED…’,s:null},
-{v:’“What open questions do we have?”’,c:‘Scholar: “Speech therapy outcomes — no controlled trials address long-term social outcomes specifically.”’,s:‘ll0’},
-{v:’“Summarize AI findings for the research report”’,c:‘Mama Bear: “Three strong findings, one major gap, two open questions. Report ready to export.”’,s:‘ll2’},
+{v:'"Show me the research gap — highlight everything connected"',c:'AI highlighting all nodes connected to the detected research opportunity…',s:'ll2'},
+{v:'"Summarize the 2019 meta-analysis findings"',c:'Mama Bear: "Early intervention before age 3 significantly improves outcomes. In plain terms — earlier is better."',s:'ll1'},
+{v:'"Connect sensory study to the gap — label it unexplored"',c:'AI drawing connection: Sensory Processing → Research Opportunity — labeled UNEXPLORED…',s:null},
+{v:'"What open questions do we have?"',c:'Scholar: "Speech therapy outcomes — no controlled trials address long-term social outcomes specifically."',s:'ll0'},
+{v:'"Summarize AI findings for the research report"',c:'Mama Bear: "Three strong findings, one major gap, two open questions. Report ready to export."',s:'ll2'},
 ];
 
 function runLive(){if(lT)clearTimeout(lT);lI=0;nextLive()}
 function nextLive(){
-const inv=mode===‘investigation’;const seq=inv?lSeqInv:lSeqRes;
+const inv=mode==='investigation';const seq=inv?lSeqInv:lSeqRes;
 if(lI>=seq.length){lI=0;lT=setTimeout(nextLive,3000);return}
 const s=seq[lI];
-document.getElementById(‘lvtxt’).textContent=s.v;
-document.getElementById(‘lcap’).textContent=s.c;
-document.querySelectorAll(’.ln’).forEach(n=>{n.classList.remove(‘sp’,‘inv’,‘res’);n.classList.add(inv?‘inv’:‘res’)});
-if(s.s){const el=document.getElementById(s.s);if(el)el.classList.add(‘sp’,inv?‘inv’:‘res’)}
-document.getElementById(‘lvc’).textContent=`● ${(1247+Math.floor(Math.random()*80)).toLocaleString()} watching`;
+document.getElementById('lvtxt').textContent=s.v;
+document.getElementById('lcap').textContent=s.c;
+document.querySelectorAll('.ln').forEach(n=>{n.classList.remove('sp','inv','res');n.classList.add(inv?'inv':'res')});
+if(s.s){const el=document.getElementById(s.s);if(el)el.classList.add('sp',inv?'inv':'res')}
+document.getElementById('lvc').textContent=`● ${(1247+Math.floor(Math.random()*80)).toLocaleString()} watching`;
 lI++;lT=setTimeout(nextLive,3200);
 }
 
 function applyMode(m){
-const inv=m===‘investigation’;
-const ac=inv?‘var(–red)’:‘var(–blue)’;
-document.getElementById(‘hdr’).className=inv?‘inv’:‘res’;
-document.getElementById(‘cw’).className=inv?‘inv’:‘res’;
-document.getElementById(‘bnav’).className=inv?‘inv’:‘res’;
-document.getElementById(‘mb’).className=inv?‘inv’:‘res’;
-document.getElementById(‘mb’).textContent=inv?‘🕵️ Investigation Mode’:‘🔍 Research Mode’;
-document.getElementById(‘hdr-title’).textContent=inv?‘OPERATION DEEP WATER’:‘AUTISM RESEARCH BOARD’;
-document.getElementById(‘hdr-sub’).textContent=inv?‘12 nodes · 9 strings · 3 new tips’:‘8 sources · 5 connections · 2 open questions’;
-document.getElementById(‘live-btn’).className=inv?‘hbtn red’:‘hbtn blue’;
-document.getElementById(‘live-btn’).textContent=inv?‘● LIVE’:‘● SHARE’;
-document.getElementById(‘inv-nodes’).style.display=inv?‘block’:‘none’;
-document.getElementById(‘res-nodes’).style.display=inv?‘none’:‘block’;
-document.querySelectorAll(’.tbtn’).forEach(b=>b.className=`tbtn ${inv?'inv-t':'res-t'}`);
-document.getElementById(‘nl-canvas’).textContent=inv?‘Canvas’:‘Board’;
-document.getElementById(‘nl-tips’).textContent=inv?‘Tips’:‘Sources’;
-document.getElementById(‘nl-wr’).textContent=inv?‘War Room’:‘Groups’;
-document.getElementById(‘nl-live’).textContent=inv?‘Live’:‘Share’;
-document.getElementById(‘nb-tips’).style.display=inv?‘flex’:‘none’;
-document.getElementById(‘aip’).className=`panel ${inv?'inv-p':'res-p'}`;
-document.getElementById(‘ai-title’).textContent=inv?‘AI Research’:‘Research AI’;
-document.getElementById(‘ai-pl’).textContent=inv?‘● Detective Persona ▾ tap to switch’:‘● Mama Bear ▾ tap to switch’;
-document.querySelector(’.ai-in’).className=`ai-in ${inv?'inv-i':'res-i'}`;
-document.querySelector(’.ai-sb’).className=`ai-sb ${inv?'inv-s':'res-s'}`;
-document.querySelector(’.ai-in’).placeholder=inv?‘Ask the Detective…’:‘Ask Mama Bear, Scholar, Verify Val…’;
+const inv=m==='investigation';
+document.getElementById('hdr').className=inv?'inv':'res';
+document.getElementById('cw').className=inv?'inv':'res';
+document.getElementById('bnav').className=inv?'inv':'res';
+document.getElementById('mb').className=inv?'inv':'res';
+document.getElementById('mb').textContent=inv?'🕵️ Investigation Mode':'🔍 Research Mode';
+document.getElementById('hdr-title').textContent=inv?'OPERATION DEEP WATER':'AUTISM RESEARCH BOARD';
+document.getElementById('hdr-sub').textContent=inv?'12 nodes · 9 strings · 3 new tips':'8 sources · 5 connections · 2 open questions';
+document.getElementById('live-btn').className=inv?'hbtn red':'hbtn blue';
+document.getElementById('live-btn').textContent=inv?'● LIVE':'● SHARE';
+document.getElementById('inv-nodes').style.display=inv?'block':'none';
+document.getElementById('res-nodes').style.display=inv?'none':'block';
+document.querySelectorAll('.tbtn').forEach(b=>b.className=`tbtn ${inv?'inv-t':'res-t'}`);
+document.getElementById('nl-canvas').textContent=inv?'Canvas':'Board';
+document.getElementById('nl-tips').textContent=inv?'Tips':'Sources';
+document.getElementById('nl-wr').textContent=inv?'War Room':'Groups';
+document.getElementById('nl-live').textContent=inv?'Live':'Share';
+document.getElementById('nb-tips').style.display=inv?'flex':'none';
+document.getElementById('aip').className=`panel ${inv?'inv-p':'res-p'}`;
+document.getElementById('ai-title').textContent=inv?'AI Research':'Research AI';
+document.getElementById('ai-pl').textContent=inv?'● Detective Persona ▾ tap to switch':'● Mama Bear ▾ tap to switch';
+document.querySelector('.ai-in').className=`ai-in ${inv?'inv-i':'res-i'}`;
+document.querySelector('.ai-sb').className=`ai-sb ${inv?'inv-s':'res-s'}`;
+document.querySelector('.ai-in').placeholder=inv?'Ask the Detective…':'Ask Mama Bear, Scholar, Verify Val…';
 if(!inv){
-document.getElementById(‘ai-msgs’).innerHTML=`<div class="am sch"><div class="aml">Mama Bear</div>Looking at your autism research board — I see sources on ABA therapy, sensory processing, and early intervention. The research is genuinely encouraging. Let me break it down in plain terms for parents just starting this journey.</div><div class="am sch"><div class="aml">Mama Bear</div>I noticed a gap — nothing on co-occurring conditions like ADHD or anxiety, which affect about 70% of autistic kids. Want me to suggest credible sources? I'll keep it jargon-free.</div>`;
+document.getElementById('ai-msgs').innerHTML=`<div class="am sch"><div class="aml">Mama Bear</div>Looking at your autism research board — I see sources on ABA therapy, sensory processing, and early intervention. The research is genuinely encouraging. Let me break it down in plain terms for parents just starting this journey.</div><div class="am sch"><div class="aml">Mama Bear</div>I noticed a gap — nothing on co-occurring conditions like ADHD or anxiety, which affect about 70% of autistic kids. Want me to suggest credible sources? I'll keep it jargon-free.</div>`;
 } else {
-document.getElementById(‘ai-msgs’).innerHTML=`<div class="am det"><div class="aml">Detective</div>The 72-hour gap is the thread that unravels everything. Three unanswered contacts in that window is legally anomalous. Cross-referencing now.</div><div class="am det"><div class="aml">Detective</div>Witness Delta's tip directly corroborates the location discrepancy. Initiate chain of custody before any external sharing.</div>`;
+document.getElementById('ai-msgs').innerHTML=`<div class="am det"><div class="aml">Detective</div>The 72-hour gap is the thread that unravels everything. Three unanswered contacts in that window is legally anomalous. Cross-referencing now.</div><div class="am det"><div class="aml">Detective</div>Witness Delta's tip directly corroborates the location discrepancy. Initiate chain of custody before any external sharing.</div>`;
 }
-document.getElementById(‘vn-sub’).textContent=inv?‘Auto-transcribed + AI analyzed’:‘Auto-transcribed + Mama Bear analyzed’;
-document.getElementById(‘vn-trlbl’).className=`vn-trlbl ${inv?'inv':'res'}`;
-document.getElementById(‘vn-text’).textContent=inv?’“So I noticed the communication logs show three calls in that 72 hour window that went unanswered, and the location data from the witness doesn't match the official account at all…”’:’“So I was reading through the early intervention studies and the ones from 2019 onward show significantly better outcomes — I want to cross-reference with the sensory processing sources…”’;
-document.getElementById(‘vn-sumlbl’).className=inv?‘inv-a’:‘res-a’;
-document.getElementById(‘vn-sumlbl’).textContent=inv?‘AI SUMMARY + CONNECTIONS’:‘MAMA BEAR SUMMARY + CONNECTIONS’;
-document.getElementById(‘vn-sumtext’).textContent=inv?‘References 72hr gap + location discrepancy. Connects to: Comm Logs, Witness Delta, 72-Hour Gap. Suggested action: Elevate to critical.’:‘References early intervention research. Connects to: 2019 Meta-Analysis, Open Question #2, Sensory nodes. Mama Bear: Strong finding — add to Research Report.’;
-document.getElementById(‘ink-box’).className=`ink-box ${inv?'inv':'res'}`;
-document.getElementById(‘ink-content’).className=`ink-content ${inv?'inv':'res'}`;
-document.getElementById(‘ink-lbl’).textContent=inv?‘REDACTED — SENSITIVE’:‘PRIVATE — HOLD TO READ’;
-document.getElementById(‘ink-name’).textContent=inv?‘PROTECTED SOURCE’:‘PRIVATE HYPOTHESIS’;
-document.getElementById(‘ink-body’).innerHTML=inv?‘Government connection confirmed<br>Source: protected whistleblower<br>Legal proceedings in progress’:‘Working theory: gut-brain connection<br>may explain sensory hypersensitivity<br>Not yet in literature — original’;
-document.getElementById(‘tlh’).className=`tlh ${inv?'inv':'res'}`;
-document.getElementById(‘tl-title’).textContent=inv?‘Forensic Timeline’:‘Research Timeline’;
-document.getElementById(‘tl-lbl’).textContent=inv?‘Timeline’:‘Timeline’;
-document.querySelectorAll(’.gb’).forEach(b=>{b.className=b.className.replace(/inv-g|res-g/g,`${inv?'inv-g':'res-g'}`)});
-document.getElementById(‘tl-inv’).style.display=inv?‘flex’:‘none’;
-document.getElementById(‘tl-res’).style.display=inv?‘none’:‘flex’;
-document.getElementById(‘tl-unplbl’).textContent=inv?‘Unplaced — Drag to timeline to assign date’:‘Unplaced Sources — Drag to place on timeline’;
-const tu=document.getElementById(‘tl-unp’);
+document.getElementById('vn-sub').textContent=inv?'Auto-transcribed + AI analyzed':'Auto-transcribed + Mama Bear analyzed';
+document.getElementById('vn-trlbl').className=`vn-trlbl ${inv?'inv':'res'}`;
+document.getElementById('vn-text').textContent=inv?'"So I noticed the communication logs show three calls in that 72 hour window that went unanswered, and the location data from the witness doesn\'t match the official account at all…"':'"So I was reading through the early intervention studies and the ones from 2019 onward show significantly better outcomes — I want to cross-reference with the sensory processing sources…"';
+document.getElementById('vn-sumlbl').className=inv?'inv-a':'res-a';
+document.getElementById('vn-sumlbl').textContent=inv?'AI SUMMARY + CONNECTIONS':'MAMA BEAR SUMMARY + CONNECTIONS';
+document.getElementById('vn-sumtext').textContent=inv?'References 72hr gap + location discrepancy. Connects to: Comm Logs, Witness Delta, 72-Hour Gap. Suggested action: Elevate to critical.':'References early intervention research. Connects to: 2019 Meta-Analysis, Open Question #2, Sensory nodes. Mama Bear: Strong finding — add to Research Report.';
+document.getElementById('ink-box').className=`ink-box ${inv?'inv':'res'}`;
+document.getElementById('ink-content').className=`ink-content ${inv?'inv':'res'}`;
+document.getElementById('ink-lbl').textContent=inv?'REDACTED — SENSITIVE':'PRIVATE — HOLD TO READ';
+document.getElementById('ink-name').textContent=inv?'PROTECTED SOURCE':'PRIVATE HYPOTHESIS';
+document.getElementById('ink-body').innerHTML=inv?'Government connection confirmed<br>Source: protected whistleblower<br>Legal proceedings in progress':'Working theory: gut-brain connection<br>may explain sensory hypersensitivity<br>Not yet in literature — original';
+document.getElementById('tlh').className=`tlh ${inv?'inv':'res'}`;
+document.getElementById('tl-title').textContent=inv?'Forensic Timeline':'Research Timeline';
+document.getElementById('tl-lbl').textContent=inv?'Timeline':'Timeline';
+document.querySelectorAll('.gb').forEach(b=>{b.className=b.className.replace(/inv-g|res-g/g,`${inv?'inv-g':'res-g'}`)});
+document.getElementById('tl-inv').style.display=inv?'flex':'none';
+document.getElementById('tl-res').style.display=inv?'none':'flex';
+document.getElementById('tl-unplbl').textContent=inv?'Unplaced — Drag to timeline to assign date':'Unplaced Sources — Drag to place on timeline';
+const tu=document.getElementById('tl-unp');
 tu.innerHTML=inv?`<div class="tluitem">📄 FOIA Filing</div><div class="tluitem">👤 Associate Epsilon</div><div class="tluitem">🎙️ Voice Note #3</div>`:`<div class="tluitem">🔬 2024 Study</div><div class="tluitem">❓ Open Question</div><div class="tluitem">🎙️ Voice Note</div>`;
-document.getElementById(‘wrh’).className=`wrh ${inv?'inv':'res'}`;
-document.getElementById(‘wr-title’).textContent=inv?‘War Room — Operation Deep Water’:‘Study Group — Autism Research’;
-document.getElementById(‘wr-live’).className=`wrli ${inv?'inv':'res'}`;
-document.getElementById(‘wr-live’).textContent=inv?‘Live · 3 collaborators’:‘Live · 2 researchers’;
-document.getElementById(‘wrin’).className=`wrin ${inv?'inv':'res'}`;
-document.getElementById(‘wrsend’).className=`wrsend ${inv?'inv':'res'}`;
-const sb1=document.getElementById(‘wm-sb1’);const sb2=document.getElementById(‘wm-sb2’);
-const sbm1=document.getElementById(‘wm-sbmsg1’);const sbm2=document.getElementById(‘wm-sbmsg2’);
-if(sb1)sb1.textContent=inv?‘Source B’:‘Research Partner B’;
-if(sb2)sb2.textContent=inv?‘Source B’:‘Research Partner B’;
-if(sbm1)sbm1.textContent=inv?‘Contradicts the official account. Primary source docs?’:‘Great point on the 2022 sensory study. Cross-referencing now.’;
-if(sbm2)sbm2.textContent=inv?‘I can see your canvas in real time — pin it as critical’:‘I can see your board updating — this connection is significant.’;
-document.getElementById(‘wr-chatlbl’).textContent=inv?‘SECURE IN-APP CHAT’:‘RESEARCH CHAT’;
-document.getElementById(‘wm-who1’).textContent=inv?‘Lead Researcher’:‘Lead Researcher’;
-document.getElementById(‘wm-msg1’).textContent=inv?‘The 72hr gap — source can place Subject Alpha at a different location during that window’:‘The 2019 meta-analysis directly supports the sensory connection — adding to board now’;
-document.getElementById(‘wm-who2’).textContent=inv?‘Lead Researcher’:‘Lead Researcher’;
-document.getElementById(‘wm-msg2’).textContent=inv?‘Witness Delta tip in — AI credibility: High. Adding to canvas now’:‘Source contributor submitted a 2024 follow-up study — adding to board’;
-// lvp background handled by CSS panel rule
-document.getElementById(‘lvh’).className=`lvh ${inv?'inv':'res'}`;
-document.getElementById(‘lv-title’).textContent=inv?‘AI Live Presentation’:‘Live Research Share’;
-document.getElementById(‘lv-badge’).className=`lvbadge ${inv?'inv':'res'}`;
-document.getElementById(‘lvc’).className=`lvvc ${inv?'inv':'res'}`;
-document.getElementById(‘lncap’).className=`lncap ${inv?'inv':'res'}`;
-document.getElementById(‘lvbar’).className=`lvbar ${inv?'inv':'res'}`;
-document.getElementById(‘lvdot’).className=`lvdot ${inv?'inv':'res'}`;
-document.getElementById(‘lvend’).className=`lvend ${inv?'inv':'res'}`;
-document.getElementById(‘ll0t’).textContent=inv?‘Investigator’:‘Researcher’;
-document.getElementById(‘ll0n’).textContent=inv?‘LEAD INVESTIGATOR’:‘LEAD RESEARCHER’;
-document.getElementById(‘ll1t’).textContent=inv?‘Subject’:‘Source’;
-document.getElementById(‘ll1n’).textContent=inv?‘SUBJECT ALPHA’:‘2019 META-ANALYSIS’;
-document.getElementById(‘ll2t’).className=inv?‘inv-a’:‘res-a’;
-document.getElementById(‘ll2t’).textContent=inv?‘⚠ Critical’:‘⚡ Gap Detected’;
-document.getElementById(‘ll2n’).textContent=inv?‘72-HOUR GAP’:‘RESEARCH OPPORTUNITY’;
-document.getElementById(‘ll3t’).textContent=inv?‘FOIA Doc’:‘Study 2022’;
-document.getElementById(‘ll3n’).textContent=inv?‘COMM LOGS’:‘SENSORY STUDY’;
-document.getElementById(‘ll4t’).textContent=inv?‘Verified Tip’:‘Contributor’;
-document.getElementById(‘ll4n’).textContent=inv?‘WITNESS DELTA’:‘SOURCE CONTRIBUTOR’;
-document.getElementById(‘tiph’).className=`tiph ${inv?'inv':'res'}`;
-document.getElementById(‘tip-title’).textContent=inv?‘Tips Inbox’:‘Source Submissions’;
-document.getElementById(‘tip-sub’).textContent=inv?‘redstring.app/tip/username · 3 new · Name + contact required’:‘redstring.app/sources/username · 2 new’;
-document.getElementById(‘msgp’).className=`panel ${inv?'inv-p':'res-p'}`;
-document.getElementById(‘msg-title’).textContent=inv?‘In-House Messaging’:‘Research Messaging’;
-document.getElementById(‘msg1-lbl’).textContent=inv?‘Tip Reply — Jane M.’:‘Source Discussion — Dr. Chen’;
-document.getElementById(‘msg1-lbl’).style.color=inv?‘var(–red)’:‘var(–blue)’;
-document.getElementById(‘msg1-body’).textContent=inv?‘Can you clarify the timestamp on the photo? We need exact metadata for the record.’:‘The 2022 sensory study methodology has a limitation worth noting in your bibliography.’;
-document.getElementById(‘msg2-lbl’).textContent=inv?‘Co-Researcher — Source B’:‘Research Partner — Dr. Kim’;
-document.getElementById(‘msg2-body’).textContent=inv?‘Got the FOIA docs. Adding to the 72hr gap node now.’:‘Found a 2024 replication study that addresses the population gap — adding to board now.’;
-document.getElementById(‘msg3-lbl’).textContent=inv?‘Tipster Reply — R. Thompson’:‘Source Contributor — Parent Network’;
-document.getElementById(‘msg-btn’).style.background=inv?‘var(–red-dim)’:‘var(–blue)’;
-document.getElementById(‘presp’).className=`panel ${inv?'inv-p':'res-p'}`;
-document.getElementById(‘pres-title’).textContent=inv?‘Presentation Builder’:‘Research Report Builder’;
-document.getElementById(‘pres-sub’).textContent=inv?‘Auto-generated from your board’:‘Auto-generated from research board’;
-document.getElementById(‘pres-desc’).textContent=inv?‘Auto-build a full slide deck from your board. Export as PDF, PPTX, or shareable link.’:‘Auto-build a full research report. Export as PDF, PPTX, or share with colleagues.’;
-document.getElementById(‘ps2’).textContent=inv?‘Executive Summary’:‘Research Summary’;
-document.getElementById(‘ps3’).textContent=inv?‘72-Hour Gap — Critical’:‘Key Study Finding — AI Flagged’;
-document.getElementById(‘ps4’).textContent=inv?‘Timeline Slide’:‘Research Timeline’;
-document.getElementById(‘ps5’).textContent=inv?‘Evidence Gallery’:‘Source Gallery’;
-document.getElementById(‘ps6’).textContent=inv?‘Sources & FOIA Docs’:‘Bibliography & Sources’;
-document.getElementById(‘pres-pdf’).style.background=inv?‘var(–red-dim)’:‘var(–blue)’;
-document.getElementById(‘pres-pptx’).style.borderColor=inv?‘var(–red)’:‘var(–blue)’;
-document.getElementById(‘pres-pptx’).style.color=inv?‘var(–red)’:‘var(–blue)’;
-document.getElementById(‘hubp’).className=`panel ${inv?'inv-p':'res-p'}`;
-document.getElementById(‘hub-title’).textContent=inv?‘The Spool 🧵’:‘The Spool’;
-document.getElementById(‘hub-url-lbl’).textContent=inv?‘YOUR SPOOL’:‘YOUR SPOOL’;
-document.getElementById(‘hub-desc’).textContent=inv?‘Your community pulls threads with you’:‘Your community pulls threads with you’;
-document.getElementById(‘hub-b1’).textContent=inv?‘OPERATION DEEP WATER’:‘AUTISM RESEARCH BOARD’;
-document.getElementById(‘hub-b1m’).textContent=inv?‘12 nodes · Active · 247 pulling threads · 3 tips · 12 comments’:‘8 sources · Active · 312 pulling threads · 2 sources submitted’;
-document.getElementById(‘hub-b2’).textContent=inv?‘OPERATION LOOKING GLASS’:‘THESIS — SENSORY PROCESSING’;
-document.getElementById(‘hub-addon’).textContent=inv?‘THE SPOOL 🧵 — $7.99/mo ADD-ON’:‘THE SPOOL 🧵 — $7.99/mo ADD-ON’;
-document.getElementById(‘hub-addondesc’).textContent=inv?‘Ready to pull the thread? Your audience joins The Spool, comments on your public boards, submits tips, and gets notified when you publish findings.’:‘Ready to pull the thread? Your audience joins The Spool, comments on your public boards, submits sources, and follows your research journey.’;
-document.getElementById(‘dos-close’).className=`dosclose ${inv?'inv':'res'}`;
-document.getElementById(‘dos-hdr’).className=`doshdr ${inv?'inv':'res'}`;
-document.getElementById(‘dos-cls’).className=`doscls ${inv?'inv-a':'res-a'}`;
-document.getElementById(‘dos-cls’).textContent=inv?‘Classified — Red String Research’:‘Research Report — Red String Research’;
-document.getElementById(‘dos-title’).textContent=inv?‘Intelligence Dossier’:‘Research Report’;
-document.getElementById(‘dos-wm’).className=`doswm ${inv?'inv':'res'}`;
-document.getElementById(‘dos-sec1’).className=`dossectitle ${inv?'inv-a':'res-a'}`;
-document.getElementById(‘dos-sec1’).textContent=inv?‘Executive Summary’:‘Research Summary’;
-document.getElementById(‘dos-sum’).textContent=inv?‘This investigation documents a critical 72-hour timeline gap, three unanswered communications, a location discrepancy contradicting the official account, and a connected organizational entity with undisclosed financial ties. Three verified tips provide corroborating evidence.’:‘This research board synthesizes 8 peer-reviewed sources on early intervention, sensory processing in ASD, and co-occurring conditions. AI identified a significant gap: no studies address the gut-brain connection alongside sensory processing in the same population — an original research opportunity.’;
-document.getElementById(‘dos-e1’).className=`dosent ${inv?'inv':'res'}`;
-document.getElementById(‘dos-e1n’).textContent=inv?‘Subject Alpha — Person of Interest’:‘2019 Meta-Analysis — Foundational Source’;
-document.getElementById(‘dos-e1d’).textContent=inv?‘Timeline discrepancy flagged by AI · 72hr gap: no verified alibi · Status: Under active investigation’:‘47 citations · Peer reviewed · Early intervention before age 3 significantly improves outcomes · Credibility: High’;
-document.getElementById(‘dos-e2’).className=`dosent ${inv?'inv':'res'}`;
-document.getElementById(‘dos-e2n’).textContent=inv?‘72-Hour Timeline Gap — Critical’:‘Research Gap — AI Detected’;
-document.getElementById(‘dos-e2d’).textContent=inv?‘AI-flagged anomaly · No alibi · Corroborated by 2 verified tips · Primary source: FOIA logs’:‘No studies address gut-brain connection alongside sensory processing in ASD · Original research opportunity · Flagged after cross-referencing all board sources’;
-document.getElementById(‘dos-e3’).className=`dosent ${inv?'inv':'res'}`;
-document.getElementById(‘dos-e3n’).textContent=inv?‘Witness Delta — Verified Tip’:‘Source Contributor — Parent Network’;
-document.getElementById(‘dos-e3d’).textContent=inv?‘Contact info on file · AI credibility: High · Present at last known location · Formal statement pending’:‘Contact info on file · Submitted 3 peer-reviewed sources · All verified · Permanently credited’;
-document.getElementById(‘dos-sec2’).className=`dossectitle ${inv?'inv-a':'res-a'}`;
-document.getElementById(‘dos-sec2’).textContent=inv?‘Key Findings’:‘Research Findings’;
-document.getElementById(‘dos-sec3’).className=`dossectitle ${inv?'inv-a':'res-a'}`;
-document.getElementById(‘dos-credits’).innerHTML=inv?’@lead_researcher — Owner · 8 nodes · Lead<br>Jane M. — Tip contributor · Timeline corroboration · Permanently credited<br>R. Thompson — Tip contributor · Location witness · Permanently credited<br>M. Rivera — Tip contributor · Financial connection · Privacy protected<br><span style="color:var(--dim);font-size:8px">Credits are permanent and cannot be removed.</span>’:’@lead_researcher — Owner · Primary researcher<br>Dr. Sarah Chen — Source author · 2019 Meta-Analysis · Credited<br>Source Contributor — Parent Network · 3 sources submitted · Permanently credited<br><span style="color:var(--dim);font-size:8px">Credits are permanent and cannot be removed.</span>’;
-const coachtxt=document.getElementById(‘coach-txt’);
-if(coachtxt)coachtxt.innerHTML=inv?‘Tap 🔗 Connect then tap<br>any two nodes to draw<br>a red string connection’:‘Tap 🔗 Connect then tap<br>any two nodes to draw<br>a blue connection’;
+document.getElementById('wrh').className=`wrh ${inv?'inv':'res'}`;
+document.getElementById('wr-title').textContent=inv?'War Room — Operation Deep Water':'Study Group — Autism Research';
+document.getElementById('wr-live').className=`wrli ${inv?'inv':'res'}`;
+document.getElementById('wr-live').textContent=inv?'Live · 3 collaborators':'Live · 2 researchers';
+document.getElementById('wrin').className=`wrin ${inv?'inv':'res'}`;
+document.getElementById('wrsend').className=`wrsend ${inv?'inv':'res'}`;
+const sb1=document.getElementById('wm-sb1');const sb2=document.getElementById('wm-sb2');
+const sbm1=document.getElementById('wm-sbmsg1');const sbm2=document.getElementById('wm-sbmsg2');
+if(sb1)sb1.textContent=inv?'Source B':'Research Partner B';
+if(sb2)sb2.textContent=inv?'Source B':'Research Partner B';
+if(sbm1)sbm1.textContent=inv?'Contradicts the official account. Primary source docs?':'Great point on the 2022 sensory study. Cross-referencing now.';
+if(sbm2)sbm2.textContent=inv?'I can see your canvas in real time — pin it as critical':'I can see your board updating — this connection is significant.';
+document.getElementById('wr-chatlbl').textContent=inv?'SECURE IN-APP CHAT':'RESEARCH CHAT';
+document.getElementById('wm-who1').textContent=inv?'Lead Researcher':'Lead Researcher';
+document.getElementById('wm-msg1').textContent=inv?'The 72hr gap — source can place Subject Alpha at a different location during that window':'The 2019 meta-analysis directly supports the sensory connection — adding to board now';
+document.getElementById('wm-who2').textContent=inv?'Lead Researcher':'Lead Researcher';
+document.getElementById('wm-msg2').textContent=inv?'Witness Delta tip in — AI credibility: High. Adding to canvas now':'Source contributor submitted a 2024 follow-up study — adding to board';
+document.getElementById('lvh').className=`lvh ${inv?'inv':'res'}`;
+document.getElementById('lv-title').textContent=inv?'AI Live Presentation':'Live Research Share';
+document.getElementById('lv-badge').className=`lvbadge ${inv?'inv':'res'}`;
+document.getElementById('lvc').className=`lvvc ${inv?'inv':'res'}`;
+document.getElementById('lncap').className=`lncap ${inv?'inv':'res'}`;
+document.getElementById('lvbar').className=`lvbar ${inv?'inv':'res'}`;
+document.getElementById('lvdot').className=`lvdot ${inv?'inv':'res'}`;
+document.getElementById('lvend').className=`lvend ${inv?'inv':'res'}`;
+document.getElementById('ll0t').textContent=inv?'Investigator':'Researcher';
+document.getElementById('ll0n').textContent=inv?'LEAD INVESTIGATOR':'LEAD RESEARCHER';
+document.getElementById('ll1t').textContent=inv?'Subject':'Source';
+document.getElementById('ll1n').textContent=inv?'SUBJECT ALPHA':'2019 META-ANALYSIS';
+document.getElementById('ll2t').className=inv?'inv-a':'res-a';
+document.getElementById('ll2t').textContent=inv?'⚠ Critical':'⚡ Gap Detected';
+document.getElementById('ll2n').textContent=inv?'72-HOUR GAP':'RESEARCH OPPORTUNITY';
+document.getElementById('ll3t').textContent=inv?'FOIA Doc':'Study 2022';
+document.getElementById('ll3n').textContent=inv?'COMM LOGS':'SENSORY STUDY';
+document.getElementById('ll4t').textContent=inv?'Verified Tip':'Contributor';
+document.getElementById('ll4n').textContent=inv?'WITNESS DELTA':'SOURCE CONTRIBUTOR';
+document.getElementById('tiph').className=`tiph ${inv?'inv':'res'}`;
+document.getElementById('tip-title').textContent=inv?'Tips Inbox':'Source Submissions';
+document.getElementById('tip-sub').textContent=inv?'knownapp.com/tip/username · 3 new · Name + contact required':'knownapp.com/sources/username · 2 new';
+document.getElementById('msgp').className=`panel ${inv?'inv-p':'res-p'}`;
+document.getElementById('msg-title').textContent=inv?'In-House Messaging':'Research Messaging';
+document.getElementById('msg1-lbl').textContent=inv?'Tip Reply — Jane M.':'Source Discussion — Dr. Chen';
+document.getElementById('msg1-lbl').style.color=inv?'var(--red)':'var(--blue)';
+document.getElementById('msg1-body').textContent=inv?'Can you clarify the timestamp on the photo? We need exact metadata for the record.':'The 2022 sensory study methodology has a limitation worth noting in your bibliography.';
+document.getElementById('msg2-lbl').textContent=inv?'Co-Researcher — Source B':'Research Partner — Dr. Kim';
+document.getElementById('msg2-body').textContent=inv?'Got the FOIA docs. Adding to the 72hr gap node now.':'Found a 2024 replication study that addresses the population gap — adding to board now.';
+document.getElementById('msg3-lbl').textContent=inv?'Tipster Reply — R. Thompson':'Source Contributor — Parent Network';
+document.getElementById('msg-btn').style.background=inv?'var(--red-dim)':'var(--blue)';
+document.getElementById('presp').className=`panel ${inv?'inv-p':'res-p'}`;
+document.getElementById('pres-title').textContent=inv?'Presentation Builder':'Research Report Builder';
+document.getElementById('pres-sub').textContent=inv?'Auto-generated from your board':'Auto-generated from research board';
+document.getElementById('pres-desc').textContent=inv?'Auto-build a full slide deck from your board. Export as PDF, PPTX, or shareable link.':'Auto-build a full research report. Export as PDF, PPTX, or share with colleagues.';
+document.getElementById('ps2').textContent=inv?'Executive Summary':'Research Summary';
+document.getElementById('ps3').textContent=inv?'72-Hour Gap — Critical':'Key Study Finding — AI Flagged';
+document.getElementById('ps4').textContent=inv?'Timeline Slide':'Research Timeline';
+document.getElementById('ps5').textContent=inv?'Evidence Gallery':'Source Gallery';
+document.getElementById('ps6').textContent=inv?'Sources & FOIA Docs':'Bibliography & Sources';
+document.getElementById('pres-pdf').style.background=inv?'var(--red-dim)':'var(--blue)';
+document.getElementById('pres-pptx').style.borderColor=inv?'var(--red)':'var(--blue)';
+document.getElementById('pres-pptx').style.color=inv?'var(--red)':'var(--blue)';
+document.getElementById('hubp').className=`panel ${inv?'inv-p':'res-p'}`;
+document.getElementById('hub-title').textContent=inv?'The Spool 🧵':'The Spool';
+document.getElementById('hub-url-lbl').textContent=inv?'YOUR SPOOL':'YOUR SPOOL';
+document.getElementById('hub-desc').textContent=inv?'Your community pulls threads with you':'Your community pulls threads with you';
+document.getElementById('hub-b1').textContent=inv?'OPERATION DEEP WATER':'AUTISM RESEARCH BOARD';
+document.getElementById('hub-b1m').textContent=inv?'12 nodes · Active · 247 pulling threads · 3 tips · 12 comments':'8 sources · Active · 312 pulling threads · 2 sources submitted';
+document.getElementById('hub-b2').textContent=inv?'OPERATION LOOKING GLASS':'THESIS — SENSORY PROCESSING';
+document.getElementById('hub-addon').textContent=inv?'THE SPOOL 🧵 — $7.99/mo ADD-ON':'THE SPOOL 🧵 — $7.99/mo ADD-ON';
+document.getElementById('hub-addondesc').textContent=inv?'Ready to pull the thread? Your audience joins The Spool, comments on your public boards, submits tips, and gets notified when you publish findings.':'Ready to pull the thread? Your audience joins The Spool, comments on your public boards, submits sources, and follows your research journey.';
+document.getElementById('dos-close').className=`dosclose ${inv?'inv':'res'}`;
+document.getElementById('dos-hdr').className=`doshdr ${inv?'inv':'res'}`;
+document.getElementById('dos-cls').className=`doscls ${inv?'inv-a':'res-a'}`;
+document.getElementById('dos-cls').textContent=inv?'Classified — Known':'Research Report — Known';
+document.getElementById('dos-title').textContent=inv?'Intelligence Dossier':'Research Report';
+document.getElementById('dos-wm').className=`doswm ${inv?'inv':'res'}`;
+document.getElementById('dos-sec1').className=`dossectitle ${inv?'inv-a':'res-a'}`;
+document.getElementById('dos-sec1').textContent=inv?'Executive Summary':'Research Summary';
+document.getElementById('dos-sum').textContent=inv?'This investigation documents a critical 72-hour timeline gap, three unanswered communications, a location discrepancy contradicting the official account, and a connected organizational entity with undisclosed financial ties. Three verified tips provide corroborating evidence.':'This research board synthesizes 8 peer-reviewed sources on early intervention, sensory processing in ASD, and co-occurring conditions. AI identified a significant gap: no studies address the gut-brain connection alongside sensory processing in the same population — an original research opportunity.';
+document.getElementById('dos-e1').className=`dosent ${inv?'inv':'res'}`;
+document.getElementById('dos-e1n').textContent=inv?'Subject Alpha — Person of Interest':'2019 Meta-Analysis — Foundational Source';
+document.getElementById('dos-e1d').textContent=inv?'Timeline discrepancy flagged by AI · 72hr gap: no verified alibi · Status: Under active investigation':'47 citations · Peer reviewed · Early intervention before age 3 significantly improves outcomes · Credibility: High';
+document.getElementById('dos-e2').className=`dosent ${inv?'inv':'res'}`;
+document.getElementById('dos-e2n').textContent=inv?'72-Hour Timeline Gap — Critical':'Research Gap — AI Detected';
+document.getElementById('dos-e2d').textContent=inv?'AI-flagged anomaly · No alibi · Corroborated by 2 verified tips · Primary source: FOIA logs':'No studies address gut-brain connection alongside sensory processing in ASD · Original research opportunity · Flagged after cross-referencing all board sources';
+document.getElementById('dos-e3').className=`dosent ${inv?'inv':'res'}`;
+document.getElementById('dos-e3n').textContent=inv?'Witness Delta — Verified Tip':'Source Contributor — Parent Network';
+document.getElementById('dos-e3d').textContent=inv?'Contact info on file · AI credibility: High · Present at last known location · Formal statement pending':'Contact info on file · Submitted 3 peer-reviewed sources · All verified · Permanently credited';
+document.getElementById('dos-sec2').className=`dossectitle ${inv?'inv-a':'res-a'}`;
+document.getElementById('dos-sec2').textContent=inv?'Key Findings':'Research Findings';
+document.getElementById('dos-sec3').className=`dossectitle ${inv?'inv-a':'res-a'}`;
+document.getElementById('dos-credits').innerHTML=inv?'@lead_researcher — Owner · 8 nodes · Lead<br>Jane M. — Tip contributor · Timeline corroboration · Permanently credited<br>R. Thompson — Tip contributor · Location witness · Permanently credited<br>M. Rivera — Tip contributor · Financial connection · Privacy protected<br><span style="color:var(--dim);font-size:8px">Credits are permanent and cannot be removed.</span>':'@lead_researcher — Owner · Primary researcher<br>Dr. Sarah Chen — Source author · 2019 Meta-Analysis · Credited<br>Source Contributor — Parent Network · 3 sources submitted · Permanently credited<br><span style="color:var(--dim);font-size:8px">Credits are permanent and cannot be removed.</span>';
+const coachtxt=document.getElementById('coach-txt');
+if(coachtxt)coachtxt.innerHTML=inv?'Tap 🔗 Connect then tap<br>any two nodes to draw<br>a red string connection':'Tap 🔗 Connect then tap<br>any two nodes to draw<br>a blue connection';
 drawStrings();
 }
 
 function drawStrings(){
-const svg=document.getElementById(‘csvg’);
-const pan=document.getElementById(‘canvas-pan’);
-const wr=pan?pan.getBoundingClientRect():document.getElementById(‘cw’).getBoundingClientRect();
-const inv=mode===‘investigation’;
-const mc=inv?’#FF2D2D’:’#2E86AB’;const ac=inv?’#C0392B’:’#1A6A99’;
+const svg=document.getElementById('csvg');
+const pan=document.getElementById('canvas-pan');
+const wr=pan?pan.getBoundingClientRect():document.getElementById('cw').getBoundingClientRect();
+const inv=mode==='investigation';
+const mc=inv?'#FF2D2D':'#2E86AB';const ac=inv?'#C0392B':'#1A6A99';
 const conns=inv?[
-{a:‘n0’,b:‘n1’,l:‘INVESTIGATING’,c:mc},
-{a:‘n1’,b:‘n3’,l:‘LAST SEEN’,c:ac},
-{a:‘n1’,b:‘n4’,l:‘DOCUMENTED’,c:’#8A8178’},
-{a:‘n4’,b:‘n6’,l:‘72HR GAP’,c:mc},
-{a:‘n3’,b:‘n8’,l:‘CORROBORATES’,c:’#27AE60’},
-{a:‘n5’,b:‘n4’,l:‘FINANCIAL TIE’,c:’#D4A843’},
-{a:‘n2’,b:‘n6’,l:‘NO ALIBI’,c:mc},
-{a:‘n8’,b:‘n6’,l:‘TIP VERIFIED’,c:’#27AE60’},
+{a:'n0',b:'n1',l:'INVESTIGATING',c:mc},
+{a:'n1',b:'n3',l:'LAST SEEN',c:ac},
+{a:'n1',b:'n4',l:'DOCUMENTED',c:'#8A8178'},
+{a:'n4',b:'n6',l:'72HR GAP',c:mc},
+{a:'n3',b:'n8',l:'CORROBORATES',c:'#27AE60'},
+{a:'n5',b:'n4',l:'FINANCIAL TIE',c:'#D4A843'},
+{a:'n2',b:'n6',l:'NO ALIBI',c:mc},
+{a:'n8',b:'n6',l:'TIP VERIFIED',c:'#27AE60'},
 ]:[
-{a:‘n1’,b:‘n4’,l:‘SUPPORTS’,c:mc},
-{a:‘n1’,b:‘n6’,l:‘CONNECTS TO’,c:mc},
-{a:‘n4’,b:‘n6’,l:‘GAPS WITH’,c:mc},
-{a:‘n2’,b:‘n4’,l:‘CITED BY’,c:’#8A8178’},
-{a:‘n5’,b:‘n6’,l:‘RELATED’,c:mc},
-{a:‘n8’,b:‘n1’,l:‘CONTRIBUTED’,c:’#27AE60’},
+{a:'n1',b:'n4',l:'SUPPORTS',c:mc},
+{a:'n1',b:'n6',l:'CONNECTS TO',c:mc},
+{a:'n4',b:'n6',l:'GAPS WITH',c:mc},
+{a:'n2',b:'n4',l:'CITED BY',c:'#8A8178'},
+{a:'n5',b:'n6',l:'RELATED',c:mc},
+{a:'n8',b:'n1',l:'CONTRIBUTED',c:'#27AE60'},
 ];
-svg.innerHTML=’’;
+svg.innerHTML='';
 conns.forEach(c=>{
 const a=document.getElementById(c.a),b=document.getElementById(c.b);
 if(!a||!b)return;
@@ -1437,100 +1417,95 @@ const ar=a.getBoundingClientRect(),br=b.getBoundingClientRect();
 const x1=ar.left-wr.left+ar.width/2,y1=ar.top-wr.top+ar.height/2;
 const x2=br.left-wr.left+br.width/2,y2=br.top-wr.top+br.height/2;
 const mx=(x1+x2)/2,my=(y1+y2)/2-22;
-const path=document.createElementNS(‘http://www.w3.org/2000/svg’,‘path’);
-path.setAttribute(‘d’,`M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`);
-path.setAttribute(‘stroke’,c.c);path.setAttribute(‘stroke-width’,‘1.2’);path.setAttribute(‘fill’,‘none’);path.setAttribute(‘opacity’,’.5’);
+const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+path.setAttribute('d',`M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`);
+path.setAttribute('stroke',c.c);path.setAttribute('stroke-width','1.2');path.setAttribute('fill','none');path.setAttribute('opacity','.5');
 svg.appendChild(path);
-const txt=document.createElementNS(‘http://www.w3.org/2000/svg’,‘text’);
-txt.setAttribute(‘x’,mx);txt.setAttribute(‘y’,my-4);txt.setAttribute(‘text-anchor’,‘middle’);
-txt.setAttribute(‘font-family’,‘DM Mono’);txt.setAttribute(‘font-size’,‘7’);txt.setAttribute(‘fill’,c.c);txt.setAttribute(‘letter-spacing’,‘1’);
+const txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+txt.setAttribute('x',mx);txt.setAttribute('y',my-4);txt.setAttribute('text-anchor','middle');
+txt.setAttribute('font-family','DM Mono');txt.setAttribute('font-size','7');txt.setAttribute('fill',c.c);txt.setAttribute('letter-spacing','1');
 txt.textContent=c.l;svg.appendChild(txt);
 });
 }
 
 function drawLiveStrings(){
-const svg=document.getElementById(‘lsvg’);
-const wrap=document.getElementById(‘lc’);
+const svg=document.getElementById('lsvg');
+const wrap=document.getElementById('lc');
 const wr=wrap.getBoundingClientRect();
-const inv=mode===‘investigation’;const c=inv?’#FF2D2D’:’#2E86AB’;
-svg.innerHTML=’’;
-[{a:‘ll0’,b:‘ll1’,c:c},{a:‘ll1’,b:‘ll2’,c:c},{a:‘ll3’,b:‘ll2’,c:’#8A8178’},{a:‘ll4’,b:‘ll2’,c:’#27AE60’}].forEach(conn=>{
+const inv=mode==='investigation';const c=inv?'#FF2D2D':'#2E86AB';
+svg.innerHTML='';
+[{a:'ll0',b:'ll1',c:c},{a:'ll1',b:'ll2',c:c},{a:'ll3',b:'ll2',c:'#8A8178'},{a:'ll4',b:'ll2',c:'#27AE60'}].forEach(conn=>{
 const a=document.getElementById(conn.a),b=document.getElementById(conn.b);
 if(!a||!b)return;
 const ar=a.getBoundingClientRect(),br=b.getBoundingClientRect();
 const x1=ar.left-wr.left+ar.width/2,y1=ar.top-wr.top+ar.height/2;
 const x2=br.left-wr.left+br.width/2,y2=br.top-wr.top+br.height/2;
 const mx=(x1+x2)/2,my=(y1+y2)/2-14;
-const path=document.createElementNS(‘http://www.w3.org/2000/svg’,‘path’);
-path.setAttribute(‘d’,`M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`);
-path.setAttribute(‘stroke’,conn.c);path.setAttribute(‘stroke-width’,‘1.5’);path.setAttribute(‘fill’,‘none’);path.setAttribute(‘opacity’,’.7’);    svg.appendChild(path);
+const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+path.setAttribute('d',`M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`);
+path.setAttribute('stroke',conn.c);path.setAttribute('stroke-width','1.5');path.setAttribute('fill','none');path.setAttribute('opacity','.7');
+svg.appendChild(path);
 });
 }
 
 function setPricingToggle(pmode){
-const mo=pmode===‘mo’;
-
-document.getElementById(‘tog-mo’).style.background=mo?‘var(–red-dim)’:‘none’;
-document.getElementById(‘tog-mo’).style.color=mo?‘var(–text)’:‘var(–muted)’;
-document.getElementById(‘tog-yr’).style.background=mo?‘none’:‘var(–red-dim)’;
-document.getElementById(‘tog-yr’).style.color=mo?‘var(–muted)’:‘var(–text)’;
+const mo=pmode==='mo';
+document.getElementById('tog-mo').style.background=mo?'var(--red-dim)':'none';
+document.getElementById('tog-mo').style.color=mo?'var(--text)':'var(--muted)';
+document.getElementById('tog-yr').style.background=mo?'none':'var(--red-dim)';
+document.getElementById('tog-yr').style.color=mo?'var(--muted)':'var(--text)';
 const tiers=[
-{id:‘researcher’,mo:’$9.99’,yr:’$6.67’,note:‘billed $79.99/yr’},
-{id:‘investigator’,mo:’$19.99’,yr:’$13.33’,note:‘billed $159.99/yr’},
-{id:‘professional’,mo:’$49.99’,yr:’$33.33’,note:‘billed $399.99/yr’},
+{id:'researcher',mo:'$9.99',yr:'$6.67',note:'billed $79.99/yr'},
+{id:'investigator',mo:'$19.99',yr:'$13.33',note:'billed $159.99/yr'},
+{id:'professional',mo:'$49.99',yr:'$33.33',note:'billed $399.99/yr'},
 ];
 tiers.forEach(t=>{
-const el=document.getElementById(‘pr-’+t.id);
-const note=document.getElementById(‘pr-’+t.id+’-note’);
-if(el)el.innerHTML=(mo?t.mo:t.yr)+’<span>/mo</span>’;
-if(note)note.style.display=mo?‘none’:‘block’;
+const el=document.getElementById('pr-'+t.id);
+const note=document.getElementById('pr-'+t.id+'-note');
+if(el)el.innerHTML=(mo?t.mo:t.yr)+'<span>/mo</span>';
+if(note)note.style.display=mo?'none':'block';
 });
 }
 
-// ── PAN + ZOOM ──────────────────────────────────────────────
 let panX=0,panY=0,scale=1;
 let isPanning=false,lastX=0,lastY=0;
 let pinchDist=0;
 
 function applyTransform(){
-const pan=document.getElementById(‘canvas-pan’);
+const pan=document.getElementById('canvas-pan');
 if(pan) pan.style.transform=`translate(${panX}px,${panY}px) scale(${scale})`;
 drawStrings();
 }
 
 function zoomIn(){scale=Math.min(scale*1.25,3);applyTransform();toast(`Zoom ${Math.round(scale*100)}%`)}
 function zoomOut(){scale=Math.max(scale/1.25,.3);applyTransform();toast(`Zoom ${Math.round(scale*100)}%`)}
-function resetZoom(){scale=1;panX=0;panY=0;applyTransform();toast(‘Canvas reset’)}
+function resetZoom(){scale=1;panX=0;panY=0;applyTransform();toast('Canvas reset')}
 
-// Node collapse/expand on double-tap
 let lastTap=0;
 function handleDblTap(el){
 const now=Date.now();
 if(now-lastTap<300){
-// Double tap — toggle collapsed
-const isCollapsed=el.dataset.collapsed===‘1’;
+const isCollapsed=el.dataset.collapsed==='1';
 if(isCollapsed){
-el.dataset.collapsed=‘0’;
-el.querySelectorAll(’.ntype,.nd,.npin’).forEach(e=>e.style.display=’’);
-el.style.minWidth=‘95px’;el.style.padding=‘8px 10px’;
+el.dataset.collapsed='0';
+el.querySelectorAll('.ntype,.nd,.npin').forEach(e=>e.style.display='');
+el.style.minWidth='95px';el.style.padding='8px 10px';
 } else {
-el.dataset.collapsed=‘1’;
-el.querySelectorAll(’.ntype,.nd,.npin’).forEach(e=>e.style.display=‘none’);
-el.style.minWidth=‘0’;el.style.padding=‘4px 6px’;
+el.dataset.collapsed='1';
+el.querySelectorAll('.ntype,.nd,.npin').forEach(e=>e.style.display='none');
+el.style.minWidth='0';el.style.padding='4px 6px';
 }
 drawStrings();
 }
 lastTap=now;
 }
 
-// Touch pan
-const cw=document.getElementById(‘cw’);
+const cw=document.getElementById('cw');
 if(cw){
 let touchStartX=0,touchStartY=0,panStartX=0,panStartY=0;
-
-cw.addEventListener(‘touchstart’,e=>{
+cw.addEventListener('touchstart',e=>{
 if(connectMode) return;
-if(e.target.closest(’.node,.tbtn,.hbtn,.nb,.panel,#hm,#zoom-ctrl,#coach,#mb’)) return;
+if(e.target.closest('.node,.tbtn,.hbtn,.nb,.panel,#hm,#zoom-ctrl,#coach,#mb')) return;
 if(e.touches.length===1){
 touchStartX=e.touches[0].clientX;
 touchStartY=e.touches[0].clientY;
@@ -1543,8 +1518,7 @@ const dy=e.touches[0].clientY-e.touches[1].clientY;
 pinchDist=Math.hypot(dx,dy);
 }
 },{passive:true});
-
-cw.addEventListener(‘touchmove’,e=>{
+cw.addEventListener('touchmove',e=>{
 if(connectMode) return;
 if(e.touches.length===1 && isPanning){
 const dx=e.touches[0].clientX-touchStartX;
@@ -1561,26 +1535,21 @@ pinchDist=newDist;
 applyTransform();
 }
 },{passive:true});
-
-cw.addEventListener(‘touchend’,()=>{isPanning=false},{passive:true});
-
-// Mouse pan for desktop
-cw.addEventListener(‘mousedown’,e=>{
+cw.addEventListener('touchend',()=>{isPanning=false},{passive:true});
+cw.addEventListener('mousedown',e=>{
 if(connectMode) return;
-if(e.target.closest(’.node,.tbtn,.hbtn,.nb,.panel,#hm,#zoom-ctrl,#coach,#mb’)) return;
+if(e.target.closest('.node,.tbtn,.hbtn,.nb,.panel,#hm,#zoom-ctrl,#coach,#mb')) return;
 isPanning=true;lastX=e.clientX;lastY=e.clientY;
-cw.style.cursor=‘grabbing’;
+cw.style.cursor='grabbing';
 });
-window.addEventListener(‘mousemove’,e=>{
+window.addEventListener('mousemove',e=>{
 if(!isPanning) return;
 panX+=e.clientX-lastX;panY+=e.clientY-lastY;
 lastX=e.clientX;lastY=e.clientY;
 applyTransform();
 });
-window.addEventListener(‘mouseup’,()=>{isPanning=false;if(cw)cw.style.cursor=’’;});
-
-// Wheel zoom
-cw.addEventListener(‘wheel’,e=>{
+window.addEventListener('mouseup',()=>{isPanning=false;if(cw)cw.style.cursor='';});
+cw.addEventListener('wheel',e=>{
 e.preventDefault();
 const factor=e.deltaY<0?1.1:.9;
 scale=Math.max(.3,Math.min(3,scale*factor));
@@ -1588,14 +1557,13 @@ applyTransform();
 },{passive:false});
 }
 
-// Add double-tap to all nodes
-document.querySelectorAll(’.node’).forEach(n=>{
-n.addEventListener(‘touchstart’,()=>handleDblTap(n),{passive:true});
-n.addEventListener(‘dblclick’,()=>handleDblTap(n));
+document.querySelectorAll('.node').forEach(n=>{
+n.addEventListener('touchstart',()=>handleDblTap(n),{passive:true});
+n.addEventListener('dblclick',()=>handleDblTap(n));
 });
 
-function toast(msg){const t=document.getElementById(‘toast’);t.textContent=msg;t.classList.add(‘show’);setTimeout(()=>t.classList.remove(‘show’),3200)}
-window.addEventListener(‘resize’,()=>{drawStrings();if(document.getElementById(‘lvp’).classList.contains(‘on’))drawLiveStrings()});
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200)}
+window.addEventListener('resize',()=>{drawStrings();if(document.getElementById('lvp').classList.contains('on'))drawLiveStrings()});
 </script>
 
 </body>
