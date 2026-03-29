@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Red String Research — Pull the Thread</title>
+<title>Known — Pull the Thread</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&family=Special+Elite&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -40,10 +40,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 20px;display:fl
 .hero-badge{font-family:‘DM Mono’,monospace;font-size:9px;letter-spacing:.3em;color:var(–red);border:1px solid var(–red-dark);padding:5px 16px;display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;margin-bottom:24px;animation:fadein .6s ease-out}
 .hero-badge::before{content:’’;width:5px;height:5px;border-radius:50%;background:var(–red);animation:pulse 1.5s infinite}
 .hero-pre{font-family:‘Rajdhani’,sans-serif;font-weight:300;font-size:15px;color:var(–muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;animation:fadein .7s ease-out}
-.hero-title{font-family:‘Oswald’,sans-serif;font-weight:700;font-size:clamp(64px,16vw,140px);letter-spacing:.04em;line-height:.85;text-transform:uppercase;margin-bottom:6px;animation:fadein .8s ease-out}
-.hero-title .t1{color:var(–text);display:block}
-.hero-title .t2{color:var(–red);display:block;animation:glow 3s ease-in-out infinite}
-.hero-title .t3{color:var(–text);font-size:.45em;font-weight:300;letter-spacing:.18em;display:block;margin-top:8px}
+.hero-title{
+font-family:‘Oswald’,sans-serif;font-weight:700;
+font-size:clamp(72px,20vw,160px);letter-spacing:.06em;line-height:1;
+text-transform:uppercase;margin-bottom:6px;animation:fadein .8s ease-out;
+color:var(–text);animation:fadein .8s ease-out,glow 3s ease-in-out infinite;
+}
 .hero-rule{width:min(400px,80%);height:1px;background:linear-gradient(90deg,transparent,var(–red),transparent);margin:24px auto;animation:fadein .9s ease-out}
 .hero-tagline{font-family:‘Rajdhani’,sans-serif;font-weight:400;font-size:clamp(16px,3vw,20px);color:var(–muted);max-width:520px;line-height:1.65;margin-bottom:10px;animation:fadein 1s ease-out}
 .hero-tagline strong{color:var(–text);font-weight:600}
@@ -210,7 +212,7 @@ footer{border-top:1px solid var(–border);padding:32px 20px;max-width:700px;mar
 <body>
 
 <nav>
-  <a href="javascript:void(0)" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="nav-logo">Red String Research</a>
+  <a href="javascript:void(0)" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="nav-logo">Known</a>
   <div class="nav-links">
     <a href="javascript:void(0)" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})" class="nav-link">Features</a>
     <a href="javascript:void(0)" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})" class="nav-link">Pricing</a>
@@ -223,11 +225,7 @@ footer{border-top:1px solid var(–border);padding:32px 20px;max-width:700px;mar
 <section id="hero">
   <div class="hero-badge">● Now in Beta — TestFlight Available</div>
   <div class="hero-pre">For the ones who need to know</div>
-  <h1 class="hero-title">
-    <span class="t1">RED</span>
-    <span class="t2">STRING</span>
-    <span class="t3">Research</span>
-  </h1>
+  <h1 class="hero-title">KNOWN</h1>
   <div class="hero-rule"></div>
   <p class="hero-tagline">
     You have the facts. You know the things.<br>
@@ -252,7 +250,7 @@ footer{border-top:1px solid var(–border);padding:32px 20px;max-width:700px;mar
 <section id="modes">
   <div class="section-kicker">Two Modes. One Tool.</div>
   <h2 class="section-title">Built for every<br>kind of deep dive</h2>
-  <p class="section-sub">Whether you're connecting evidence or synthesizing sources — Red String gives your research a home.</p>
+  <p class="section-sub">Whether you're connecting evidence or synthesizing sources — Known gives your research a home.</p>
   <div class="mode-cards">
     <div class="mode-card inv">
       <div class="mode-icon">🕵️</div>
@@ -311,7 +309,7 @@ footer{border-top:1px solid var(–border);padding:32px 20px;max-width:700px;mar
     <div class="feat">
       <div class="feat-icon">🔐</div>
       <div class="feat-name">Forensic Watermark</div>
-      <p class="feat-desc">Every export invisibly watermarked. If your work leaks, Red String identifies exactly who shared it and when.</p>
+      <p class="feat-desc">Every export invisibly watermarked. If your work leaks, Known identifies exactly who shared it and when.</p>
     </div>
     <div class="feat">
       <div class="feat-icon">👻</div>
@@ -350,7 +348,7 @@ footer{border-top:1px solid var(–border);padding:32px 20px;max-width:700px;mar
   <h2 class="section-title">Pull the thread<br>with your audience</h2>
   <p class="section-sub">Your public research page. Your community. Your tip line. All in one place.</p>
   <div class="spool-box">
-    <div class="spool-url">redstring.app/spool/yourname</div>
+    <div class="spool-url">knownapp.com/spool/yourname</div>
     <p class="spool-desc">When you activate The Spool, your audience can follow your public investigations and research boards, comment on your findings, submit tips directly, and get notified when you publish something new.</p>
     <div class="spool-features">
       <div class="spool-feat">Community comments under every public board</div>
@@ -371,7 +369,7 @@ footer{border-top:1px solid var(–border);padding:32px 20px;max-width:700px;mar
 <!-- PRICING -->
 
 <section id="pricing">
-  <div class="section-kicker">Plans & Pricing</div>
+  <div class="section-kicker">Plans &amp; Pricing</div>
   <h2 class="section-title">Start free.<br>Go deep when ready.</h2>
   <p class="section-sub">Cancel anytime. Restore purchases. All plans include both Investigation and Research modes.</p>
   <div class="founding-banner">
@@ -444,7 +442,7 @@ footer{border-top:1px solid var(–border);padding:32px 20px;max-width:700px;mar
       <div style="font-size:16px;margin-bottom:4px">🔗</div>
       <div style="font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text);margin-bottom:2px">Custom Tip URL</div>
       <div style="font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;color:var(--text)">$4.99<span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)"> one-time</span></div>
-      <div style="font-family:'Rajdhani',sans-serif;font-size:12px;color:var(--muted);margin-top:3px">redstring.app/tip/yourname</div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:12px;color:var(--muted);margin-top:3px">knownapp.com/tip/yourname</div>
     </div>
     <div style="border:1px solid var(--border);padding:12px;background:var(--surf)">
       <div style="font-size:16px;margin-bottom:4px">📁</div>
@@ -461,7 +459,7 @@ footer{border-top:1px solid var(–border);padding:32px 20px;max-width:700px;mar
 
 <section id="referral">
   <div class="section-kicker">The Thread Network 🧵</div>
-  <h2 class="section-title">Share Red String.<br>Get rewarded.</h2>
+  <h2 class="section-title">Share Known.<br>Get rewarded.</h2>
   <p class="section-sub">Every account gets a unique referral code. Pull others in and earn real rewards — no gimmicks.</p>
   <div class="ref-box">
     <div class="ref-tiers">
@@ -543,7 +541,7 @@ footer{border-top:1px solid var(–border);padding:32px 20px;max-width:700px;mar
         <input class="form-input" type="email" id="beta-email" placeholder="Email address" required>
       </div>
       <select class="form-select" id="beta-use">
-        <option value="" disabled selected>How will you use Red String?</option>
+        <option value="" disabled selected>How will you use Known?</option>
         <option value="investigation">Investigation / Truth Seeking</option>
         <option value="research">Research / Academic</option>
         <option value="parenting">Parent Research</option>
@@ -558,7 +556,7 @@ footer{border-top:1px solid var(–border);padding:32px 20px;max-width:700px;mar
     <div class="beta-success" id="beta-success">
       <div class="beta-success-icon">🧵</div>
       <div class="beta-success-title">You're on the thread</div>
-      <div class="beta-success-sub">Check your email for your TestFlight invite and your private beta feedback portal link.<br><br>Your Founding Member price is locked. Welcome to the CIA.</div>
+      <div class="beta-success-sub">Check your email for your TestFlight invite and your private beta feedback portal link.<br><br>Your Founding Member price is locked. Welcome to the Syndicate.</div>
     </div>
   </div>
 </section>
@@ -604,10 +602,10 @@ footer{border-top:1px solid var(–border);padding:32px 20px;max-width:700px;mar
   <div class="section-kicker">The Story</div>
   <h2 class="section-title">Built by a mom<br>who needed it</h2>
   <div class="origin-quote">
-    <div class="origin-quote-text">"I'm a stay-at-home mom of two boys, one autistic. I built Red String Research in my free time because I needed it. I had facts, I had tabs, I had voice memos, I had screenshots — but I couldn't connect them. This is the app I wish existed."</div>
-    <div class="origin-quote-attr">— Jess, Creator of Red String Research</div>
+    <div class="origin-quote-text">"I'm a stay-at-home mom of two boys, one autistic. I built Known in my free time because I needed it. I had facts, I had tabs, I had voice memos, I had screenshots — but I couldn't connect them. This is the app I wish existed."</div>
+    <div class="origin-quote-attr">— Jess, Creator of Known</div>
   </div>
-  <p class="origin-body">Red String is built for the people who can't let go of a question until they have the full picture. Whether that's a parent researching treatments for their kid, a citizen journalist following a thread that won't quit, or a student who goes five layers deeper than the assignment requires — this app is yours.</p>
+  <p class="origin-body">Known is built for the people who can't let go of a question until they have the full picture. Whether that's a parent researching treatments for their kid, a citizen journalist following a thread that won't quit, or a student who goes five layers deeper than the assignment requires — this app is yours.</p>
 </section>
 
 <div class="divider"></div>
@@ -617,7 +615,7 @@ footer{border-top:1px solid var(–border);padding:32px 20px;max-width:700px;mar
 <footer>
   <div class="footer-top">
     <div>
-      <div class="footer-logo">Red String Research</div>
+      <div class="footer-logo">Known</div>
       <div class="footer-tagline">Pull the thread.</div>
     </div>
     <div class="footer-links">
@@ -630,7 +628,7 @@ footer{border-top:1px solid var(–border);padding:32px 20px;max-width:700px;mar
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2026 Red String Research · RedStringResearch.app</div>
+    <div class="footer-copy">© 2026 Known · knownapp.com</div>
     <div class="footer-built">Built by a mom. For the deep divers. 🧵</div>
   </div>
 </footer>
@@ -667,11 +665,8 @@ function submitBeta(){
     alert('Please enter a valid email address.');
     return;
   }
-  // In production this POSTs to your backend
-  // For now show success state
   document.getElementById('beta-form').style.display='none';
   document.getElementById('beta-success').style.display='block';
-  // Scroll to success
   document.getElementById('beta-success').scrollIntoView({behavior:'smooth',block:'center'});
 }
 
